@@ -1,70 +1,52 @@
-## Classes
-# HOOOOOOOOOOOOOOOOOOOOOOI
-class Course:
-    def __init__(self, name, lectures, restricted, points, students):
-        self.name = name
+import numpy as np
+
+
+class Rooster:
+    def __init__(self, courses, lectures, classrooms):
+        # 5 dagen, 5 tijdslots, 7 lokalen
+        # index van grid is zelfde als lijst +1
+        self.grid = np.zeros((7, 5, 5))
+        # lijst van alle vakken
+        self.courses = courses
+        # lijst van alle lectures
         self.lectures = lectures
-        self.restricted = restricted
-        self.points = points
-        self.students = students
+        # lijst van alle zalen
+        self.classrooms = classrooms
 
-    def __str__(self):
-        lectures = []
-        for lecture in self.lectures:
-            lectures.append(lecture.type)
+    def make_grid(self):
+        for course in self.courses:
+            for lecture in self.lectures:
+                empty = True
+                while empty:
+                    day = np.random.randint(0, 4)
+                    slot = np.random.randint(0, 4)
+                    classroom = np.random.randint(0, 4)
+                    if self.grid[day][slot][classroom] == 0:
+                        self.grid[day][slot][classroom] = lecture._id
+                        empty = False
 
-        return f"Naam: {self.name}, Lectures: {lectures}"
 
-class Classroom:
-    def __init__(self, name, capacity):
+class Course:
+    def __init__(self, name, lectures):
         self.name = name
-        self.capacity = capacity
-        self.slots = {"Mo9" : 0, "Mo11" : 0, "Mo13" : 0, "Mo15" : 0, "Tu9" : 0,
-            "Tu11" : 0, "Tu13" : 0, "Tu15" : 0, "We9" : 0, "We11" : 0,
-            "We13" : 0, "We15" : 0, "Th9" : 0, "Th11" : 0, "Th13" : 0,
-            "Th15" : 0, "Fr9" : 0, "Fr11" : 0, "Fr13" : 0, "Fr15" : 0}
+        # lijst van id-nummers van bijbehorende lectures
+        self.lectures = lectures
 
-    def __str__(self):
-        assigned_slots = {}
-        for slot in self.slots:
-            if self.slots[slot] != 0:
-                assigned_slots[slot] = {self.slots[slot][0],
-                self.slots[slot][1].type}
-
-        return f"""Naam: {self.name}, Capacity: {self.capacity},
-        Assigned slots: {assigned_slots}"""
-
-    def assign_slot(self, slot, course, lecture):
-        self.slots[slot] = [course, lecture]
-        lecture.assigned = slot
 
 class Lecture:
-    def __init__(self, type, max):
-        self.type = type
-        self.assigned = 0;
-        self.max = max
-
-    def __str__(self):
-        return f"Type: {self.type}, Max: {self.max}"
-
-## Data
-
-Classrooms = {"A1.04" : Classroom("A1.04", 41),
-    "A1.06" : Classroom("A1.06", 22), "A1.08" : Classroom("A1.08", 20),
-    "A1.010" : Classroom("A1.10", 56), "B0.201" : Classroom("B0.201", 48),
-    "C0.110" : Classroom("C0.110", 117), "C1.112" : Classroom("C1.112", 60)}
-
-Courses = {"Advanced Heuristics" : Course("Advanced Heuristics",
-    [Lecture("HC", 0), Lecture("PR", 10)], "Algoritmen en complexiteit", 0, 22),
-    "Algoritmen en complexiteit" : Course("Algoritmen en complexiteit",
-    [Lecture("HC", 0), Lecture("WC", 25), Lecture("PR", 25)],
-    "Advanced Heuristics", 0, 47)}
+    def __init__(self, _id, _type, course, restricted):
+        self._id = _id
+        self.type = _type
+        self.course = course
+        # lijst van id-nummers van verboden lectures tegelijk
+        self.restricted = restricted
 
 
+courses = [Course("Advanced Heuristics", [1, 2]), Course("Algoritmen en complexiteit"]
+lectures = [Lecture(1, "HC", "Advanced Heuristics", []), Lecture(2, "PR", "Advanced Heuristics", [])]
+classrooms = ["A1.04", "A1.06", "A1.08", "A1.10", "B0.201", "C0.110", "C1.112"]
 
 
-""" TODO
-Als restricted van Course niet leeg is:
-Loop over alle lokalen en check huidige tijdsslot
-Als restricted vak gevonden wordt, kan niet worden ingepland.
-"""
+rooster = Rooster(courses, lectures, classrooms)
+rooster.make_grid()
+print(rooster.grid)
