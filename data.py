@@ -1,5 +1,5 @@
 ## Classes
-
+# HOOOOOOOOOOOOOOOOOOOOOOI
 class Course:
     def __init__(self, name, lectures, restricted, points, students):
         self.name = name
