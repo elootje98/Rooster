@@ -13,28 +13,48 @@ class Rooster:
         # lijst van alle zalen
         self.classrooms = classrooms
 
-    def make_grid(self):
+    def find_lecture(self, lecture_id):
+
+        return np.argwhere(self.grid == lecture_id)
+
+        # Checkt of restricted vakken tegelijk zijn ingeroosterd,
+        # returns false if this is the case
+    def check_restriction(self):
+
+        for days in range(5):
+            for slots in range(5):
+                lectures_in_slot = []
+                restricted_in_slot = []
+                for lecture in range(7):
+                    lectures_in_slot.append(self.grid[lecture][days][slots])
+                    restricted_in_slot.append(self.lectures[self.grid[lecture][days][slots] - 1])
+
+                for i in lectures_in_slot:
+                    if i in restricted_in_slot:
+                        return False
+
+        return True
+
+    def check_order(self):
+
         for course in self.courses:
-            for lecture in course.lectures:
-                empty = True
-                while empty:
-                    restricted = False
-                    classroom = np.random.randint(0, 7)
-                    slot = np.random.randint(0, 5)
-                    day = np.random.randint(0, 5)
+            print(course.name)
+            lectures = course.lectures
+            lecture_dict = {}
+            not_HC = False
+            for lecture in lectures:
+                lecture_dict[self.find_lecture(lecture)[0][1] * 5 +
+                self.find_lecture(lecture)[0][2]] = self.lectures[lecture - 1].type
 
-                    # checkt of plek vrij is
-                    if self.grid[classroom][slot][day] == 0:
-                        # checkt of er op dat slot restricted colleges zijn
-                        for i in range(7):
-                            if self.grid[i][slot][day] in self.lectures[lecture - 1].restricted:
-                                restricted = True
-                                print("restriced", lecture, self.lectures[lecture - 1].restricted)
-                                break
-
-                        if not restricted:
-                            self.grid[classroom][slot][day] = lecture
-                            empty = False
+            sorted(lecture_dict)
+            for key in lecture_dict:
+                if lecture_dict[key] != "HC":
+                    not_HC = True
+                    print("not HC wordt true")
+                elif not_HC and lecture_dict[key] == "HC":
+                    print("return false")
+                    return False
+        return True
 
 class Course:
     def __init__(self, name, lectures):
@@ -85,7 +105,7 @@ courses = [Course("Advanced Heuristics", [1, 2]), Course(
 lectures = [
     Lecture(1, "HC", "Advanced Heuristics", [3, 4, 5]),
     Lecture(2, "PR", "Advanced Heuristics", [3, 4, 5]),
-    Lecture(3, "HR", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33]),
+    Lecture(3, "HC", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33]),
     Lecture(4, "WC", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33]),
     Lecture(5, "PR", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33]),
     Lecture(6, "HC", "Analysemethoden en -technieken", [20, 21, 22, 23, 24, 72]),
@@ -157,8 +177,3 @@ lectures = [
     Lecture(72, "PR", "Zoeken, sturen en bewegen", [])]
 
 classrooms = ["A1.04", "A1.06", "A1.08", "A1.10", "B0.201", "C0.110", "C1.112"]
-
-
-rooster = Rooster(courses, lectures, classrooms)
-rooster.make_grid()
-print(rooster.grid)

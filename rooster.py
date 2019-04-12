@@ -1,16 +1,31 @@
-Lecture(57, "PR", "Project Genetic Algorithms", [])
-Lecture(58, "PR", "Project Numerical Recipes", [])
-Lecture(59, "HC", "Reflectie op de digitale cultuur", [])
-Lecture(60, "HC", "Reflectie op de digitale cultuur", [])
-Lecture(61, "WC", "Reflectie op de digitale cultuur", [])
-Lecture(62, "HC", "Software engineering", [])
-Lecture(63, "WC", "Software engineering", [])
-Lecture(64, "PR", "Software engineering", [])
-Lecture(65, "HC", "Technology for games", [])
-Lecture(66, "HC", "Technology for games", [])
-Lecture(67, "WC", "Technology for games", [])
-Lecture(68, "HC", "Webprogrammeren en databases", [])
-Lecture(69, "HC", "Webprogrammeren en databases", [])
-Lecture(70, "WC", "Webprogrammeren en databases", [])
-Lecture(71, "PR", "Webprogrammeren en databases", [])
-Lecture(72, "PR", "Zoeken, sturen en bewegen", [])
+import data as d
+import numpy as np
+
+
+def make_grid(rooster):
+    for course in rooster.courses:
+        for lecture in course.lectures:
+            empty = True
+            while empty:
+                restricted = False
+                classroom = np.random.randint(0, 7)
+                slot = np.random.randint(0, 5)
+                day = np.random.randint(0, 5)
+
+                # checkt of plek vrij is
+                if rooster.grid[classroom][slot][day] == 0:
+                    # checkt of er op dat slot restricted colleges zijn
+                    for i in range(7):
+                        if rooster.grid[i][slot][day] in rooster.lectures[lecture - 1].restricted:
+                            restricted = True
+                            print("restriced", lecture, rooster.lectures[lecture - 1].restricted)
+                            break
+
+                    if not restricted:
+                        rooster.grid[classroom][slot][day] = lecture
+                        empty = False
+
+
+rooster = d.Rooster(d.courses, d.lectures, d.classrooms)
+make_grid(rooster)
+print(rooster.grid)
