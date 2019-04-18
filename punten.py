@@ -1,5 +1,5 @@
 # Dictionary containing the points allocated to the lectures, is used to determine the lectures most difficult to schedule
-lecture_points{"restricted" : 20, "HC" : 10, "WC" : 5}
+import data as d
 
 # Dictionary containing the points allocated to the timetable, this is used to rate the quality of the timetable
 # max_spread = 2 activities: ma-do/di-vr, 3 lectures: ma-wo-vr, 4 vakken: ma-di-do-vr
@@ -8,3 +8,13 @@ lecture_points{"restricted" : 20, "HC" : 10, "WC" : 5}
 timetable_points = {"overfull" : -1, "evening": -20,
 "max_spread" : 20, "same_1" : -10, "same_2" : -20, "same_3": -30,
 "no_conflict" : 1, "conflict" : 1}
+
+def course_points(course):
+    points = 0
+    lecture_points = {"restricted" : 20, "HC" : 10, "WC" : 5, "PR" : 5}
+    lecture = course.lectures[0]
+    list_restricted = d.lectures[lecture - 1].restricted
+    points += len(list_restricted) * 20
+    for lecture in course.lectures:
+        points += lecture_points[d.lectures[lecture - 1].type]
+    return points

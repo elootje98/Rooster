@@ -1,11 +1,11 @@
 import numpy as np
-
+import punten as p
 
 class Rooster:
     def __init__(self, courses, lectures, classrooms):
         # 5 dagen, 5 tijdslots, 7 lokalen
         # index van grid is zelfde als lijst +1
-        self.grid = np.zeros((7, 5, 5))
+        self.grid = np.zeros((7, 5, 4), dtype=int)
         # lijst van alle vakken
         self.courses = courses
         # lijst van alle lectures
@@ -27,7 +27,7 @@ class Rooster:
                 restricted_in_slot = []
                 for lecture in range(7):
                     lectures_in_slot.append(self.grid[lecture][days][slots])
-                    restricted_in_slot.append(self.lectures[self.grid[lecture][days][slots] - 1])
+                    restricted_in_slot.append(get_lecture(self.grid[lecture][days][slots]))
 
                 for i in lectures_in_slot:
                     if i in restricted_in_slot:
@@ -35,9 +35,9 @@ class Rooster:
 
         return True
 
-    def check_order(self):
+    def check_order(self, courses):
 
-        for course in self.courses:
+        for course in courses:
             print(course.name)
             lectures = course.lectures
             lecture_dict = {}
@@ -50,18 +50,26 @@ class Rooster:
             for key in lecture_dict:
                 if lecture_dict[key] != "HC":
                     not_HC = True
-                    print("not HC wordt true")
                 elif not_HC and lecture_dict[key] == "HC":
-                    print("return false")
                     return False
         return True
 
+    def sort(self):
+        for course in self.courses:
+            course.points = p.course_points(course)
+
+        self.courses.sort(key=lambda course: course.points, reverse=True)
+
+        for course in self.courses:
+            print(course.name, course.points)
+
 class Course:
-    def __init__(self, name, lectures):
+    def __init__(self, _id, name, lectures):
         self.name = name
         # lijst van id-nummers van bijbehorende lectures
         self.lectures = lectures
-
+        self._id = _id
+        self.points = 0
 
 class Lecture:
     def __init__(self, _id, _type, course, restricted):
@@ -72,35 +80,35 @@ class Lecture:
         self.restricted = restricted
 
 
-courses = [Course("Advanced Heuristics", [1, 2]), Course(
-    "Algoritmen en complexiteit", [3, 4, 5]), Course(
-    "Analysemethoden en -technieken", [6]), Course(
-    "Architectuur en computerorganisatie", [7, 8]), Course(
-    "Autonomous Agents 2", [9, 10, 11, 12]), Course(
-    "Bioinformatica", [13, 14, 15, 16, 17]), Course(
-    "Calculus 2", [18, 19]), Course(
-    "Collectieve Intelligentie", [20, 21, 22, 23, 24]), Course(
-    "Compilerbouw", [25, 26, 27, 28]), Course(
-    "Compilerbouw (practicum)", [29]), Course(
-    "Data Mining", [30, 31, 32, 33]), Course(
-    "Databases 2", [34, 35]), Course(
-    "Heuristieken 1", [36, 37]), Course(
-    "Heuristieken 2", [28, 39]), Course(
-    "Informatie- en organisatieontwerp", [40, 41, 42, 43]), Course(
-    "Interactie-ontwerp", [44, 45]), Course(
-    "Kansrekenen 2", [46, 47]), Course(
-    "Lineaire Algebra", [48, 49]), Course(
-    "Machine Learning", [50, 51]), Course(
-    "Moderne Databases", [52, 53, 54]), Course(
-    "Netwerken en systeembeveiliging", [55]), Course(
-    "Programmeren in Java 2", [56]), Course(
-    "Project Genetic Algorithms", [57]), Course(
-    "Project Numerical Recipes", [58]), Course(
-    "Reflectie op de digitale cultuur", [59, 60, 61]), Course(
-    "Software engineering", [62, 63, 64]), Course(
-    "Technology for games", [65, 66, 67]), Course(
-    "Webprogrammeren en databases", [68, 69, 70, 71]), Course(
-    "Zoeken, sturen en bewegen", [72])]
+courses = [Course(1, "Advanced Heuristics", [1, 2]), Course(
+    2, "Algoritmen en complexiteit", [3, 4, 5]), Course(
+    3, "Analysemethoden en -technieken", [6]), Course(
+    4, "Architectuur en computerorganisatie", [7, 8]), Course(
+    5, "Autonomous Agents 2", [9, 10, 11, 12]), Course(
+    6, "Bioinformatica", [13, 14, 15, 16, 17]), Course(
+    7, "Calculus 2", [18, 19]), Course(
+    8, "Collectieve Intelligentie", [20, 21, 22, 23, 24]), Course(
+    9, "Compilerbouw", [25, 26, 27, 28]), Course(
+    10, "Compilerbouw (practicum)", [29]), Course(
+    11, "Data Mining", [30, 31, 32, 33]), Course(
+    12, "Databases 2", [34, 35]), Course(
+    13, "Heuristieken 1", [36, 37]), Course(
+    14, "Heuristieken 2", [28, 39]), Course(
+    15, "Informatie- en organisatieontwerp", [40, 41, 42, 43]), Course(
+    16, "Interactie-ontwerp", [44, 45]), Course(
+    17, "Kansrekenen 2", [46, 47]), Course(
+    18, "Lineaire Algebra", [48, 49]), Course(
+    19, "Machine Learning", [50, 51]), Course(
+    20, "Moderne Databases", [52, 53, 54]), Course(
+    21, "Netwerken en systeembeveiliging", [55]), Course(
+    22, "Programmeren in Java 2", [56]), Course(
+    23, "Project Genetic Algorithms", [57]), Course(
+    24, "Project Numerical Recipes", [58]), Course(
+    25, "Reflectie op de digitale cultuur", [59, 60, 61]), Course(
+    26, "Software engineering", [62, 63, 64]), Course(
+    27, "Technology for games", [65, 66, 67]), Course(
+    28, "Webprogrammeren en databases", [68, 69, 70, 71]), Course(
+    29, "Zoeken, sturen en bewegen", [72])]
 
 lectures = [
     Lecture(1, "HC", "Advanced Heuristics", [3, 4, 5]),
@@ -177,3 +185,13 @@ lectures = [
     Lecture(72, "PR", "Zoeken, sturen en bewegen", [])]
 
 classrooms = ["A1.04", "A1.06", "A1.08", "A1.10", "B0.201", "C0.110", "C1.112"]
+
+
+def get_lecture(lecture_id):
+
+    return lectures[int(lecture_id) - 1]
+
+
+def get_course(course_id):
+
+    return courses[int(course_id) - 1]
