@@ -61,6 +61,9 @@ class Rooster:
     def sort(self):
         self.courses.sort(key=lambda course: course.points, reverse=True)
 
+    def make_child(self):
+        for get_lecture(_id) in self.lectures:
+
 
 class Course:
     def __init__(self, _id, name, lectures):
@@ -81,14 +84,14 @@ class Course:
         return points
 
 class Lecture:
-    def __init__(self, _id, _type, course, restricted):
+    def __init__(self, _id, _type, course, restricted, students, capacity):
         self._id = _id
         self.type = _type
         self.course = course
         # lijst van id-nummers van verboden lectures tegelijk
         self.restricted = restricted
-        self.students = 50
-        self.capacity = 10
+        self.students = students
+        self.capacity = capacity
 
 class Lecture_child(Lecture):
     def __init__(self, parent_id, _type, course, restricted, _id):
