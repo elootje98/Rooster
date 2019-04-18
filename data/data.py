@@ -3,8 +3,8 @@ import rooster as r
 lectures = [
     r.Lecture(1, "HC", "Advanced Heuristics", [3, 4, 5], 22, 0),
     r.Lecture(2, "PR", "Advanced Heuristics", [3, 4, 5], 22, 10),
-    r.Lecture(3, "HC", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33], 47, 0)
-    r.Lecture(4, "WC", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33], 47, 25)
+    r.Lecture(3, "HC", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33], 47, 0),
+    r.Lecture(4, "WC", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33], 47, 25),
     r.Lecture(5, "PR", "Algoritmen en complexiteit", [1, 2, 30, 31, 32, 33], 47, 25),
     r.Lecture(6, "HC", "Analysemethoden en -technieken", [20, 21, 22, 23, 24, 72], 60, 0),
     r.Lecture(7, "HC", "Architectuur en computerorganisatie", [13, 14, 15, 16, 17, 44, 45, 48, 49, 52, 53, 54], 19, 0),
@@ -29,7 +29,7 @@ lectures = [
     r.Lecture(26, "HC", "Compilerbouw", [29, 56], 70, 0),
     r.Lecture(27, "WC", "Compilerbouw", [29, 56], 70, 40),
     r.Lecture(28, "PR", "Compilerbouw", [29, 56], 70, 40),
-    r.Lecture(29, "PR", "Compilerbouw (practicum)", [72], 35, 0),
+    r.Lecture(29, "PR", "Compilerbouw (practicum)", [72], 35, 15),
     r.Lecture(30, "HC", "Data Mining", [59, 60, 61], 30, 0),
     r.Lecture(31, "HC", "Data Mining", [59, 60, 61], 30, 0),
     r.Lecture(32, "WC", "Data Mining", [59, 60, 61], 30, 10),
