@@ -2,6 +2,7 @@ import numpy as np
 from data import points as p
 from data import data as d
 import objective as o
+import math
 
 class Rooster:
     def __init__(self, courses, lectures, classrooms):
@@ -61,9 +62,15 @@ class Rooster:
     def sort(self):
         self.courses.sort(key=lambda course: course.points, reverse=True)
 
-    def make_child(self):
-        for get_lecture(_id) in self.lectures:
+    def make_children(self):
+        children = {}
+        for lecture in self.lectures:
+            if lecture.type != 'HC':
+                print(lecture.course)
+                children = math.ceil(lecture.students / lecture.capacity)
 
+    # Make a dict with children. The key of the dict will be the lecture Id,
+    # The value will be a list of the children of that lecture 
 
 class Course:
     def __init__(self, _id, name, lectures):
@@ -92,12 +99,6 @@ class Lecture:
         self.restricted = restricted
         self.students = students
         self.capacity = capacity
-
-class Lecture_child(Lecture):
-    def __init__(self, parent_id, _type, course, restricted, _id):
-        Lecture.__init__(self, parent_id, _type, course, restricted)
-        self.parent_id = self._id
-        self._id = _id
 
 def get_lecture(lecture_id):
 

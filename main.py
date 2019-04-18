@@ -12,3 +12,5 @@ a.make_grid(rooster)
 
 print(rooster.grid)
 o.objective_function(rooster)
+
+rooster.make_children()
