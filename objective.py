@@ -1,21 +1,21 @@
 import data as d
-import rooster as r
+import timetable as t
 """
-All function that calculate the rooster score are in this file.
+All function that calculate the timetable score are in this file.
 """
 
 
 # Main function that calculates total score of schedule
-def objective_function(rooster):
+def objective_function(timetable):
 
-    points = day_check(rooster) + spread_check(rooster)
+    points = day_check(timetable) + spread_check(timetable)
     print("points ", points)
 
     return points
 
 
 #
-def day_check(rooster):
+def day_check(timetable):
 
     points = 0
     for day in range(5):
@@ -25,7 +25,7 @@ def day_check(rooster):
 
         for slot in range(4):
             for classroom in range(7):
-                courses_day.append(r.get_lecture(rooster.grid[classroom][day][slot]).course)
+                courses_day.append(t.get_lecture(timetable.grid[classroom][day][slot]).course)
 
         # Sorts list of courses alphabetically
         sorted(courses_day)
@@ -38,16 +38,16 @@ def day_check(rooster):
 
 
 #
-def spread_check(rooster):
+def spread_check(timetable):
 
     points = 0
-    for course in rooster.courses:
+    for course in timetable.courses:
 
         length = len(course.lectures)
         day_list = []
 
         for lecture in course.lectures:
-            day_list.append(rooster.find_lecture(lecture)[0][1])
+            day_list.append(timetable.find_lecture(lecture)[0][1])
 
         sorted(day_list)
 

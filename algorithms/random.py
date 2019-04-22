@@ -1,17 +1,17 @@
 import numpy as np
-import rooster as r
+import timetable as t
 
 
-# Constructs a valid rooster from empty rooster object
-def make_grid(rooster):
+# Constructs a valid timetable from empty timetable object
+def make_grid(timetable):
 
-    # Test is a temporary rooster object to validate changes before committing
-    test = rooster
-    for course in rooster.courses:
+    # Test is a temporary timetable object to validate changes before committing
+    test = timetable
+    for course in timetable.courses:
         test = plan_lectures(course, test)
         while not test.check_order([course]):
             test = plan_lectures(course, test)
-        rooster = test
+        timetable = test
 
 
 def plan_lectures(course, test):
@@ -26,9 +26,9 @@ def plan_lectures(course, test):
 
             # Checks if slot is available
             if test.grid[classroom][slot][day] == 0:
-                # checkt of er op dat slot restricted colleges zijn
+                # checks if there are restricted lectures on that timeslot
                 for i in range(7):
-                    if test.grid[i][slot][day] in r.get_lecture(lecture).restricted:
+                    if test.grid[i][slot][day] in t.get_lecture(lecture).restricted:
                         restricted = True
                         break
 

@@ -1,16 +1,16 @@
 from data import data as d
 import numpy as np
 import objective as o
-import rooster as r
+import timetable as t
 from algorithms import random as a
 
-rooster = r.Rooster(d.courses, d.lectures, d.classrooms)
+timetable = t.Timetable(d.courses, d.lectures, d.classrooms)
 
-rooster.sort()
-a.make_grid(rooster)
+timetable.sort()
+a.make_grid(timetable)
 
 
-print(rooster.grid)
-o.objective_function(rooster)
+print(timetable.grid)
+o.objective_function(timetable)
 
-rooster.make_children()
+timetable.make_children()

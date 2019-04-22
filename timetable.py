@@ -4,26 +4,26 @@ from data import data as d
 import objective as o
 import math
 
-class Rooster:
+class Timetable:
     def __init__(self, courses, lectures, classrooms):
-        # 5 dagen, 5 tijdslots, 7 lokalen
-        # index van grid is zelfde als lijst +1
+        # 5 days, 5 timeslots, 7 classrooms
+        # index of grid is the same as list + 1
         self.grid = np.zeros((7, 5, 4), dtype=int)
-        # lijst van alle vakken
+        # list of all courses
         self.courses = courses
-        # lijst van alle lectures
+        # list of all lectures
         self.lectures = lectures
-        # lijst van alle zalen
+        # list of all classrooms
         self.classrooms = classrooms
 
 
+    # finds a lecture in the grid
     def find_lecture(self, lecture_id):
-
         return np.argwhere(self.grid == lecture_id)
 
 
-        # Checkt of restricted vakken tegelijk zijn ingeroosterd,
-        # returns false if this is the case
+    # checks whether restricted lectures have been scheduled on the same
+    # timeslot, returns false if this is the case
     def check_restriction(self):
 
         for days in range(5):
@@ -62,6 +62,9 @@ class Rooster:
     def sort(self):
         self.courses.sort(key=lambda course: course.points, reverse=True)
 
+
+    # Make a dict with children. The key of the dict will be the lecture Id,
+    # The value will be a list of the children of that lecture
     def make_children(self):
         children = {}
         for lecture in self.lectures:
@@ -69,13 +72,11 @@ class Rooster:
                 print(lecture.course)
                 children = math.ceil(lecture.students / lecture.capacity)
 
-    # Make a dict with children. The key of the dict will be the lecture Id,
-    # The value will be a list of the children of that lecture 
 
 class Course:
     def __init__(self, _id, name, lectures):
         self.name = name
-        # lijst van id-nummers van bijbehorende lectures
+        # list of id's of corresponding lectures
         self.lectures = lectures
         self._id = _id
         self.points = self.course_points()
@@ -95,7 +96,7 @@ class Lecture:
         self._id = _id
         self.type = _type
         self.course = course
-        # lijst van id-nummers van verboden lectures tegelijk
+        # list of id's of restricted lectures
         self.restricted = restricted
         self.students = students
         self.capacity = capacity
