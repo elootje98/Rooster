@@ -7,7 +7,7 @@ from algorithms import random as a
 
 timetable = t.Timetable(d.courses, d.lectures, d.classrooms)
 
-timetable.sort()
+#timetable.sort()
 a.make_grid(timetable)
 
 
@@ -16,4 +16,4 @@ o.objective_function(timetable)
 
 timetable.make_children()
 
-# p.make_table(timetable)
+p.make_table(timetable)

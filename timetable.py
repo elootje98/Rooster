@@ -9,6 +9,7 @@ class Timetable:
         # 5 days, 5 timeslots, 7 classrooms
         # index of grid is the same as list + 1
         self.grid = np.zeros((7, 5, 4), dtype=object)
+        self.grid.fill(Empty())
         # list of all courses
         self.courses = courses
         # list of all lectures
@@ -68,17 +69,27 @@ class Timetable:
     # Make a dict with children. The key of the dict will be the lecture Id,
     # The value will be a list of the children of that lecture
     def make_children(self):
+        counter = 1
         for lecture in self.lectures:
             # make different numbers of werkcollege students
             if lecture.type != 'HC':
                 print(lecture.course)
                 nr_child_lectures = math.ceil(lecture.students / lecture.capacity)
-                nr_students_in_child = lecture.students / nr_child_lectures
+                rest_student = lecture.students % lecture.capacity
+                nr_students_in_child = lecture.capacity
                 for i in range(nr_child_lectures):
-                    self.child_lectures.append(Child_Lecture(lecture, i, nr_students_in_child))
+                    if i == nr_child_lectures - 1 and rest_student != 0:
+                        nr_students_in_child = rest_student
+                    self.child_lectures.append(Child_Lecture(lecture, counter, nr_students_in_child))
+                    counter += 1
             else:
-                self.child_lectures.append(Child_Lecture(lecture, 0, lecture.students))
-        print(self.child_lectures)
+                self.child_lectures.append(Child_Lecture(lecture, counter, lecture.students))
+                counter += 1
+
+        for lecture in self.child_lectures:
+            for item in vars(lecture).items():
+                print(item)
+
 
 class Course:
     def __init__(self, _id, name, lectures):
@@ -108,6 +119,10 @@ class Lecture:
         self.students = students
         self.capacity = capacity
         self.children = []
+
+class Empty:
+    def __init__(self):
+        self.course = "empty"
 
 class Child_Lecture(Lecture):
     def __init__(self, parent, child_id, child_students):
