@@ -8,16 +8,18 @@ class Timetable:
     def __init__(self, courses, lectures, classrooms):
         # 5 days, 5 timeslots, 7 classrooms
         # index of grid is the same as list + 1
-        self.grid = np.zeros((7, 5, 4), dtype=int)
+        self.grid = np.zeros((7, 5, 4), dtype=object)
         # list of all courses
         self.courses = courses
         # list of all lectures
         self.lectures = lectures
+        # list of all child lectures
+        self.child_lectures = []
         # list of all classrooms
         self.classrooms = classrooms
 
 
-    # finds a lecture in the grid
+    # finds a lecture in the grid TODO: reform
     def find_lecture(self, lecture_id):
         return np.argwhere(self.grid == lecture_id)
 
@@ -66,12 +68,17 @@ class Timetable:
     # Make a dict with children. The key of the dict will be the lecture Id,
     # The value will be a list of the children of that lecture
     def make_children(self):
-        children = {}
         for lecture in self.lectures:
+            # make different numbers of werkcollege students
             if lecture.type != 'HC':
                 print(lecture.course)
-                children = math.ceil(lecture.students / lecture.capacity)
-
+                nr_child_lectures = math.ceil(lecture.students / lecture.capacity)
+                nr_students_in_child = lecture.students / nr_child_lectures
+                for i in range(nr_child_lectures):
+                    self.child_lectures.append(Child_Lecture(lecture, i, nr_students_in_child))
+            else:
+                self.child_lectures.append(Child_Lecture(lecture, 0, lecture.students))
+        print(self.child_lectures)
 
 class Course:
     def __init__(self, _id, name, lectures):
@@ -92,7 +99,7 @@ class Course:
         return points
 
 class Lecture:
-    def __init__(self, _id, _type, course, restricted, students, capacity):
+    def __init__(self, _id, _type, course, restricted, students, capacity, children):
         self._id = _id
         self.type = _type
         self.course = course
@@ -100,6 +107,14 @@ class Lecture:
         self.restricted = restricted
         self.students = students
         self.capacity = capacity
+        self.children = []
+
+class Child_Lecture(Lecture):
+    def __init__(self, parent, child_id, child_students):
+        super().__init__(parent._id, parent.type, parent.course, parent.restricted, parent.students, parent.capacity, parent.children)
+        self.parent_id = self._id
+        self._id = child_id
+        self.students = child_students
 
 def get_lecture(lecture_id):
 

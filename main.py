@@ -16,4 +16,4 @@ o.objective_function(timetable)
 
 timetable.make_children()
 
-p.make_table(timetable)
+# p.make_table(timetable)
