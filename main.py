@@ -6,14 +6,16 @@ import printer as p
 from algorithms import random as a
 
 timetable = t.Timetable(d.courses, d.lectures, d.classrooms)
+timetable.make_children()
+timetable.assign_children()
+timetable.sort()
 
-#timetable.sort()
 a.make_grid(timetable)
 
 
-print(timetable.grid)
-o.objective_function(timetable)
+# print(timetable.grid)
+# o.objective_function(timetable)
 
-timetable.make_children()
+
 
 p.make_table(timetable)

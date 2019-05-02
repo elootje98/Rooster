@@ -8,8 +8,7 @@ class Timetable:
     def __init__(self, courses, lectures, classrooms):
         # 5 days, 5 timeslots, 7 classrooms
         # index of grid is the same as list + 1
-        self.grid = np.zeros((7, 5, 4), dtype=object)
-        self.grid.fill(Empty())
+        self.grid = np.full((7, 5, 4), Empty(), dtype=object)
         # list of all courses
         self.courses = courses
         # list of all lectures
@@ -86,9 +85,14 @@ class Timetable:
                 self.child_lectures.append(Child_Lecture(lecture, counter, lecture.students))
                 counter += 1
 
-        for lecture in self.child_lectures:
-            for item in vars(lecture).items():
-                print(item)
+    def assign_children(self):
+        for child in self.child_lectures:
+            for course in self.courses:
+                if child.course == course.name:
+                    course.child_lectures.append(child)
+                    break
+
+
 
 
 class Course:
@@ -98,6 +102,7 @@ class Course:
         self.lectures = lectures
         self._id = _id
         self.points = self.course_points()
+        self.child_lectures = []
 
     def course_points(self):
         points = 0
@@ -124,18 +129,12 @@ class Empty:
     def __init__(self):
         self.course = "empty"
 
+    def __str__(self):
+        return " T_T "
+
 class Child_Lecture(Lecture):
     def __init__(self, parent, child_id, child_students):
         super().__init__(parent._id, parent.type, parent.course, parent.restricted, parent.students, parent.capacity, parent.children)
         self.parent_id = self._id
         self._id = child_id
         self.students = child_students
-
-def get_lecture(lecture_id):
-
-    return d.lectures[int(lecture_id) - 1]
-
-
-def get_course(course_id):
-
-    return d.courses[int(course_id) - 1]

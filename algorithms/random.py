@@ -9,14 +9,14 @@ def make_grid(timetable):
     test = timetable
     for course in timetable.courses:
         test = plan_lectures(course, test)
-        while not test.check_order([course]):
-            test = plan_lectures(course, test)
+        #while not test.check_order([course]):
+        #    test = plan_lectures(course, test)
         timetable = test
 
 
 def plan_lectures(course, test):
 
-    for lecture in course.lectures:
+    for lecture in course.child_lectures:
         empty = True
         while empty:
             restricted = False
@@ -25,10 +25,12 @@ def plan_lectures(course, test):
             day = np.random.randint(0, 4)
 
             # Checks if slot is available
-            if test.grid[classroom][slot][day] == 0:
+            print(test.grid[classroom][slot][day].course)
+            if test.grid[classroom][slot][day].course == "empty":
+                print("janken dit")
                 # checks if there are restricted lectures on that timeslot
                 for i in range(7):
-                    if test.grid[i][slot][day] in t.get_lecture(lecture).restricted:
+                    if test.grid[i][slot][day] in lecture.restricted:
                         restricted = True
                         break
 
