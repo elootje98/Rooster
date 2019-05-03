@@ -104,4 +104,4 @@ courses = [t.Course(1, "Advanced Heuristics", [1, 2]), t.Course(
     28, "Webprogrammeren en databases", [68, 69, 70, 71]), t.Course(
     29, "Zoeken, sturen en bewegen", [72])]
 
-classrooms = ["A1.04", "A1.06", "A1.08", "A1.10", "B0.201", "C0.110", "C1.112"]
+classrooms = {"A1.04" = 41, "A1.06" = 22, "A1.08" = 20, "A1.10" = 56, "B0.201" = 48, "C0.110" = 117, "C1.112" = 60}
