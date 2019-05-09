@@ -4,7 +4,7 @@ Onze repository is op dit moment heel onoverzichtelijk, dat gaan we vrijdag even
 - main_test.py
 - timetable_test.py
 - objective_test.py
-- data_test.py
+- data_test.py (data)
 - hillclimber.py
 - greedy.py
 - printer.py (nog niet aangepast op nieuwe structuur)
