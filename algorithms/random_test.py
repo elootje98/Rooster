@@ -18,7 +18,7 @@ def plan_lectures(course, timetable):
         while True:
             classroom = np.random.randint(0, 7)
             day = np.random.randint(0, 5)
-            slot = np.random.randint(0, 4)
+            slot = np.random.randint(0, 5)
 
             if type(timetable.grid[classroom][day][slot]) == t.Empty:
                 timetable.grid[classroom][day][slot] = lecture

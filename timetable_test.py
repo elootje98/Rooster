@@ -10,12 +10,14 @@ from data import data_test as d
 class Timetable:
     def __init__(self):
         # 7 Classrooms, 5 days, 4 timeslots
-        self.grid = np.full((7, 5, 4), Empty(), dtype=object)
+        self.grid = np.full((7, 5, 5), Empty(), dtype=object)
         self.courses = []
-        self.classrooms = d.classrooms
+        self.classrooms = []
         self.make_courses()
         self.make_lectures(d.lectures)
+        self.make_classrooms()
         self.add_restricted()
+        self.fill_nightslots()
 
     # Finds lecture object for entered ID (int)
     def find_lecture(self, _id):
@@ -41,6 +43,10 @@ class Timetable:
     def make_courses(self):
         for course in d.courses:
             self.courses.append(Course(course))
+
+    def make_classrooms(self):
+        for classroom in d.classrooms:
+            self.classrooms.append(Classroom(classroom[0], classroom[1]))
 
     # Creates and assigns lecture objects based on list of data
     def make_lectures(self, lectures):
@@ -126,6 +132,13 @@ class Timetable:
         pass
 
 
+    def fill_nightslots(self):
+        for classroom in range(7):
+            for day in range(5):
+                if classroom != 5:
+                    self.grid[classroom][day][4] = Restricted()
+
+
 class Course:
     def __init__(self, name):
         self.name = name
@@ -155,3 +168,11 @@ class Empty:
 
     def __str__(self):
         return " - "
+
+
+class Restricted:
+    def __init__(self):
+        self.course = "restricted"
+
+    def __str__(self):
+        return "Restricted"
