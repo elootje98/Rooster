@@ -9,7 +9,7 @@ from data import data_test as d
 
 class Timetable:
     def __init__(self):
-        # 7 Classrooms, 5 days, 4 timeslots
+        # 7 Classrooms, 5 days, 4(5) timeslots
         self.grid = np.full((7, 5, 5), Empty(), dtype=object)
         self.courses = []
         self.classrooms = []
@@ -127,10 +127,8 @@ class Timetable:
 
         return True
 
-
     def check_restriction(self):
         pass
-
 
     def fill_nightslots(self):
         for classroom in range(7):
