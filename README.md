@@ -15,5 +15,6 @@ Onze verschillende algoritmes kunnen worden aangeroepen met command-line argumen
 
 oftewel -> main_test.py algoritme_1 [algoritme_2]
 
-algoritme_1: random, greedy (werkt niet of heel langzaam)
-algoritme_2: hillclimber
+
+Opties voor algoritme_1: random, greedy (werkt niet of heel langzaam)
+Optie voor algoritme_2 (optioneel): hillclimber 
