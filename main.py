@@ -4,6 +4,7 @@ import objective as o
 import timetable as t
 import printer as p
 from algorithms import random as a
+from algorithms import hillclimber as hill
 
 timetable = t.Timetable(d.courses, d.lectures, d.classrooms)
 timetable.make_children()
@@ -19,3 +20,4 @@ a.make_grid(timetable)
 
 
 p.make_table(timetable)
+hill.hillclimber(timetable)

@@ -4,6 +4,7 @@ import timetable_test as t
 import objective_test as o
 from data import data_test as d
 from algorithms import random_test as random
+from algorithms import hillclimber as hill
 
 
 if len(sys.argv) != 2:
@@ -17,7 +18,9 @@ timetable = t.Timetable()
 if algorithm == "random":
     random.make_table(timetable)
 
+hill.hillclimber(timetable)
 print(o.objective_function(timetable))
+
 
 ### Prints out all lectures made in ID order
 
