@@ -8,7 +8,9 @@ def make_table(timetable):
     # fig = plt.figure()
     #gs = gridspec.GridSpec(nrows=4, ncols=2)
     f = open('timetable.txt' ,'w')
-    for classroom in range(len(d.classrooms)):
+    i = 0
+    for key in d.classrooms:
+     #classroom in range(len(d.classrooms)):
         ### test with matplotlib
         #ax = fig.add_subplot(gs[int(classroom/2) , classroom%2])
         #ax.set_title(d.classrooms[classroom])
@@ -16,9 +18,9 @@ def make_table(timetable):
 
 
         # using dataframes for a simple output
-        print("\n\n----- " + d.classrooms[classroom] + " -----")
-        f.write("\n\n----- " + d.classrooms[classroom] + " -----\n")
-        df = pd.DataFrame(np.transpose(timetable.grid[classroom]),
+        print("\n\n----- " + key + " -----")
+        f.write("\n\n----- " + key + " -----\n")
+        df = pd.DataFrame(np.transpose(timetable.grid[i]),
         columns=['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
         index=['9:00', '11:00', '13:00' , '15:00'])
 
@@ -29,6 +31,7 @@ def make_table(timetable):
         #    print(df)
         print(df.to_string())
         f.write(df.to_string())
+        i += 1
     f.close()
     #fig.tight_layout()
     #plt.show()
