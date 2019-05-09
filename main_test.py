@@ -3,18 +3,23 @@ import sys
 import timetable_test as t
 from data import data_test as d
 from algorithms import random_test as random
+from algorithms import greedy as greedy
 
-
-if len(sys.argv) != 2:
-    print("Please provide an algorithm. Correct usage: main.py random.")
-    print("Available algorithms: random.")
-    exit()
-
-algorithm = sys.argv[1]
+# if len(sys.argv) != 2:
+#     print("Please provide an algorithm. Correct usage: main.py random.")
+#     print("Available algorithms: random.")
+#     exit()
+#
+# algorithm = sys.argv[1]
 timetable = t.Timetable()
+#
+# if algorithm == "random":
+#     random.make_table(timetable)
+#
+# if algorithm == "greedy":
 
-if algorithm == "random":
-    random.make_table(timetable)
+
+greedy.make_table(timetable)
 
 # for course in timetable.courses:
 #     print(course.name, '\n')
