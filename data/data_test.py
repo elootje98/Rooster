@@ -1,5 +1,3 @@
-import timetable as t
-
 lectures = [
     ["HC", "Advanced Heuristics", 22, 0],
     ["PR", "Advanced Heuristics", 22, 10],
@@ -29,7 +27,7 @@ lectures = [
     ["HC", "Compilerbouw", 70, 0],
     ["WC", "Compilerbouw", 70, 40],
     ["PR", "Compilerbouw", 70, 40],
-    ["PR", "Compilerbouw [practicum)", 35, 15],
+    ["PR", "Compilerbouw practicum", 35, 15],
     ["HC", "Data Mining", 30, 0],
     ["HC", "Data Mining", 30, 0],
     ["WC", "Data Mining", 30, 10],
@@ -72,36 +70,38 @@ lectures = [
     ["HC", "Webprogrammeren en databases", 46, 0],
     ["WC", "Webprogrammeren en databases", 46, 20],
     ["PR", "Webprogrammeren en databases", 46, 20],
-    ["PR", "Zoeken, sturen en bewegen", 45, 15]]
+    ["PR", "Zoeken sturen en bewegen", 45, 15]]
 
-courses = [t.Course[1, "Advanced Heuristics", [1, 2]), t.Course[
-    2, "Algoritmen en complexiteit", [3, 4, 5]), t.Course[
-    3, "Analysemethoden en -technieken", [6]), t.Course[
-    4, "Architectuur en computerorganisatie", [7, 8]), t.Course[
-    5, "Autonomous Agents 2", [9, 10, 11, 12]), t.Course[
-    6, "Bioinformatica", [13, 14, 15, 16, 17]), t.Course[
-    7, "Calculus 2", [18, 19]), t.Course[
-    8, "Collectieve Intelligentie", [20, 21, 22, 23, 24]), t.Course[
-    9, "Compilerbouw", [25, 26, 27, 28]), t.Course[
-    10, "Compilerbouw [practicum)", [29]), t.Course[
-    11, "Data Mining", [30, 31, 32, 33]), t.Course[
-    12, "Databases 2", [34, 35]), t.Course[
-    13, "Heuristieken 1", [36, 37]), t.Course[
-    14, "Heuristieken 2", [28, 39]), t.Course[
-    15, "Informatie- en organisatieontwerp", [40, 41, 42, 43]), t.Course[
-    16, "Interactie-ontwerp", [44, 45]), t.Course[
-    17, "Kansrekenen 2", [46, 47]), t.Course[
-    18, "Lineaire Algebra", [48, 49]), t.Course[
-    19, "Machine Learning", [50, 51]), t.Course[
-    20, "Moderne Databases", [52, 53, 54]), t.Course[
-    21, "Netwerken en systeembeveiliging", [55]), t.Course[
-    22, "Programmeren in Java 2", [56]), t.Course[
-    23, "Project Genetic Algorithms", [57]), t.Course[
-    24, "Project Numerical Recipes", [58]), t.Course[
-    25, "Reflectie op de digitale cultuur", [59, 60, 61]), t.Course[
-    26, "Software engineering", [62, 63, 64]), t.Course[
-    27, "Technology for games", [65, 66, 67]), t.Course[
-    28, "Webprogrammeren en databases", [68, 69, 70, 71]), t.Course[
-    29, "Zoeken, sturen en bewegen", [72])]
+courses = [
+    "Advanced Heuristics",
+    "Algoritmen en complexiteit",
+    "Analysemethoden en -technieken",
+    "Architectuur en computerorganisatie",
+    "Autonomous Agents 2",
+    "Bioinformatica",
+    "Calculus 2",
+    "Collectieve Intelligentie",
+    "Compilerbouw",
+    "Compilerbouw practicum",
+    "Data Mining",
+    "Databases 2",
+    "Heuristieken 1",
+    "Heuristieken 2",
+    "Informatie- en organisatieontwerp",
+    "Interactie-ontwerp",
+    "Kansrekenen 2",
+    "Lineaire Algebra",
+    "Machine Learning",
+    "Moderne Databases",
+    "Netwerken en systeembeveiliging",
+    "Programmeren in Java 2",
+    "Project Genetic Algorithms",
+    "Project Numerical Recipes",
+    "Reflectie op de digitale cultuur",
+    "Software engineering",
+    "Technology for games",
+    "Webprogrammeren en databases",
+    "Zoeken sturen en bewegen"]
 
-classrooms = {"A1.04" = 41, "A1.06" = 22, "A1.08" = 20, "A1.10" = 56, "B0.201" = 48, "C0.110" = 117, "C1.112" = 60}
+classrooms = [["A1.04", 41], ["A1.06", 22], ["A1.08", 20], ["A1.10", 56], ["B0.201", 48],
+              ["C0.110", 117], ["C1.112", 60]]
