@@ -7,3 +7,5 @@
 timetable_points = {"overfull" : -1, "evening": -20,
 "max_spread" : 20, "same_1" : -10, "same_2" : -20, "same_3": -30,
 "no_conflict" : 1, "conflict" : 1}
+
+lecture_points = {"restricted": 20, "HC": 10, "WC": 5, "PR":5}
