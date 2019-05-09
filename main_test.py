@@ -4,11 +4,8 @@ import timetable_test as t
 import objective_test as o
 from data import data_test as d
 from algorithms import random_test as random
-<<<<<<< HEAD
-from algorithms import hillclimber as hill
-=======
 from algorithms import greedy as greedy
->>>>>>> 8e6fcca98c84c3ae042f6bd25c28e780155bcc7b
+from algorithms import hillclimber as hill
 
 # if len(sys.argv) != 2:
 #     print("Please provide an algorithm. Correct usage: main.py random.")
@@ -24,10 +21,13 @@ timetable = t.Timetable()
 # if algorithm == "greedy":
 
 
-greedy.make_table(timetable)
+#greedy.make_table(timetable)
 
+random.make_table(timetable)
 hill.hillclimber(timetable)
-print(o.objective_function(timetable))
+
+
+# print(o.objective_function(timetable))
 
 
 ### Prints out all lectures made in ID order
