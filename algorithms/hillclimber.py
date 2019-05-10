@@ -3,10 +3,10 @@ import random
 import numpy as np
 
 import objective as o
-import timetable as t
+from classes import empty
 
 def hillclimber(timetable, iterations, *args):
-"""Algorithm: iterating over a premade timetable, swaps two random lectures"""
+    """Algorithm: iterating over a premade timetable, swaps two random lectures"""
 
     points_timetable = o.objective_function(timetable)
 
@@ -16,6 +16,9 @@ def hillclimber(timetable, iterations, *args):
 
         # swap two random lectures
         lecture_1 = random_lecture(timetable)
+        while lecture_1[0] == empty.Empty:
+            print(lecture_1[0])
+            lecture_1 = random_lecture(timetable)
         lectur_2 = random_lecture(timetable)
         swap_lectures(timetable, lecture_1, lecture_2)
         after_points = o.objective_function(timetable)
