@@ -25,7 +25,7 @@ if len(sys.argv) == 3:
     algorithm_2 = sys.argv[2]
 
     if algorithm_2 == "hillclimber":
-        print("Starting timetable score:", o.objective_function(timetable))
+        print("Starting timetable score:", objective.objective_function(timetable))
         iterations = int(input("Number of iterations for hillclimber: "))
         hillclimber.hillclimber(timetable, iterations)
 

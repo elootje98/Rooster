@@ -19,13 +19,13 @@ def hillclimber(timetable, iterations, *args):
         while lecture_1[0] == empty.Empty:
             print(lecture_1[0])
             lecture_1 = random_lecture(timetable)
-        lectur_2 = random_lecture(timetable)
+        lecture_2 = random_lecture(timetable)
         swap_lectures(timetable, lecture_1, lecture_2)
         after_points = o.objective_function(timetable)
 
         # swaps back if the number of points decreases
         if after_points < points_timetable:
-            swap_lectures(timetable, to_swap[j], to_swap[j+1])
+            swap_lectures(timetable, lecture_1, lecture_2)
         after_points = o.objective_function(timetable)
         points_timetable = o.objective_function(timetable)
 
