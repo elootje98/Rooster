@@ -1,6 +1,6 @@
 import numpy as np
 
-import timetable_test as t
+import timetable as t
 
 
 def make_table(timetable):

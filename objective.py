@@ -1,5 +1,5 @@
-import timetable_test as t
-from data import data_test as d
+import timetable as t
+from data import data as d
 
 """
 All function that calculate the timetable score are in this file.

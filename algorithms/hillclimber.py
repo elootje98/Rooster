@@ -1,7 +1,8 @@
 import numpy as np
 import random
-import objective_test as o
-import timetable_test as t
+
+import objective as o
+import timetable as t
 
 def hillclimber(timetable, iterations):
     # check points of courses?

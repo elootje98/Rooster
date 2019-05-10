@@ -1,9 +1,9 @@
 import sys
 
-import timetable_test as t
-import objective_test as o
-from data import data_test as d
-from algorithms import random_test as random
+import timetable as t
+import objective as o
+from data import data as d
+from algorithms import random
 from algorithms import hillclimber as hill
 from algorithms import greedy
 

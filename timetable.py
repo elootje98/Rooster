@@ -4,7 +4,7 @@ import os
 
 import numpy as np
 
-from data import data_test as d
+from data import data as d
 
 
 class Timetable:

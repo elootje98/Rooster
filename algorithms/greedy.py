@@ -1,5 +1,5 @@
 import numpy as np
-import timetable_test as t
+import timetable as t
 from data import points as p
 
 def make_table(timetable):
@@ -35,18 +35,15 @@ def give_points_lectures(timetable):
         course.points = points
 
     # Sort the courses on the points
-    t.Timetable.sort_courses(timetable)
+    timetable.sort_courses()
 
 def plan_lectures(course, timetable):
     for lecture in course.lectures:
         while True:
-            # Start from first avialable
-            for i in range(5):
-                day = i
-                for j in range(4):
-                    slot = j
-                    for k in range(7):
-                        classroom = k
+            # Start from first available
+            for day in range(5):
+                for slot in range(4):
+                    for classroom in range(7):
                         if type(timetable.grid[classroom][day][slot]) == t.Empty:
                             timetable.grid[classroom][day][slot] = lecture
                             break
