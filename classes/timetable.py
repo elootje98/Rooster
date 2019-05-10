@@ -5,13 +5,16 @@ import os
 import numpy as np
 
 from data import data as d
-from classes import course, lecture, empty, restricted, classroom
-
+from classes import course as crs
+from classes import lecture as lec
+from classes import empty as emp
+from classes import restricted as res
+from classes import classroom as cla
 
 class Timetable:
     def __init__(self):
         # 7 Classrooms, 5 days, 4(5) timeslots
-        self.grid = np.full((7, 5, 5), Empty(), dtype=object)
+        self.grid = np.full((7, 5, 5), emp.Empty(), dtype=object)
         self.courses = []
         self.classrooms = []
         self.make_courses()
@@ -43,11 +46,11 @@ class Timetable:
 
     def make_courses(self):
         for course in d.courses:
-            self.courses.append(Course(course))
+            self.courses.append(crs.Course(course))
 
     def make_classrooms(self):
         for classroom in d.classrooms:
-            self.classrooms.append(Classroom(classroom[0], classroom[1]))
+            self.classrooms.append(cla.Classroom(classroom[0], classroom[1]))
 
     # Creates and assigns lecture objects based on list of data
     def make_lectures(self, lectures):
@@ -63,7 +66,7 @@ class Timetable:
 
             # Handles Hoorcollege
             if _type == "HC":
-                lecture = Lecture(_type, name, _id, students, capacity)
+                lecture = lec.Lecture(_type, name, _id, students, capacity)
                 _id += 1
                 self.find_course(name).lectures.append(lecture)
 
@@ -76,11 +79,11 @@ class Timetable:
                 for group in range(groups):
                     # Full groups
                     if students > capacity:
-                        lecture = Lecture(_type, name, _id, capacity, capacity)
+                        lecture = lec.Lecture(_type, name, _id, capacity, capacity)
                         students -= capacity
                     # Remainder group
                     else:
-                        lecture = Lecture(_type, name, _id, students, capacity)
+                        lecture = lec.Lecture(_type, name, _id, students, capacity)
 
                     _id += 1
                     self.find_course(name).lectures.append(lecture)
@@ -88,7 +91,7 @@ class Timetable:
     # Reads and assigns restricted courses to Course objects
     def add_restricted(self):
         # Joins project path with file path to ensure cross-platform use
-        relative_path = os.path.dirname(os.path.abspath(__file__))
+        relative_path = os.path.dirname(os.path.abspath("main.py"))
         absolute_path = os.path.join(relative_path, "data", "restricted.csv")
 
         # Opens CSV file
@@ -135,4 +138,4 @@ class Timetable:
         for classroom in range(7):
             for day in range(5):
                 if classroom != 5:
-                    self.grid[classroom][day][4] = Restricted()
+                    self.grid[classroom][day][4] = res.Restricted()
