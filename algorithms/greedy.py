@@ -1,5 +1,5 @@
 import numpy as np
-import timetable as t
+from classes import timetable as t
 from data import points as p
 
 def make_table(timetable):

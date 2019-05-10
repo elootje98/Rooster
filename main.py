@@ -1,11 +1,9 @@
 import sys
 
-import timetable as t
-import objective as o
-from data import data as d
-from algorithms import random
-from algorithms import hillclimber as hill
-from algorithms import greedy
+import objective
+from algorithms import random, hillclimber, greedy
+from classes import timetable
+from data import data
 
 if len(sys.argv) < 2:
     print("Please provide an algorithm.")
@@ -14,7 +12,7 @@ if len(sys.argv) < 2:
     print("Available algorithms #2 : hillclimber")
     exit()
 
-timetable = t.Timetable()
+timetable = timetable.Timetable()
 algorithm_1 = sys.argv[1]
 
 if algorithm_1 == "random":
@@ -29,9 +27,9 @@ if len(sys.argv) == 3:
     if algorithm_2 == "hillclimber":
         print("Starting timetable score:", o.objective_function(timetable))
         iterations = int(input("Number of iterations for hillclimber: "))
-        hill.hillclimber(timetable, iterations)
+        hillclimber.hillclimber(timetable, iterations)
 
-print("Timetable score:", o.objective_function(timetable))
+print("Timetable score:", objective.objective_function(timetable))
 
 
 # ## Prints out all lectures made in ID order

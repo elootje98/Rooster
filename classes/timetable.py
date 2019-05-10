@@ -5,6 +5,7 @@ import os
 import numpy as np
 
 from data import data as d
+from classes import course, lecture, empty, restricted, classroom
 
 
 class Timetable:
@@ -135,42 +136,3 @@ class Timetable:
             for day in range(5):
                 if classroom != 5:
                     self.grid[classroom][day][4] = Restricted()
-
-
-class Course:
-    def __init__(self, name):
-        self.name = name
-        self.lectures = []
-        self.restricted = []
-        self.points = 0
-
-
-class Lecture:
-    def __init__(self, _type, course, _id, students, capacity):
-        self.type = _type
-        self.course = course
-        self.id = _id
-        self.capacity = capacity
-        self.students = students
-
-
-class Classroom:
-    def __init__(self, name, capacity):
-        self.name = name
-        self.capacity = capacity
-
-
-class Empty:
-    def __init__(self):
-        self.course = "empty"
-
-    def __str__(self):
-        return " - "
-
-
-class Restricted:
-    def __init__(self):
-        self.course = "restricted"
-
-    def __str__(self):
-        return "Restricted"

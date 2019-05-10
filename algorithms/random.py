@@ -1,6 +1,6 @@
 import numpy as np
 
-import timetable as t
+from classes import timetable as t
 
 
 def make_table(timetable):

@@ -1,4 +1,4 @@
-import timetable as t
+from classes import timetable as t
 from data import data as d
 
 """
