@@ -11,6 +11,7 @@ class Lecture:
         track (int): Track ID, links each Werkcollege to a Practicum.
 
         """
+
         self.type = _type
         self.course = course
         self.id = _id

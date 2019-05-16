@@ -13,6 +13,7 @@ class Course:
                           when planning, determine the order in greedy.
 
         """
+
         self.name = name
         self.lectures = []
         self.restricted = []

@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.gridspec as gridspec
 
 def make_table(timetable):
+    """ UNDER CONSTRUCTION """
     # fig = plt.figure()
     #gs = gridspec.GridSpec(nrows=4, ncols=2)
     f = open('timetable.txt' ,'w')

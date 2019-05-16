@@ -1,20 +1,40 @@
 from classes import timetable as t
 from data import data as d
 
-"""
-All function that calculate the timetable score are in this file.
-"""
 
-
-# Main function that calculates total score of schedule
 def objective_function(timetable):
+    """ Calculates timetable score from the objective function rules.
+
+    Calls a method for each objective function rule to calculate the score.
+    All scores are added and returned by this function.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of all rules combined.
+
+    """
 
     return (day_check(timetable) + spread_check(timetable) +
             students_check(timetable) + nightslot_check(timetable))
 
 
-# Checks if lectures of the same course are planned on the same day
 def day_check(timetable):
+    """ Calculates timetable score for multiple lectures a day rule.
+
+    Checks whether multiple lectures of the same course are scheduled on the
+    same day. Every time this happens, 10 points are deducted from the score.
+    Lectures are checked by putting all lectures of a day in a list and
+    checking for duplicate courses.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of multiple lectures a day rule.
+
+    """
 
     points = 0
     for day in range(5):
@@ -37,6 +57,21 @@ def day_check(timetable):
 
 
 def spread_check(timetable):
+    """ Calculates timetable score for maximum spread rule.
+
+    Checks if lectures of a course are spread out optimally according to the
+    objective function. Multiple instances of the same Werkcollege and
+    Practicum are handled in their predetermined tracks. Spread is checked
+    through a series of if-statements.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of maximum spread rule.
+
+    """
+
     points = 0
 
     for course in timetable.courses:
@@ -103,6 +138,19 @@ def spread_check(timetable):
 
 
 def check_track_one(tracks, list_WC, list_PR, day):
+    """ Checks if either WC or PR is scheduled on given day and assigns points.
+
+    Arguments:
+        tracks (int): Number of tracks.
+        list_WC [int]: List of day indices for all Werkcolleges.
+        list_PR [int]: List of day indices for all Practicums.
+        day (int): Index of day to be checked.
+
+    Returns:
+        points (int): Calculated number of points.
+
+    """
+
     points = 0
 
     for track in range(tracks):
@@ -117,6 +165,20 @@ def check_track_one(tracks, list_WC, list_PR, day):
 
 
 def check_track_two(tracks, list_WC, list_PR, day_1, day_2):
+    """ Checks if both WC and PR are scheduled on given day and assigns points.
+
+    Arguments:
+        tracks (int): Number of tracks.
+        list_WC [int]: List of day indices for all Werkcolleges.
+        list_PR [int]: List of day indices for all Practicums.
+        day_1 (int): Index of first day to be checked.
+        day_2 (int): Index of second day to be checked.
+
+    Returns:
+        points (int): Calculated number of points.
+
+    """
+
     points = 0
 
     for track in range(tracks):
@@ -128,6 +190,18 @@ def check_track_two(tracks, list_WC, list_PR, day_1, day_2):
 
 
 def students_check(timetable):
+    """ Calculates timetable score for maximum students rule.
+
+    Checks if classroom capacity is exceeded by number of students. One point
+    is deducted from the total score for each extra student.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of maximum students rule.
+
+    """
 
     points = 0
     for course in timetable.courses:
@@ -142,8 +216,19 @@ def students_check(timetable):
     return points
 
 
-# Checks use of night slot
 def nightslot_check(timetable):
+    """ Calculates timetable score for nightslot rule.
+
+    Checks if the nightslot in classroom C0.110 is used. Twenty points are
+    deducted for each use of the nightslot.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of nightslot rule.
+
+    """
 
     points = 0
     for day in range(5):

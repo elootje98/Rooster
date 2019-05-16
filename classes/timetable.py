@@ -38,6 +38,7 @@ class Timetable:
             fill_nightslots: Fills unavailable slots with Restricted objects
 
         """
+
         self.grid = np.full((7, 5, 5), emp.Empty(), dtype=object)
         self.courses = []
         self.classrooms = []
@@ -49,6 +50,7 @@ class Timetable:
 
     def find_lecture(self, _id):
         """ Returns the Lecture object with a certain ID (int). """
+
         for course in self.courses:
             for lecture in course.lectures:
                 if lecture.id == _id:
@@ -56,6 +58,7 @@ class Timetable:
 
     def find_course(self, name):
         """ Returns the Course objects with a certain name (str). """
+
         for course in self.courses:
             if course.name == name:
                 return course
@@ -71,19 +74,23 @@ class Timetable:
             empty list otherwise.
 
         """
+
         return np.argwhere(self.grid == lecture)
 
     def sort_courses(self):
         """ Sorts list of courses based on their points from high to low. """
+
         self.courses.sort(key=lambda course: course.points, reverse=True)
 
     def make_courses(self):
         """" Fills list of courses with Course objects made from data file. """
+
         for course in d.courses:
             self.courses.append(crs.Course(course))
 
     def make_classrooms(self):
         """ Fills list of classrooms with Classroom objects from data file. """
+
         for classroom in d.classrooms:
             self.classrooms.append(cla.Classroom(classroom[0], classroom[1]))
 
@@ -95,6 +102,7 @@ class Timetable:
         objects are assigned in tracks to enable the objective function.
 
         """
+
         _id = 0
 
         # Loops over lecture data (ld)
@@ -140,6 +148,7 @@ class Timetable:
         lists are created from a csv file with the restriction data.
 
         """
+
         # Joins project path with file path to ensure cross-platform use
         relative_path = os.path.dirname(os.path.abspath("main.py"))
         absolute_path = os.path.join(relative_path, "data", "restricted.csv")
@@ -178,6 +187,7 @@ class Timetable:
             Returns True if all courses are in the correct order, False if not.
 
         """
+
         for course in courses:
             positions = {"HC": [], "WC": [], "PR": []}
 
@@ -208,6 +218,7 @@ class Timetable:
             True if no restrictions are violated, False otherwise.
 
         """
+
         course = self.find_course(lecture.course)
 
         for i in range(6):
@@ -225,6 +236,7 @@ class Timetable:
 
     def fill_nightslots(self):
         """ Fills all unavailable nightslots with Restricted object. """
+
         for classroom in range(7):
             for day in range(5):
                 if classroom != 5:
