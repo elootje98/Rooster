@@ -8,9 +8,10 @@ import sys
 
 if len(sys.argv) < 2:
     print("Please provide an algorithm.")
-    print("Correct usage: main.py algorithm 1 [, algorithm 2]")
+    print("Correct usage: main.py algorithm 1 [, algorithm 2, added_function()]")
     print("Available algorithms #1 : random, greedy")
     print("Available algorithms #2 : hillclimber")
+    print("Available added functions #3: print_hello()")
     exit()
 
 timetable = timetable.Timetable()
@@ -23,13 +24,17 @@ elif algorithm_1 == "greedy":
     iterations = int(input("Number of iterations for greedy: "))
     timetable = multiplegreedy.make_table(timetable, iterations)
 
-if len(sys.argv) == 3:
+if len(sys.argv) >= 3:
     algorithm_2 = sys.argv[2]
 
     if algorithm_2 == "hillclimber":
         print("Starting timetable score:", objective.objective_function(timetable))
         iterations = int(input("Number of iterations for hillclimber: "))
-        hillclimber.hillclimber(timetable, iterations)
+        if len(sys.argv) == 3:
+            hillclimber.hillclimber(timetable, iterations)
+        elif len(sys.argv) == 4:
+            function_1 = sys.argv[3]
+            hillclimber.hillclimber(timetable, iterations, function_1)
 
 print("Timetable score:", objective.objective_function(timetable))
 
