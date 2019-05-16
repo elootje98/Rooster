@@ -11,7 +11,7 @@ if len(sys.argv) < 2:
     print("Correct usage: main.py algorithm 1 [, algorithm 2, added_function()]")
     print("Available algorithms #1 : random, greedy")
     print("Available algorithms #2 : hillclimber")
-    print("Available added functions #3: print_hello()")
+    print("Available added functions #3: print_hello")
     exit()
 
 timetable = timetable.Timetable()
