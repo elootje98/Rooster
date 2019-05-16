@@ -21,7 +21,7 @@ if algorithm_1 == "random":
 
 elif algorithm_1 == "greedy":
     iterations = int(input("Number of iterations for greedy: "))
-    multiplegreedy.make_table(timetable, iterations)
+    timetable = multiplegreedy.make_table(timetable, iterations)
 
 if len(sys.argv) == 3:
     algorithm_2 = sys.argv[2]
