@@ -8,22 +8,6 @@ from classes import empty
 def print_hello():
     print("Hello World!")
 
-
-def greedy_hill(timetable, samples = 200, chance = 0.1):
-    if np.random.random_sample() < chance:
-        # number of lectures to be swapped
-        to_swap = []
-        for i in range(2 * samples):
-            to_swap.append(random_lecture(timetable))
-        for j in range(0, len(to_swap), 2):
-            # get points before and after iteration
-            swap_lectures(timetable, to_swap[j], to_swap[j+1])
-
-        # execute additional functions, TODO: does not work
-        for function in args:
-            functions[function]()
-
-
 def random_lecture(timetable):
     """Returns a random lecture from the timetable grid"""
     classroom = np.random.randint(0, 7)
@@ -54,8 +38,20 @@ def hill_climbing(timetable, points_timetable):
     # swaps back if the number of points decreases
     if after_points < points_timetable:
         swap_lectures(timetable, lecture_1, lecture_2)
-    after_points = o.objective_function(timetable)
-    points_timetable = o.objective_function(timetable)
+
+
+def greedy_hill(timetable, samples = 50, chance = 0.1):
+    if np.random.random_sample() < chance:
+        print("yo")
+        # number of lectures to be swapped
+        to_swap = []
+        scores = []
+        for i in range(2 * samples):
+            to_swap.append(random_lecture(timetable))
+        for j in range(0, len(to_swap), 2):
+            # get points before and after iteration
+            swap_lectures(timetable, to_swap[j], to_swap[j+1])
+            scores.append(o.objective_function(timetable))
 
 
 def hillclimber(timetable, iterations, *args):
@@ -68,6 +64,8 @@ def hillclimber(timetable, iterations, *args):
     for i in range(iterations):
     # while (points_timetable < -100): # use if you want to iterate to a score
         hill_climbing(timetable, points_timetable)
-        # execute additional functions, TODO: does not work
+        points_timetable = o.objective_function(timetable)
+
+        # apply optional added functions
         for function in args:
             functions[function]()
