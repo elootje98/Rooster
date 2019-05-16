@@ -67,7 +67,7 @@ class Timetable:
 
             # Handles Hoorcollege
             if _type == "HC":
-                lecture = lec.Lecture(_type, name, _id, students, capacity)
+                lecture = lec.Lecture(_type, name, _id, students, capacity, 0)
                 _id += 1
                 self.find_course(name).lectures.append(lecture)
 
@@ -75,18 +75,23 @@ class Timetable:
             else:
                 # Calculates number of needed groups
                 groups = math.ceil(students / capacity)
+                track = 1
 
                 # Makes right amount of lectures
                 for group in range(groups):
                     # Full groups
                     if students > capacity:
-                        lecture = lec.Lecture(_type, name, _id, capacity, capacity)
+                        lecture = lec.Lecture(_type, name, _id, capacity,
+                                              capacity, track)
                         students -= capacity
+
                     # Remainder group
                     else:
-                        lecture = lec.Lecture(_type, name, _id, students, capacity)
+                        lecture = lec.Lecture(_type, name, _id, students,
+                                              capacity, track)
 
                     _id += 1
+                    track += 1
                     self.find_course(name).lectures.append(lecture)
 
     # Reads and assigns restricted courses to Course objects
