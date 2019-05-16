@@ -137,14 +137,16 @@ class Timetable:
 
         for i in range(6):
             try:
-                if (self.grid[i][day][slot].course in course.restricted or
-                   lecture.course in self.grid[i][day][slot].course.restricted):
+                course_i = self.grid[i][day][slot].course
+
+                if (course_i in course.restricted or
+                   lecture.course in course_i.restricted):
                     return False
+
             except(AttributeError):
                 pass
 
         return True
-
 
     def fill_nightslots(self):
         for classroom in range(7):
