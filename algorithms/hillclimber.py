@@ -52,14 +52,47 @@ def greedy_hill(timetable, points_timetable, samples = 50, chance = 0.1):
             scores.append(o.objective_function(timetable))
             swap_lectures(timetable, to_swap[j], to_swap[j+1])
         max_score = scores.index(max(scores))
+        print(timetable.grid[to_swap[2*max_score][1]][to_swap[2*max_score][2]][to_swap[2*max_score][3]], timetable.grid[to_swap[2*max_score+1][1]][to_swap[2*max_score+1][2]][to_swap[2*max_score+1][3]])
         swap_lectures(timetable, to_swap[2*max_score], to_swap[2*max_score+1])
+        print(timetable.grid[to_swap[2*max_score][1]][to_swap[2*max_score][2]][to_swap[2*max_score][3]], timetable.grid[to_swap[2*max_score+1][1]][to_swap[2*max_score+1][2]][to_swap[2*max_score+1][3]])
+
+
+def random_burst(timetable, points_timetable, samples = 50):
+    maximum_points = 380
+    minimum_points = -1400
+    delta_points = maximum_points - points_timetable
+
+    # use chance to swap multiple lectures
+    chance = 0.1 * delta_points
+    bound = random.uniform(0, maximum_points - minimum_points)
+
+    if (bound < chance):
+        print("burst ", chance, bound)
+        to_swap = []
+        for samples in range(2*samples):
+            to_swap.append(random_lecture(timetable))
+        print("One: ", timetable.grid[to_swap[0][1]][to_swap[0][2]][to_swap[0][3]], timetable.grid[to_swap[1][1]][to_swap[1][2]][to_swap[1][3]], "\n")
+        for k in range(0, len(to_swap), 2):
+            # get points before and after iteration
+            swap_lectures(timetable, to_swap[k], to_swap[k+1])
+        print("Two: ", timetable.grid[to_swap[0][1]][to_swap[0][2]][to_swap[0][3]], timetable.grid[to_swap[1][1]][to_swap[1][2]][to_swap[1][3]], "\n")
+        if o.objective_function(timetable) < points_timetable:
+            print(o.objective_function(timetable), points_timetable)
+            for l in range(0, len(to_swap), 2):
+                # get points before and after iteration
+                swap_lectures(timetable, to_swap[l], to_swap[l+1])
+            print(o.objective_function(timetable))
+            print("Three: ", timetable.grid[to_swap[0][1]][to_swap[0][2]][to_swap[0][3]], timetable.grid[to_swap[1][1]][to_swap[1][2]][to_swap[1][3]], "\n")
+        else:
+            print("Four: ", timetable.grid[to_swap[0][1]][to_swap[0][2]][to_swap[0][3]], timetable.grid[to_swap[1][1]][to_swap[1][2]][to_swap[1][3]], "\n")
+
 
 
 def hillclimber(timetable, iterations, *args):
     """Algorithm: iterating over a premade timetable, swaps two random lectures"""
 
     points_timetable = o.objective_function(timetable)
-    functions = {'print_hello': print_hello, 'greedy_hill': greedy_hill}
+    functions = {'print_hello': print_hello, 'greedy_hill': greedy_hill, 'burst': random_burst}
 
     # iterates over a range
     for i in range(iterations):
@@ -77,3 +110,4 @@ def hillclimber(timetable, iterations, *args):
                 print(function + " is not a valid function.")
                 return
         points_timetable = o.objective_function(timetable)
+        print(points_timetable)
