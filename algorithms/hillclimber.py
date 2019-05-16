@@ -37,7 +37,10 @@ def random_lecture(timetable):
     """Returns a random lecture from the timetable grid"""
     classroom = np.random.randint(0, 7)
     day = np.random.randint(0, 4)
-    slot = np.random.randint(0, 4)
+    if classroom == 5:
+        slot = np.random.randint(0, 5)
+    else:
+        slot = np.random.randint(0, 4)
     return timetable.grid[classroom][day][slot], classroom, day, slot
 
 def swap_lectures(timetable, lecture_1, lecture_2):
