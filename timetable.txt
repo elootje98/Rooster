@@ -1,50 +1,57 @@
 
 
 ----- A1.04 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                                Day 1                           Day 2                       Day 3                                  Day 4                                Day 5
+9:00       PR: Programmeren in Java 2         HC: Autonomous Agents 2          WC: Bioinformatica  WC: Informatie- en organisatieontwerp                PR: Moderne Databases
+11:00   HC: Collectieve Intelligentie  HC: Algoritmen en complexiteit                          -              PR: Compilerbouw practicum        PR: Collectieve Intelligentie
+13:00            HC: Lineaire Algebra      PR: Compilerbouw practicum     PR: Advanced Heuristics  HC: Informatie- en organisatieontwerp             WC: Technology for games
+15:00  PR: Project Genetic Algorithms         PR: Advanced Heuristics  PR: Compilerbouw practicum       PR: Webprogrammeren en databases  PR: Netwerken en systeembeveiliging
+17:00                      Restricted                      Restricted                  Restricted                             Restricted                           Restricted
 
 ----- A1.06 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                                     Day 1                                  Day 2                                  Day 3                                  Day 4                          Day 5
+9:00                       HC: Data Mining                  WC: Moderne Databases  PR: Informatie- en organisatieontwerp  WC: Informatie- en organisatieontwerp  WC: Collectieve Intelligentie
+11:00              HC: Advanced Heuristics                                     -              PR: Programmeren in Java 2          PR: Collectieve Intelligentie        WC: Autonomous Agents 2
+13:00         PR: Zoeken sturen en bewegen                     HC: Bioinformatica                HC: Autonomous Agents 2                                     -                  WC: Calculus 2
+15:00  PR: Netwerken en systeembeveiliging  PR: Informatie- en organisatieontwerp               PR: Software engineering                  PR: Moderne Databases                 WC: Calculus 2
+17:00                           Restricted                             Restricted                             Restricted                             Restricted                     Restricted
 
 ----- A1.08 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                                Day 1                   Day 2                             Day 3                                  Day 4                           Day 5
+9:00   PR: Project Genetic Algorithms         PR: Data Mining        PR: Programmeren in Java 2                        WC: Data Mining   PR: Project Numerical Recipes
+11:00              HC: Bioinformatica  HC: Interactie-ontwerp  WC: Webprogrammeren en databases                     HC: Heuristieken 1  PR: Algoritmen en complexiteit
+13:00   PR: Project Numerical Recipes        PR: Compilerbouw        PR: Programmeren in Java 2  WC: Informatie- en organisatieontwerp                 PR: Data Mining
+15:00                              -       HC: Heuristieken 2           PR: Autonomous Agents 2                     PR: Bioinformatica                              - 
+17:00                      Restricted              Restricted                        Restricted                             Restricted                      Restricted
 
 ----- A1.10 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                         Day 1                          Day 2                                 Day 3                                 Day 4                             Day 5
+9:00        WC: Bioinformatica               HC: Compilerbouw   PR: Netwerken en systeembeveiliging  WC: Reflectie op de digitale cultuur  WC: Webprogrammeren en databases
+11:00                       -                PR: Compilerbouw                    WC: Heuristieken 2         WC: Collectieve Intelligentie     WC: Collectieve Intelligentie
+13:00  PR: Autonomous Agents 2  PR: Collectieve Intelligentie                       WC: Data Mining      PR: Webprogrammeren en databases             WC: Moderne Databases
+15:00         HC: Compilerbouw   PR: Zoeken sturen en bewegen  HC: Reflectie op de digitale cultuur                       WC: Databases 2          PR: Software engineering
+17:00               Restricted                     Restricted                            Restricted                            Restricted                        Restricted
 
 ----- B0.201 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                                      Day 1                                  Day 2                                 Day 3                          Day 4                           Day 5
+9:00               HC: Software engineering                   HC: Machine Learning      PR: Webprogrammeren en databases       HC: Technology for games  PR: Algoritmen en complexiteit
+11:00                    HC: Bioinformatica  PR: Informatie- en organisatieontwerp                HC: Interactie-ontwerp                             -                  PR: Data Mining
+13:00  WC: Reflectie op de digitale cultuur               WC: Software engineering        WC: Algoritmen en complexiteit  PR: Project Numerical Recipes   PR: Collectieve Intelligentie
+15:00                       HC: Databases 2                        HC: Data Mining  WC: Reflectie op de digitale cultuur     PR: Programmeren in Java 2              WC: Heuristieken 1
+17:00                            Restricted                             Restricted                            Restricted                     Restricted                      Restricted
 
 ----- C0.110 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                                       Day 1                                 Day 2                                    Day 3               Day 4                          Day 5
+9:00                                      -       HC: Webprogrammeren en databases             PR: Zoeken sturen en bewegen                  -        WC: Technology for games
+11:00                                     -                  WC: Moderne Databases                         WC: Compilerbouw                  -   WC: Collectieve Intelligentie
+13:00  HC: Informatie- en organisatieontwerp  HC: Reflectie op de digitale cultuur                                       -       HC: Calculus 2       WC: Software engineering
+15:00                         WC: Calculus 2      WC: Webprogrammeren en databases                     HC: Lineaire Algebra  WC: Heuristieken 1       WC: Technology for games
+17:00                                     -                        WC: Data Mining  HC: Architectuur en computerorganisatie                  -                WC: Compilerbouw
 
 ----- C1.112 -----
-       Day 1  Day 2  Day 3  Day 4  Day 5
-9:00    T_T    T_T    T_T    T_T    T_T 
-11:00   T_T    T_T    T_T    T_T    T_T 
-13:00   T_T    T_T    T_T    T_T    T_T 
-15:00   T_T    T_T    T_T    T_T    T_T 
+                                    Day 1                          Day 2                     Day 3                    Day 4                                    Day 5
+9:00   HC: Analysemethoden en -technieken                WC: Databases 2                        -         HC: Kansrekenen 2  HC: Architectuur en computerorganisatie
+11:00      WC: Algoritmen en complexiteit  HC: Collectieve Intelligentie  HC: Technology for games                       -            PR: Project Genetic Algorithms
+13:00       HC: Collectieve Intelligentie        WC: Autonomous Agents 2        PR: Bioinformatica     HC: Machine Learning                        HC: Kansrekenen 2
+15:00    HC: Webprogrammeren en databases          HC: Moderne Databases     PR: Moderne Databases  PR: Advanced Heuristics                       WC: Heuristieken 2
+17:00                          Restricted                     Restricted                Restricted               Restricted                               Restricted

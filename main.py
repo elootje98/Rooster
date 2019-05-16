@@ -1,6 +1,7 @@
 import sys
 
 import objective
+import printer
 from algorithms import random, hillclimber, multiplegreedy
 from classes import timetable
 from data import data
@@ -37,6 +38,7 @@ if len(sys.argv) >= 3:
             hillclimber.hillclimber(timetable, iterations, function_1)
 
 print("Timetable score:", objective.objective_function(timetable))
+printer.make_table(timetable)
 
 # ## Prints out all lectures made in ID order
 #
