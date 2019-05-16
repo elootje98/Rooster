@@ -4,12 +4,13 @@ import os
 
 import numpy as np
 
-from data import data as d
-from classes import course as crs
-from classes import lecture as lec
-from classes import empty as emp
-from classes import restricted as res
 from classes import classroom as cla
+from classes import course as crs
+from classes import empty as emp
+from classes import lecture as lec
+from classes import restricted as res
+from data import data as d
+
 
 class Timetable:
     def __init__(self):
