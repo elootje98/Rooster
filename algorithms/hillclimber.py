@@ -42,7 +42,7 @@ def swap_lectures(timetable, lecture_1, lecture_2):
     timetable.grid[c1[0]][c1[1]][c1[2]], timetable.grid[c2[0]][c2[1]][c2[2]] = timetable.grid[c2[0]][c2[1]][c2[2]], timetable.grid[c1[0]][c1[1]][c1[2]]
 
 
-def hill_climbing(timetable):
+def hill_climbing(timetable, points_timetable):
     # swap two random lectures
     lecture_1 = random_lecture(timetable)
     while lecture_1[0] == empty.Empty:
@@ -67,7 +67,7 @@ def hillclimber(timetable, iterations, *args):
     # iterates over a range
     for i in range(iterations):
     # while (points_timetable < -100): # use if you want to iterate to a score
-        hill_climbing(timetable)
+        hill_climbing(timetable, points_timetable)
         # execute additional functions, TODO: does not work
         for function in args:
             functions[function]()
