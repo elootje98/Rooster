@@ -131,8 +131,19 @@ class Timetable:
 
         return True
 
-    def check_restriction(self):
-        pass
+    def check_restriction(self, lecture, day, slot):
+        course = self.find_course(lecture.course)
+
+        for i in range(6):
+            try:
+                if (self.grid[i][day][slot].course in course.restricted or
+                   lecture.course in self.grid[i][day][slot].course.restricted):
+                    return False
+            except(AttributeError):
+                pass
+
+        return True
+
 
     def fill_nightslots(self):
         for classroom in range(7):

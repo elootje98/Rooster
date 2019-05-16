@@ -20,7 +20,8 @@ def plan_lectures(course, timetable):
             day = np.random.randint(0, 5)
             slot = np.random.randint(0, 5)
 
-            if type(timetable.grid[classroom][day][slot]) == empty.Empty:
+            if (type(timetable.grid[classroom][day][slot]) == empty.Empty and
+               timetable.check_restriction(lecture, day, slot)):
                 timetable.grid[classroom][day][slot] = lecture
                 break
 
