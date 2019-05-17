@@ -65,7 +65,7 @@ def remove_lectures(course, timetable):
         timetable (Timetable): Timetable to modify.
 
     """
-    
+
     for lecture in course.lectures:
         (classroom, day, slot) = timetable.find_slot(lecture)[0]
         timetable.grid[classroom][day][slot] = empty.Empty()

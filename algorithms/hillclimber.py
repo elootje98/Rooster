@@ -110,4 +110,4 @@ def hillclimber(timetable, iterations, *args):
                 print(function + " is not a valid function.")
                 return
         points_timetable = o.objective_function(timetable)
-        print(points_timetable)
+        # print(points_timetable)
