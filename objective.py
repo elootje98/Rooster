@@ -1,20 +1,40 @@
 from classes import timetable as t
 from data import data as d
 
-"""
-All function that calculate the timetable score are in this file.
-"""
 
-
-# Main function that calculates total score of schedule
 def objective_function(timetable):
+    """ Calculates timetable score from the objective function rules.
+
+    Calls a method for each objective function rule to calculate the score.
+    All scores are added and returned by this function.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of all rules combined.
+
+    """
 
     return (day_check(timetable) + spread_check(timetable) +
             students_check(timetable) + nightslot_check(timetable))
 
 
-# Checks if lectures of the same course are planned on the same day
 def day_check(timetable):
+    """ Calculates timetable score for multiple lectures a day rule.
+
+    Checks whether multiple lectures of the same course are scheduled on the
+    same day. Every time this happens, 10 points are deducted from the score.
+    Lectures are checked by putting all lectures of a day in a list and
+    checking for duplicate courses.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of multiple lectures a day rule.
+
+    """
 
     points = 0
     for day in range(5):
@@ -35,8 +55,22 @@ def day_check(timetable):
 
     return points
 
-# Cheks optimal spread, uses 'tracks' to divide points
+
 def spread_check(timetable):
+    """ Calculates timetable score for maximum spread rule.
+
+    Checks if lectures of a course are spread out optimally according to the
+    objective function. Multiple instances of the same Werkcollege and
+    Practicum are handled in their predetermined tracks. Spread is checked
+    through a series of if-statements.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of maximum spread rule.
+
+    """
 
     points = 0
 
@@ -54,21 +88,25 @@ def spread_check(timetable):
                 list_HC.append(timetable.find_slot(lecture)[0][1])
             elif lecture.type == "WC":
                 found_WC = True
-                list_WC.append(timetable.find_slot(lecture)[0][1])
+                list_WC.append(lecture)
             elif lecture.type == "PR":
                 found_PR = True
-                list_PR.append(timetable.find_slot(lecture)[0][1])
-
-        list_HC.sort()
-        list_WC.sort()
-        list_PR.sort()
-        l1 = len(list_WC + list_PR)
-        l2 = l1 / 2
+                list_PR.append(lecture)
 
         if found_WC:
             count += 1
         if found_PR:
             count += 1
+
+        list_HC.sort()
+        tracks = max(len(list_WC), len(list_PR))
+
+        list_WC.sort(key=lambda lecture: lecture.track)
+        for i in range(len(list_WC)):
+            list_WC[i] = timetable.find_slot(list_WC[i])[0][1]
+        list_PR.sort(key=lambda lecture: lecture.track)
+        for i in range(len(list_PR)):
+            list_PR[i] = timetable.find_slot(list_PR[i])[0][1]
 
         if count == 2:
 
@@ -77,55 +115,93 @@ def spread_check(timetable):
                     points += 20
 
             elif len(list_HC) == 1:
-                if 0 in list_HC:
-                    points += 20.0 * (list_WC + list_PR).count(3) / l1
-                elif 1 in list_HC:
-                    points += 20.0 * (list_WC + list_PR).count(4) / l1
-                elif 3 in list_HC:
-                    points += 20.0 * (list_WC + list_PR).count(0) / l1
-                elif 4 in list_HC:
-                    points += 20.0 * (list_WC + list_PR).count(1) / l1
+                if list_HC == [0]:
+                    points += check_track_one(tracks, list_WC, list_PR, 3)
+
+                if list_HC == [1]:
+                    points += check_track_one(tracks, list_WC, list_PR, 4)
 
         elif count == 3:
 
-            if len(list_HC) == 2:
-                if list_HC == [0, 2]:
-                    points += 20.0 * (list_WC + list_PR).count(4) / l1
-                elif list_HC == [0, 4]:
-                    points += 20.0 * (list_WC + list_PR).count(2) / l1
-                elif list_HC == [2, 4]:
-                    points += 20.0 * (list_WC + list_PR).count(0) / l1
+            if list_HC == [0, 2]:
+                points += check_track_one(tracks, list_WC, list_PR, 4)
 
-            elif len(list_HC) == 1:
-                if list_HC == [0]:
-                    points += 20.0 * counter(list_PR, list_WC, 2, 4) / l2
-                elif list_HC == [2]:
-                    points += 20.0 * counter(list_PR, list_WC, 0, 4) / l2
-                elif list_HC == [4]:
-                    points += 20.0 * counter(list_PR, list_WC, 0, 2) / l2
+            if list_HC == [0]:
+                points += check_track_two(tracks, list_WC, list_PR, 2, 4)
 
         elif count == 4:
-            if list_HC == [0, 1]:
-                points += 20.0 * counter(list_PR, list_WC, 3, 4) / l2
-            elif list_HC == [1, 3]:
-                points += 20.0 * counter(list_PR, list_WC, 0, 4) / l2
-            elif list_HC == [3, 4]:
-                points += 20.0 * counter(list_PR, list_WC, 0, 1) / l2
 
-        # print(course.name, list_HC, list_WC, list_PR, points)
+            if list_HC == [0, 1]:
+                points += check_track_two(tracks, list_WC, list_PR, 3, 4)
 
     return points
 
 
-# Helper function for spread_check
-def counter(list_PR, list_WC, spot_1, spot_2):
+def check_track_one(tracks, list_WC, list_PR, day):
+    """ Checks if either WC or PR is scheduled on given day and assigns points.
 
-    return (min(list_WC.count(spot_1), list_PR.count(spot_2)) +
-            min(list_WC.count(spot_2), list_PR.count(spot_1)))
+    Arguments:
+        tracks (int): Number of tracks.
+        list_WC [int]: List of day indices for all Werkcolleges.
+        list_PR [int]: List of day indices for all Practicums.
+        day (int): Index of day to be checked.
+
+    Returns:
+        points (int): Calculated number of points.
+
+    """
+
+    points = 0
+
+    for track in range(tracks):
+        try:
+            if list_WC[track] == day:
+                points += 20 / tracks
+        except(IndexError):
+            if list_PR[track] == day:
+                points += 20 / tracks
+
+    return points
 
 
-# Checks surplus of students for all lectures
+def check_track_two(tracks, list_WC, list_PR, day_1, day_2):
+    """ Checks if both WC and PR are scheduled on given day and assigns points.
+
+    Arguments:
+        tracks (int): Number of tracks.
+        list_WC [int]: List of day indices for all Werkcolleges.
+        list_PR [int]: List of day indices for all Practicums.
+        day_1 (int): Index of first day to be checked.
+        day_2 (int): Index of second day to be checked.
+
+    Returns:
+        points (int): Calculated number of points.
+
+    """
+
+    points = 0
+
+    for track in range(tracks):
+        if ((list_WC[track] == day_1 and list_PR[track] == day_2) or
+           (list_WC[track] == day_2 and list_PR[track] == day_1)):
+            points += 20 / tracks
+
+    return points
+
+
 def students_check(timetable):
+    """ Calculates timetable score for maximum students rule.
+
+    Checks if classroom capacity is exceeded by number of students. One point
+    is deducted from the total score for each extra student.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of maximum students rule.
+
+    """
 
     points = 0
     for course in timetable.courses:
@@ -140,8 +216,19 @@ def students_check(timetable):
     return points
 
 
-# Checks use of night slot
 def nightslot_check(timetable):
+    """ Calculates timetable score for nightslot rule.
+
+    Checks if the nightslot in classroom C0.110 is used. Twenty points are
+    deducted for each use of the nightslot.
+
+    Arguments:
+        timetable (Timetable): Timetable to calculate score of.
+
+    Returns:
+        points (int): Calculated score of nightslot rule.
+
+    """
 
     points = 0
     for day in range(5):
