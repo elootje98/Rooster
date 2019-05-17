@@ -1,4 +1,5 @@
 import random
+import matplotlib.pyplot as plt
 
 import numpy as np
 import math
@@ -7,7 +8,7 @@ from classes import empty
 
 def simulated(timetable):
     """Simulated annealing algorithm"""
-
+    change_list = []
     # Calculate points of current timetable
     points_timetable = o.objective_function(timetable)
     temperature = 10000000000000000000
@@ -20,7 +21,7 @@ def simulated(timetable):
         # swap two random lectures
         lecture_1 = random_lecture(timetable)
         while lecture_1[0] == empty.Empty:
-            print(lecture_1[0])
+            #print(lecture_1[0])
             lecture_1 = random_lecture(timetable)
         lecture_2 = random_lecture(timetable)
         swap_lectures(timetable, lecture_1, lecture_2)
@@ -29,19 +30,25 @@ def simulated(timetable):
 
         # If the timetable is not better, accept with prop.
         if delta_points < 0:
-            print("delta", delta_points)
-            print("temperature", temperature)
+            #print("delta", delta_points)
+            #print("temperature", temperature)
             chance = 1 - math.exp(-delta_points/temperature)
-            print(chance)
+            #print(chance)
             bound = random.randrange(1)
-            print("CHAAAAAAAAAAAAAAAAAAAAAAAAAANGE")
+            #print("CHAAAAAAAAAAAAAAAAAAAAAAAAAANGE")
             if chance < bound:
                 # swaps back
                 swap_lectures(timetable, lecture_1, lecture_2)
                 points_timetable = o.objective_function(timetable)
+                change_list.append(delta_points)
             else:
-                print("BAAAAAAAAAAAAAAAAAD")
+                print(temperature)
         temperature = temperature * alfa
+
+    change_list.sort()
+    plt.plot(change_list, range(0, len(change_list)))
+    plt.show()
+
 
 def random_lecture(timetable):
     """Returns a random lecture from the timetable grid"""

@@ -2,12 +2,12 @@ import sys
 
 import objective
 import printer
-from algorithms import hillclimber, multiplegreedy, random
+from algorithms import hillclimber, multiplegreedy, random, simulatedan
 from classes import timetable as tmt
 from data import data
 
 
-def main(iteration, filename):
+def main():
     """ Main script to generate a timetable using certain algorithms.
 
     Main creates a timetable with either random or greedy algorithm, which can
@@ -27,34 +27,21 @@ def main(iteration, filename):
         exit()
 
     algorithm_1 = sys.argv[1]
-    csv = open(filename, "w")
 
-
-
+    timetable = tmt.Timetable()
 
     if algorithm_1 == "random":
         random.make_table(timetable)
 
-
-
-    for i in range(iteration):
-        timetable = tmt.Timetable()
-        print(i)
-
-        if algorithm_1 == "greedy":
-            iterations = 1 # int(input("Number of iterations for greedy: "))
-            timetable = multiplegreedy.make_table(timetable, iterations)
-            hillclimber.hillclimber(timetable, 1000)
-
-            csv.write(str(int(objective.objective_function(timetable))))
-            csv.write(';')
-            csv.write('\n')
-
-    csv.close()
-
+    if algorithm_1 == "greedy":
+        iterations = 1 # int(input("Number of iterations for greedy: "))
+        timetable = multiplegreedy.make_table(timetable, iterations)
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]
+
+        if algorithm_2 == "siman":
+            simulatedan.simulated(timetable)
 
         if algorithm_2 == "hillclimber":
             print("Starting timetable score:", objective.objective_function(timetable))
@@ -91,4 +78,4 @@ def main(iteration, filename):
     #             print(timetable.grid[i][j][k].course)
 
 
-main(100, "greedy_hillclimber_1000.csv")
+main()
