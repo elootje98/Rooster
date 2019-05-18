@@ -53,7 +53,7 @@ def main():
                 hillclimber.hillclimber(timetable, iterations, function_1)
 
     print("Timetable score:", objective.objective_function(timetable))
-    printer.make_table(timetable)
+    # printer.make_table(timetable)
 
     # ## Prints out all lectures made in ID order
     #
