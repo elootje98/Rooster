@@ -20,12 +20,21 @@ def make_table(timetable):
 
     random.shuffle(timetable.courses)
     for course in timetable.courses:
+
+        attempt = 0
         while True:
-            plan_lectures(course, timetable)
+            completed = plan_lectures(course, timetable)
+            attempt += 1
+
             if timetable.check_order([course]):
                 break
             else:
                 remove_lectures(course, timetable)
+
+            if attempt > 10000 or not completed:
+                return False
+
+    return True
 
 
 def plan_lectures(course, timetable):
@@ -43,6 +52,7 @@ def plan_lectures(course, timetable):
     """
 
     for lecture in course.lectures:
+        attempt = 0
         while True:
             classroom = np.random.randint(0, 7)
             day = np.random.randint(0, 5)
@@ -53,6 +63,12 @@ def plan_lectures(course, timetable):
                 timetable.grid[classroom][day][slot] = lecture
                 break
 
+            attempt += 1
+
+            if attempt > 10000:
+                return False
+
+    return True
 
 def remove_lectures(course, timetable):
     """ Removes all lectures of a course.

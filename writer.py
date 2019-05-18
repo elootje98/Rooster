@@ -32,7 +32,9 @@ def writer():
         timetable = tmt.Timetable()
 
         if algorithm_1 == "random":
-            random.make_table(timetable)
+            succesful = False
+            while not succesful:
+                succesful = random.make_table(timetable)
 
         elif algorithm_1 == "greedy":
             greedy.make_table(timetable)
