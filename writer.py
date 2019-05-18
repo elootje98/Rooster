@@ -28,16 +28,26 @@ def writer():
         iterations = int(input("Enter number of Hillclimber iterations: "))
 
     f = open("results/" + filename + ".csv", 'w')
+
     for i in range(population):
-        timetable = tmt.Timetable()
 
         if algorithm_1 == "random":
             succesful = False
             while not succesful:
+                timetable = tmt.Timetable()
                 succesful = random.make_table(timetable)
 
+                if not succesful:
+                    print("Not succesful")
+
         elif algorithm_1 == "greedy":
-            greedy.make_table(timetable)
+            succesful = False
+            while not succesful:
+                timetable = tmt.Timetable()
+                succesful = greedy.make_table(timetable)
+
+                if not succesful:
+                    print("Not succesful")
 
         if algorithm_2 == "hillclimber":
             hillclimber.hillclimber(timetable, iterations)

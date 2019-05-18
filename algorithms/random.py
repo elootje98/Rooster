@@ -11,7 +11,7 @@ def make_table(timetable):
     one by one. Lectures are put in a random unoccupied spot if they are not
     restricted by other lectures on the same timeslot. Correct order of all
     lectures is check after every course. If not ensured, the course is
-    rescheduled untill it fitsself.
+    rescheduled untill it fits.
 
     Arguments:
         timetable (Timetable): Empty timetable to start with.
@@ -64,11 +64,11 @@ def plan_lectures(course, timetable):
                 break
 
             attempt += 1
-
             if attempt > 10000:
                 return False
 
     return True
+
 
 def remove_lectures(course, timetable):
     """ Removes all lectures of a course.
