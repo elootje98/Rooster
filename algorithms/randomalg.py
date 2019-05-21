@@ -1,5 +1,4 @@
 import numpy as np
-import random
 
 from classes import empty, timetable
 
@@ -18,7 +17,7 @@ def make_table(timetable):
 
     """
 
-    random.shuffle(timetable.courses)
+    np.random.shuffle(timetable.courses)
     for course in timetable.courses:
 
         attempt = 0
@@ -34,6 +33,7 @@ def make_table(timetable):
             if attempt > 10000 or not completed:
                 return False
 
+    timetable.score()
     return True
 
 
@@ -83,5 +83,8 @@ def remove_lectures(course, timetable):
     """
 
     for lecture in course.lectures:
-        (classroom, day, slot) = timetable.find_slot(lecture)[0]
-        timetable.grid[classroom][day][slot] = empty.Empty()
+        try:
+            (classroom, day, slot) = timetable.find_slot(lecture)[0]
+            timetable.grid[classroom][day][slot] = empty.Empty()
+        except(IndexError):
+            pass

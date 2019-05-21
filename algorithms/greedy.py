@@ -24,6 +24,9 @@ def make_table(timetable):
             if attempt > 10000 or not completed:
                 return False
 
+    timetable.score()
+    return True
+
 
 # Gives points to the lecture for planning in for greedy.
 def give_points_lectures(timetable):

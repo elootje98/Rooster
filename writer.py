@@ -1,7 +1,7 @@
 import sys
 
 import objective
-from algorithms import hillclimber, multiplegreedy, random, simulatedan
+from algorithms import hillclimber, greedy, randomalg, ppa
 from classes import timetable as tmt
 from data import data
 
@@ -35,7 +35,7 @@ def writer():
             succesful = False
             while not succesful:
                 timetable = tmt.Timetable()
-                succesful = random.make_table(timetable)
+                succesful = randomalg.make_table(timetable)
 
                 if not succesful:
                     print("Not succesful")
@@ -48,6 +48,9 @@ def writer():
 
                 if not succesful:
                     print("Not succesful")
+
+        elif algorithm_1 == "ppa":
+            timetable = ppa.make_table()
 
         if algorithm_2 == "hillclimber":
             hillclimber.hillclimber(timetable, iterations)
