@@ -16,6 +16,8 @@ def objective_function(timetable):
 
     """
 
+    reset_points(timetable) # TODO: in de uitleg, als dit werkt
+
     return (day_check(timetable) + spread_check(timetable) +
             students_check(timetable) + nightslot_check(timetable))
 
@@ -44,14 +46,18 @@ def day_check(timetable):
 
         for slot in range(4):
             for classroom in range(7):
-                courses_day.append(timetable.grid[classroom][day][slot].course)
+                courses_day.append(timetable.grid[classroom][day][slot])
 
         # Sorts list of courses alphabetically
-        courses_day.sort()
+        courses_day.sort(key=lambda lecture: lecture.course)
 
         for i in range(len(courses_day)):
-            if courses_day[i] == courses_day[i - 1]:
+            if courses_day[i].course == courses_day[i - 1].course and courses_day[i].course != "empty":
+                courses_day[i].score -= 5
+                courses_day[i - 1].score -= 5
                 points -= 10
+
+
 
     return points
 
@@ -112,27 +118,48 @@ def spread_check(timetable):
 
             if len(list_HC) == 2:
                 if list_HC == ([0, 3] or [1, 4]):
+                    course.lectures[0].score += 10
+                    course.lectures[1].score += 10
                     points += 20
 
             elif len(list_HC) == 1:
                 if list_HC == [0]:
-                    points += check_track_one(tracks, list_WC, list_PR, 3)
+                    checked_score = check_track_one(tracks, list_WC, list_PR, 3)
+                    course.lectures[0].score += checked_score / 2.
+                    course.lectures[1].score += checked_score / 2.
+                    points += checked_score
 
                 if list_HC == [1]:
-                    points += check_track_one(tracks, list_WC, list_PR, 4)
+                    checked_score = check_track_one(tracks, list_WC, list_PR, 4)
+                    course.lectures[0].score += checked_score / 2.
+                    course.lectures[1].score += checked_score / 2.
+                    points += checked_score
 
         elif count == 3:
 
             if list_HC == [0, 2]:
-                points += check_track_one(tracks, list_WC, list_PR, 4)
+                checked_score = check_track_one(tracks, list_WC, list_PR, 4)
+                course.lectures[0].score += checked_score / 3.
+                course.lectures[1].score += checked_score / 3.
+                course.lectures[2].score += checked_score / 3.
+                points += checked_score
 
             if list_HC == [0]:
-                points += check_track_two(tracks, list_WC, list_PR, 2, 4)
+                checked_score = check_track_two(tracks, list_WC, list_PR, 2, 4)
+                course.lectures[0].score += checked_score / 3.
+                course.lectures[1].score += checked_score / 3.
+                course.lectures[2].score += checked_score / 3.
+                points += checked_score
 
         elif count == 4:
 
             if list_HC == [0, 1]:
-                points += check_track_two(tracks, list_WC, list_PR, 3, 4)
+                checked_score = check_track_two(tracks, list_WC, list_PR, 3, 4)
+                course.lectures[0].score += checked_score / 4.
+                course.lectures[1].score += checked_score / 4.
+                course.lectures[2].score += checked_score / 4.
+                course.lectures[3].score += checked_score / 4.
+                points += checked_score
 
     return points
 
@@ -211,6 +238,7 @@ def students_check(timetable):
             margin = timetable.classrooms[room].capacity - lecture.students
 
             if margin < 0:
+                lecture.score += margin
                 points += margin
 
     return points
@@ -233,6 +261,17 @@ def nightslot_check(timetable):
     points = 0
     for day in range(5):
         if timetable.grid[5][day][4].course != ("empty"):
+            timetable.grid[5][day][4].score -= 20
             points -= 20
 
     return points
+
+def reset_points(timetable): # TODO: beter of mooier maken
+    for classroom in range(7):
+        for day in range(5):
+            for slot in range(5):
+                try:
+                    timetable.grid[classroom][day][slot].score = 0
+                    #print(classroom, " - ", day, " - ",slot)
+                except(AttributeError):
+                    pass

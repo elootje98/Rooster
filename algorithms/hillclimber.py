@@ -40,7 +40,7 @@ def hill_climbing(timetable, points_timetable):
         swap_lectures(timetable, lecture_1, lecture_2)
 
 
-def greedy_hill(timetable, points_timetable, samples = 50, chance = 0.1):
+def hill_population(timetable, points_timetable, samples = 50, chance = 0.1):
     if np.random.random_sample() < chance:
         to_swap = [] # number of lectures to be swapped
         scores = [] # keep track of scores
@@ -52,9 +52,9 @@ def greedy_hill(timetable, points_timetable, samples = 50, chance = 0.1):
             scores.append(o.objective_function(timetable))
             swap_lectures(timetable, to_swap[j], to_swap[j+1])
         max_score = scores.index(max(scores))
-        print(timetable.grid[to_swap[2*max_score][1]][to_swap[2*max_score][2]][to_swap[2*max_score][3]], timetable.grid[to_swap[2*max_score+1][1]][to_swap[2*max_score+1][2]][to_swap[2*max_score+1][3]])
+        #print(timetable.grid[to_swap[2*max_score][1]][to_swap[2*max_score][2]][to_swap[2*max_score][3]], timetable.grid[to_swap[2*max_score+1][1]][to_swap[2*max_score+1][2]][to_swap[2*max_score+1][3]])
         swap_lectures(timetable, to_swap[2*max_score], to_swap[2*max_score+1])
-        print(timetable.grid[to_swap[2*max_score][1]][to_swap[2*max_score][2]][to_swap[2*max_score][3]], timetable.grid[to_swap[2*max_score+1][1]][to_swap[2*max_score+1][2]][to_swap[2*max_score+1][3]])
+        #print(timetable.grid[to_swap[2*max_score][1]][to_swap[2*max_score][2]][to_swap[2*max_score][3]], timetable.grid[to_swap[2*max_score+1][1]][to_swap[2*max_score+1][2]][to_swap[2*max_score+1][3]])
 
 
 def random_burst(timetable, points_timetable, samples = 50):
@@ -92,7 +92,7 @@ def hillclimber(timetable, iterations, *args):
     """Algorithm: iterating over a premade timetable, swaps two random lectures"""
 
     points_timetable = o.objective_function(timetable)
-    functions = {'print_hello': print_hello, 'greedy_hill': greedy_hill, 'burst': random_burst}
+    functions = {'print_hello': print_hello, 'pop': hill_population, 'burst': random_burst}
 
     # iterates over a range
     for i in range(iterations):

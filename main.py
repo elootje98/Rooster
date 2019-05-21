@@ -23,7 +23,7 @@ def main():
         print("Correct usage: main.py algorithm 1 [, algorithm 2, added_function()]")
         print("Available algorithms #1 : random, greedy")
         print("Available algorithms #2 : hillclimber")
-        print("Available added functions #3: print_hello")
+        print("Available added functions #3: print_hello, pop, burst")
         exit()
 
     algorithm_1 = sys.argv[1]
@@ -53,6 +53,17 @@ def main():
                 hillclimber.hillclimber(timetable, iterations, function_1)
 
     print("Timetable score:", objective.objective_function(timetable))
+
+    rechecked_score = 0 # TODO: weghalen of netter neerzetten later
+    for classroom in range(7):
+        for day in range(5):
+            for slot in range(5):
+                try:
+                    rechecked_score += timetable.grid[classroom][day][slot].score
+                except(AttributeError):
+                    pass
+
+    print("Timetable rechecked_score:", rechecked_score)
     # printer.make_table(timetable)
 
     # ## Prints out all lectures made in ID order

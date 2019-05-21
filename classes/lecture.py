@@ -18,3 +18,4 @@ class Lecture:
         self.capacity = capacity
         self.students = students
         self.track = track
+        self.score = 0
