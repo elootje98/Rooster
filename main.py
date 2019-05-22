@@ -59,6 +59,9 @@ def main():
         if algorithm_2 == "siman":
             simulatedan.simulated(timetable)
 
+        if algorithm_2 == "simanmany":
+            simulatedan.many(timetable, 1)
+
         if algorithm_2 == "hillclimber":
             iterations = int(input("Number of iterations for hillclimber: "))
 
