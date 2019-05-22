@@ -256,3 +256,5 @@ class Timetable:
     def score(self):
 
         self.objective_score = objective.objective_function(self)
+
+        return self.objective_score
