@@ -6,6 +6,11 @@ from algorithms import hillclimber, multiplegreedy, randomalg, simulatedan
 from classes import timetable as tmt
 from data import data
 
+available_algorithms1 = ["random", "greedy"]
+available_algorithms2 = ["hillclimber"] # TODO add other algo's
+hill_functions = {'pop': hillclimber.hill_population, 'burst': hillclimber.random_burst}
+helper_functions = {"print": printer.make_table} # TODO add writer
+
 
 def main():
     """ Main script to generate a timetable using certain algorithms.
@@ -17,13 +22,23 @@ def main():
     (hillclimber).
 
     """
+    # Check if arguements given are valid
+    for arg in sys.argv[1:]:
+        if (arg not in available_algorithms1 and
+            arg not in available_algorithms2 and
+            arg not in hill_functions and arg not in helper_functions):
+            print("Wrong input, run: $ main.py to refer to correct input.")
+            return
+
+
 
     if len(sys.argv) < 2:
         print("Please provide an algorithm.")
-        print("Correct usage: main.py algorithm 1 [, algorithm 2, added_function()]")
-        print("Available algorithms #1 : random, greedy")
-        print("Available algorithms #2 : hillclimber")
-        print("Available added functions #3: print_hello, pop, burst")
+        print("Correct usage: main.py algorithm 1 [, algorithm 2, *added_functions, *helper_functions]")
+        print("Available algorithms #1 : " + ", ".join([str(a) for a in available_algorithms1]))
+        print("Available algorithms #2 : " + ", ".join([str(a) for a in available_algorithms2]))
+        print("Available added hillclimber functions: " + ", ".join([str(key) for key in hill_functions]))
+        print("Available added helper functions: " + ", ".join([str(key) for key in helper_functions]))
         exit()
 
     algorithm_1 = sys.argv[1]
@@ -39,32 +54,45 @@ def main():
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]
+        print("Starting timetable score:", objective.objective_function(timetable))
 
         if algorithm_2 == "siman":
             simulatedan.simulated(timetable)
 
         if algorithm_2 == "hillclimber":
-            print("Starting timetable score:", objective.objective_function(timetable))
             iterations = int(input("Number of iterations for hillclimber: "))
+
+            # If no additional arguments are given, run standard hillclimber
             if len(sys.argv) == 3:
                 hillclimber.hillclimber(timetable, iterations)
-            elif len(sys.argv) == 4:
-                function_1 = sys.argv[3]
-                hillclimber.hillclimber(timetable, iterations, function_1)
+
+            # Runs hillclimber using functions applied as command line args
+            elif len(sys.argv) > 3:
+                hill_functions_applied = [hill_functions[f] for f in sys.argv if f in hill_functions]
+                hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
+
+        # Applies helper functions added to the command line as args
+        helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
+        for function in helper_functions_applied:
+            function(timetable)
+
 
     print("Timetable score:", objective.objective_function(timetable))
 
-    rechecked_score = 0 # TODO: weghalen of netter neerzetten later
-    for classroom in range(7):
-        for day in range(5):
-            for slot in range(5):
-                try:
-                    rechecked_score += timetable.grid[classroom][day][slot].score
-                except(AttributeError):
-                    pass
 
-    print("Timetable rechecked_score:", rechecked_score)
-    # printer.make_table(timetable)
+
+    # Recheck de score voor de individuele vakken
+    # rechecked_score = 0 # TODO: weghalen of netter neerzetten later
+    # for classroom in range(7):
+    #     for day in range(5):
+    #         for slot in range(5):
+    #             try:
+    #                 rechecked_score += timetable.grid[classroom][day][slot].score
+    #             except(AttributeError):
+    #                 pass
+    #
+    # print("Timetable rechecked_score:", rechecked_score)
+
 
     # ## Prints out all lectures made in ID order
     #
