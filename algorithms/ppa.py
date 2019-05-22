@@ -5,12 +5,12 @@ import random as ran
 from algorithms import randomalg as random
 from classes import timetable as tmt
 
-POPULATION = 5
-GENERATIONS = 10
+POPULATION = 30
+GENERATIONS = 30
 LOWER_BOUND = -1400
 UPPER_BOUND = 500
 NUMBER_PARAMETER = 3
-RUN_PARAMETER = 1000
+RUN_PARAMETER = 100
 
 
 def make_table():

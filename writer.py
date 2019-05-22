@@ -12,7 +12,7 @@ def writer():
         algorithm_1 = sys.argv[1]
     except(IndexError):
         print("Please prove an algorithm:")
-        print("1: random, greedy")
+        print("1: random, greedy, ppa")
         print("2: hillclimber")
         exit()
 
