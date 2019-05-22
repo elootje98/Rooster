@@ -5,18 +5,52 @@ import numpy as np
 import math
 import objective as o
 from classes import empty
+import copy
 
-def simulated(timetable):
+def linear(temperature):
+    alfa = 1
+    temperature = temperature - alfa
+    return temperature
+
+def exponent(temperature):
+    alfa = 0.999
+    temperature = temperature * alfa
+    return temperature
+
+def logarithmic(temperature):
+    alfa = 2.5
+    temperature = math.log(temperature, alfa)
+    return temperature
+
+def many(timetable, iterations):
+
+    points_all = []
+    temperatures = [1000]
+
+    #for different temperatures
+    for temperature in temperatures:
+        print(temperature)
+        # Save all the timetables and chancetheir points
+        points_max = []
+        for i in range(iterations):
+            compare_timetable = copy.deepcopy(timetable)
+            points_max.append(simulated(compare_timetable, temperature))
+        points_all.append(max(points_max))
+
+    print("max", max(points_all))
+    plt.bar(range(0, len(points_all)), points_all)
+    plt.show()
+
+def simulated(timetable, temperature):
     """Simulated annealing algorithm"""
     change_list = []
+    points_list = []
+    chance_list = []
     # Calculate points of current timetable
     points_timetable = o.objective_function(timetable)
-    temperature = 10000000000000000000
-    alfa = 0.99
-    maximum_points = 380
-    minimum_points = -1400
+    k = 0.028
 
-    while(temperature > 10):
+    while(temperature > 0):
 
         # swap two random lectures
         lecture_1 = random_lecture(timetable)
@@ -30,24 +64,25 @@ def simulated(timetable):
 
         # If the timetable is not better, accept with prop.
         if delta_points < 0:
-            #print("delta", delta_points)
-            #print("temperature", temperature)
-            chance = 1 - math.exp(-delta_points/temperature)
-            #print(chance)
-            bound = random.randrange(1)
-            #print("CHAAAAAAAAAAAAAAAAAAAAAAAAAANGE")
-            if chance < bound:
-                # swaps back
-                swap_lectures(timetable, lecture_1, lecture_2)
-                points_timetable = o.objective_function(timetable)
-                change_list.append(delta_points)
-            else:
-                print(temperature)
-        temperature = temperature * alfa
 
-    change_list.sort()
-    plt.plot(change_list, range(0, len(change_list)))
+            chance = 1 - math.exp(delta_points/(k * temperature))
+            chance_list.append(math.exp(-10/(k * temperature)))
+            bound = random.randrange(1)
+            print(delta_points)
+            print("chance", chance)
+
+            if chance < bound:
+                swap_lectures(timetable, lecture_1, lecture_2)
+
+        points_timetable = o.objective_function(timetable)
+        points_list.append(points_timetable)
+        temperature = exponent(temperature)
+
+    print(points_timetable)
+
+    plt.plot(range(0, len(chance_list)), chance_list)
     plt.show()
+    return points_timetable
 
 
 def random_lecture(timetable):
