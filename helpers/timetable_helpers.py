@@ -10,10 +10,12 @@ def make_table(algorithm):
     timetable = tmt.Timetable()
 
     if algorithm == "random":
-        ran.make_table(timetable)
+        while not ran.make_table(timetable):
+            timetable = tmt.Timetable()
 
     elif algorithm == "greedy":
-        grd.make_table(timetable)
+        while not grd.make_table(timetable):
+            timetable = tmt.Timetable()
 
     else:
         raise ValueError("Invalid algorithm:", algorithm)
@@ -34,7 +36,7 @@ def swap_random(timetable, chance=0):
 
         timetable = swap_coordinates(timetable, c1, c2)
         score_new = timetable.score()
-        score_diff = score_old - score_new
+        score_diff = score_new - score_old
 
         course_1 = timetable.find_course(lecture_1.course)
         course_2 = timetable.find_course(lecture_2.course)
@@ -43,6 +45,7 @@ def swap_random(timetable, chance=0):
            (score_diff < 0 and chance < np.random.rand())):
 
             timetable = swap_coordinates(timetable, c1, c2)
+            timetable.score()
             return timetable
 
     return timetable

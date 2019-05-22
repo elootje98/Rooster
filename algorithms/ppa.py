@@ -1,26 +1,24 @@
 import copy
 import math
-import random as ran
+import random
 
-from algorithms import randomalg as random
+from algorithms import randomalg as ran
 from classes import timetable as tmt
+from helpers import timetable_helpers as hlp
 
-POPULATION = 30
+POPULATION = 20
 GENERATIONS = 30
 LOWER_BOUND = -1400
 UPPER_BOUND = 500
 NUMBER_PARAMETER = 3
-RUN_PARAMETER = 100
+RUN_PARAMETER = 200
 
 
 def make_table():
     timetable_list = []
 
     for i in range(POPULATION):
-        timetable = tmt.Timetable()
-        while not random.make_table(timetable):
-            timetable = tmt.Timetable()
-
+        timetable = hlp.make_table("random")
         timetable_list.append(timetable)
         print("Population:", i)
 
@@ -47,7 +45,7 @@ def make_table():
 
         timetable_list = timetable_list + offspring_list
         timetable_list.sort(key=lambda table: table.objective_score,
-                                reverse=True)
+                            reverse=True)
 
         timetable_list = timetable_list[0:POPULATION]
 
@@ -56,14 +54,14 @@ def make_table():
 
 def offspring_number(score):
 
-    number = NUMBER_PARAMETER * adapted_fitness(score) * ran.random()
+    number = NUMBER_PARAMETER * adapted_fitness(score) * random.random()
 
     return math.ceil(number)
 
 
 def offspring_iterations(score):
 
-    iterations = RUN_PARAMETER * (1 - adapted_fitness(score)) * ran.random()
+    iterations = RUN_PARAMETER * (1 - adapted_fitness(score)) * random.random()
 
     return math.ceil(iterations)
 
@@ -78,58 +76,5 @@ def adapted_fitness(score):
 
 def swap_lectures(timetable, swaps):
 
-    swap = 0
-    while swap < swaps:
-        if swap_random(timetable):
-            swap += 1
-
-
-def swap_random(timetable):
-
-    c1 = random_coordinates()
-    c2 = random_coordinates()
-
-    lecture_1 = select_lecture(timetable, c1)
-    lecture_2 = select_lecture(timetable, c2)
-    score_old = timetable.objective_score
-
-    if (timetable.check_restriction(lecture_1, c2[1], c2[2]) and
-       timetable.check_restriction(lecture_2, c1[1], c1[2])):
-
-        timetable.grid[c1[0]][c1[1]][c1[2]], timetable.grid[c2[0]][c2[1]][c2[2]] = timetable.grid[c2[0]][c2[1]][c2[2]], timetable.grid[c1[0]][c1[1]][c1[2]]
-
-        timetable.score()
-        score_new = timetable.objective_score
-        course_1 = timetable.find_course(lecture_1.course)
-        course_2 = timetable.find_course(lecture_2.course)
-
-        if ((score_new < score_old) or
-           (not timetable.check_order([course_1, course_2]))):
-
-            timetable.grid[c1[0]][c1[1]][c1[2]], timetable.grid[c2[0]][c2[1]][c2[2]] = timetable.grid[c2[0]][c2[1]][c2[2]], timetable.grid[c1[0]][c1[1]][c1[2]]
-            timetable.score()
-            return False
-
-        return True
-
-    return False
-
-
-def random_coordinates():
-
-    classroom = ran.randint(0, 6)
-    day = ran.randint(0, 4)
-
-    if classroom == 5:
-        slot = ran.randint(0, 4)
-    else:
-        slot = ran.randint(0, 3)
-
-    return (classroom, day, slot)
-
-
-def select_lecture(timetable, coordinates):
-
-    lecture = timetable.grid[coordinates[0]][coordinates[1]][coordinates[2]]
-
-    return lecture
+    for i in range(swaps):
+        timetable = hlp.swap_random(timetable)
