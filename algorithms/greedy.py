@@ -1,19 +1,32 @@
 import numpy as np
+
+from classes import empty
 from classes import timetable as t
 from data import points as p
-from classes import timetable, empty
+
 
 def make_table(timetable):
 
     # First sort the courses based on points
     give_points_lectures(timetable)
     for course in timetable.courses:
+
+        attempt = 0
         while True:
-            plan_lectures(course, timetable)
+            completed = plan_lectures(course, timetable)
+            attempt += 1
+
             if timetable.check_order([course]):
                 break
             else:
                 remove_lectures(course, timetable)
+
+            if attempt > 10000 or not completed:
+                return False
+
+    timetable.score()
+    return True
+
 
 # Gives points to the lecture for planning in for greedy.
 def give_points_lectures(timetable):
@@ -38,8 +51,10 @@ def give_points_lectures(timetable):
     # Sort the courses on the points
     timetable.sort_courses()
 
+
 def plan_lectures(course, timetable):
     for lecture in course.lectures:
+        attempt = 0
         while True:
             classroom = np.random.randint(0, 7)
             day = np.random.randint(0, 5)
@@ -49,6 +64,13 @@ def plan_lectures(course, timetable):
                timetable.check_restriction(lecture, day, slot)):
                 timetable.grid[classroom][day][slot] = lecture
                 break
+
+            attempt += 1
+            if attempt > 10000:
+                return False
+
+    return True
+
 
 def remove_lectures(course, timetable):
     for lecture in course.lectures:

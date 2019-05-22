@@ -4,6 +4,7 @@ import os
 
 import numpy as np
 
+import objective
 from classes import classroom as cla
 from classes import course as crs
 from classes import empty as emp
@@ -47,6 +48,7 @@ class Timetable:
         self.make_classrooms()
         self.add_restricted()
         self.fill_nightslots()
+        self.objective_score = -1500
 
     def find_lecture(self, _id):
         """ Returns the Lecture object with a certain ID (int). """
@@ -59,6 +61,9 @@ class Timetable:
     def find_course(self, name):
         """ Returns the Course objects with a certain name (str). """
 
+        if name == "empty":
+            return emp.Empty()
+
         for course in self.courses:
             if course.name == name:
                 return course
@@ -70,12 +75,13 @@ class Timetable:
             lecture (Lecture): Lecture from the grid.
 
         Returns:
-            [[classroom (int), day (int), slot (int)]] if lecture is in grid,
-            empty list otherwise.
+            coordinates [[classroom (int), day (int), slot (int)]] if lecture
+            is in grid, empty list otherwise.
 
         """
 
-        return np.argwhere(self.grid == lecture)
+        coordinates = np.argwhere(self.grid == lecture)
+        return coordinates
 
     def sort_courses(self):
         """ Sorts list of courses based on their points from high to low. """
@@ -192,7 +198,12 @@ class Timetable:
             positions = {"HC": [], "WC": [], "PR": []}
 
             for lecture in course.lectures:
-                (classroom, day, slot) = self.find_slot(lecture)[0]
+                try:
+                    (classroom, day, slot) = self.find_slot(lecture)[0]
+                except(IndexError):
+                    print("IndexError check_order")
+                    return False
+
                 position = day * 5 + slot
                 positions[lecture.type].append(position)
 
@@ -241,3 +252,9 @@ class Timetable:
             for day in range(5):
                 if classroom != 5:
                     self.grid[classroom][day][4] = res.Restricted()
+
+    def score(self):
+
+        self.objective_score = objective.objective_function(self)
+
+        return self.objective_score

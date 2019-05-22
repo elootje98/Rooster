@@ -3,8 +3,10 @@ class Empty:
         """ Creates placeholder object to sybolize empty spots in the grid. """
 
         self.course = "empty"
+        self.restricted = []
+        self.lectures = []
 
     def __str__(self):
-        """ Prints 'Empty' when object is printed. """
+        """ Prints ' - ' when object is printed. """
 
         return " - "
