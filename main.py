@@ -1,7 +1,7 @@
 import sys
 
 import helpers.objective
-import printer
+import helpers.printer
 from algorithms import hillclimber, greedy, randomalg, simulatedan
 from classes import timetable as tmt
 from data import data
