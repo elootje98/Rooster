@@ -6,6 +6,8 @@ def objective_function(timetable):
     """ Calculates timetable score from the objective function rules.
 
     Calls a method for each objective function rule to calculate the score.
+    Scores are calculated for each lecture individually as well as the total
+    score
     All scores are added and returned by this function.
 
     Arguments:
@@ -16,7 +18,8 @@ def objective_function(timetable):
 
     """
 
-    reset_points(timetable) # TODO: in de uitleg, als dit werkt
+    # Resets lectures' individual score
+    reset_points(timetable)
 
     return (day_check(timetable) + spread_check(timetable) +
             students_check(timetable) + nightslot_check(timetable))
@@ -266,7 +269,13 @@ def nightslot_check(timetable):
 
     return points
 
-def reset_points(timetable): # TODO: beter of mooier maken
+def reset_points(timetable):
+    """ Resets the individual scores of the lectures in the timetable.
+
+    Arguments:
+        timetable (Timetable): Timetable to reset score of.
+
+    """
     for classroom in range(7):
         for day in range(5):
             for slot in range(5):
