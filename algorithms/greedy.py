@@ -7,7 +7,7 @@ from objective import objective_function
 import copy
 
 def greedy_table(timetable, iterations):
-    """Make a timetable using greedy multiple times and pick the timetable with the highest score"""
+    """Makes a timetable using greedy multiple times and picks the timetable with the highest score"""
 
     # Save all the timetables and their points
     points = -10000
