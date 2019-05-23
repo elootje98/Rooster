@@ -36,13 +36,6 @@ def make_table():
                 offspring.score()
                 offspring_list.append(offspring)
 
-        print("\nTimetable list:\n")
-        for i in range(len(timetable_list)):
-            print(timetable_list[i].objective_score)
-        print("\nOffspring list:\n")
-        for j in range(len(offspring_list)):
-            print(offspring_list[j].objective_score)
-
         timetable_list = timetable_list + offspring_list
         timetable_list.sort(key=lambda table: table.objective_score,
                             reverse=True)

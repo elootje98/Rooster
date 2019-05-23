@@ -1,14 +1,34 @@
-import matplotlib.pyplot as plt
 import numpy as np
 
 from helpers import timetable_helpers as hlp
 
-TEMPERATURE = 100
+TEMP_HIGH = 100
+TEMP_LOW = 1
+SIGMOIDAL_PAR = 0.01
+TEMP_PAR = 0.4
 
 
 def make_table(iterations, cooling):
+    """ Main function for Simulated Annealing.
 
-    temp = TEMPERATURE
+    Simulated Annealing tries swapping a given number of lectures, always
+    accepting improvements while only accepting lower scoring timetables with
+    a certain chance. The chance is an exponential function depending on the
+    decrease, TEMP_PAR and temperature. The temperature decreases with the
+    number of iterations, lowering the chance of accepting a decrease in
+    points. The exact temperature behaviour is given by the cooling functions.
+
+    Arguments:
+        iterations (int): Total number of swaps to try.
+        cooling (string): Name of cooling function to use. Possible values are
+            hillclimber, linear, exponential and sigmoidal.
+
+    Returns:
+        timetable (Timetable): Final timetable.
+
+    """
+
+    temp = TEMP_HIGH
     timetable = hlp.make_table("random")
     plot_list = []
     temp_list = []
@@ -18,7 +38,7 @@ def make_table(iterations, cooling):
         if cooling == "hillclimber":
             timetable = hlp.swap_random(timetable)
         else:
-            timetable = hlp.swap_random(timetable, sa=True, T=temp)
+            timetable = hlp.swap_random(timetable, sa=True, T=temp, k=TEMP_PAR)
 
         if cooling == "linear":
             temp = linear(iterations, i)
@@ -29,29 +49,32 @@ def make_table(iterations, cooling):
         elif cooling == "sigmoidal":
             temp = sigmoidal(iterations, i)
 
-        plot_list.append(timetable.objective_score)
-        temp_list.append(temp)
-        chance_list.append(np.exp(-10 / (0.4 * temp)))
+        else:
+            raise ValueError("Invalid cooling function:", cooling)
 
-    return plot_list, temp_list, chance_list
+    return timetable
 
 
 def linear(iterations, i):
+    """ Linear cooling scheme for SA. """
 
-    temp = TEMPERATURE - i * ((TEMPERATURE - 1) / iterations)
+    temp = TEMP_HIGH - i * ((TEMP_HIGH - TEMP_LOW) / iterations)
 
     return temp
 
 
 def exponential(iterations, i):
+    """ Exponential cooling scheme for SA. """
 
-    temp = TEMPERATURE * np.float_power((1 / TEMPERATURE), (i / iterations))
+    temp = TEMP_HIGH * np.float_power((TEMP_LOW / TEMP_HIGH), (i / iterations))
 
     return temp
 
 
 def sigmoidal(iterations, i):
+    """ Sigmoidal cooling scheme for SA. """
 
-    temp = 1 + (100 - 1) / (1 + np.exp(0.1 * (i - iterations / 2)))
+    temp = (TEMP_LOW + (TEMP_HIGH - TEMP_LOW) /
+            (1 + np.exp(SIGMOIDAL_PAR * (i - iterations / 2))))
 
     return temp
