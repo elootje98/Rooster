@@ -95,8 +95,8 @@ def greedy_hill(timetable):
             if lecture.score < current_score:
                 c1 = timetable.find_slot(lecture)[0]
                 current_score = timetable.grid[c1[0]][c1[1]][c1[2]].score
-    #print(c1, timetable.grid[c1[0]][c1[1]][c1[2]].score) TODO weghalen later
-
+    print(c1, timetable.grid[c1[0]][c1[1]][c1[2]].score) #TODO weghalen later
+    print(np.argwhere(np.max(timetable.grid)), np.max(timetable.grid))
     # Get random second lecture and swap the two lectures
     c2 = th.random_coordinates(timetable)
     th.swap_lectures(timetable, c1, c2)

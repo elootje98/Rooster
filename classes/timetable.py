@@ -4,7 +4,7 @@ import os
 
 import numpy as np
 
-import helpers.objective
+import helpers.objective as objective
 from classes import classroom as cla
 from classes import course as crs
 from classes import empty as emp
