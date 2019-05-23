@@ -30,27 +30,22 @@ def make_table(iterations, cooling):
 
     temp = TEMP_HIGH
     timetable = hlp.make_table("random")
-    plot_list = []
-    temp_list = []
-    chance_list = []
 
     for i in range(iterations):
+
         if cooling == "hillclimber":
             timetable = hlp.swap_random(timetable)
         else:
             timetable = hlp.swap_random(timetable, sa=True, T=temp, k=TEMP_PAR)
 
-        if cooling == "linear":
-            temp = linear(iterations, i)
-
-        elif cooling == "exponential":
-            temp = exponential(iterations, i)
-
-        elif cooling == "sigmoidal":
-            temp = sigmoidal(iterations, i)
-
-        else:
-            raise ValueError("Invalid cooling function:", cooling)
+            if cooling == "linear":
+                temp = linear(iterations, i)
+            elif cooling == "exponential":
+                temp = exponential(iterations, i)
+            elif cooling == "sigmoidal":
+                temp = sigmoidal(iterations, i)
+            else:
+                raise ValueError("Invalid cooling function:", cooling)
 
     return timetable
 

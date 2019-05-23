@@ -15,17 +15,32 @@ RUN_PARAMETER = 500
 
 
 def make_table():
+    """ Main function for Plant Propagation Algorithm.
+
+    Plant propagation initializes a population of timetables for a given size.
+    The timetables are assigned an 'adapted fitness' based on their score. The
+    adapted fitness is used to calcule the number of child timetables to be
+    made with a certain amount of hillclimber iterations. The number of
+    iterations also depends on the adapted fitness of the timetables. After
+    creating the child tables, the tables with the highest score are grouped
+    into another population with the original size. This cycle is one
+    generation and repeated a number of times. Finally the highest scoring
+    table of the final generation is returned.
+
+    Returns:
+        timetable (Timetable): The final timetable.
+
+    """
+
     timetable_list = []
 
     for i in range(POPULATION):
         timetable = hlp.make_table("random")
         timetable_list.append(timetable)
-        print("Population:", i)
 
     for j in range(GENERATIONS):
         offspring_list = []
-        print("Generation", j)
-        print("Lenght:", len(timetable_list))
+        print("Calculating...  Generation:", j)
 
         for timetable in timetable_list:
             score = timetable.objective_score
@@ -46,6 +61,7 @@ def make_table():
 
 
 def offspring_number(score):
+    """ Calculates the number of child tables to be made. """
 
     number = NUMBER_PARAMETER * adapted_fitness(score) * random.random()
 
@@ -53,6 +69,7 @@ def offspring_number(score):
 
 
 def offspring_iterations(score):
+    """ Calculates the number of hillclimber iterations to be made. """
 
     iterations = RUN_PARAMETER * (1 - adapted_fitness(score)) * random.random()
 
@@ -60,6 +77,7 @@ def offspring_iterations(score):
 
 
 def adapted_fitness(score):
+    """ Calculates the adapted fitness of a table based on its score. """
 
     normalized_fitness = (UPPER_BOUND - score) / (UPPER_BOUND - LOWER_BOUND)
     adapted_fitness = (math.tanh(4 * (normalized_fitness - 2)) + 1) / 2
@@ -68,6 +86,7 @@ def adapted_fitness(score):
 
 
 def swap_lectures(timetable, swaps):
+    """ Calls the random swap method a number of times. """
 
     for i in range(swaps):
         timetable = hlp.swap_random(timetable)

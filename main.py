@@ -22,8 +22,9 @@ def main():
     Use of hillclimber can be switched on with the second command-line argument
     (hillclimber).
 
+
     """
-    # Check if arguements given are valid
+    # Check if arguments given are valid
     for arg in sys.argv[1:]:
         if (arg not in available_algorithms1 and
             arg not in available_algorithms2 and
