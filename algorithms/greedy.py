@@ -3,7 +3,24 @@ from algorithms import randomalg as rand
 from classes import empty
 from classes import timetable as t
 from data import points as p
+from objective import objective_function
+import copy
 
+def greedy_table(timetable, iterations):
+    """Make a timetable using greedy multiple times and pick the timetable with the highest score"""
+
+    # Save all the timetables and their points
+    points = -10000
+    for i in range(iterations):
+        compare_timetable = copy.deepcopy(timetable)
+        make_table(compare_timetable)
+        new_points = objective_function(compare_timetable)
+        if new_points > points:
+            new_timetable = copy.deepcopy(compare_timetable)
+            points = new_points
+
+    # Select the timetable with the hightest points
+    return copy.deepcopy(new_timetable)
 
 def make_table(timetable):
     """Makes the timetable, with the course sorted on their points"""
