@@ -23,7 +23,7 @@ def make_table(algorithm):
     return timetable
 
 
-def swap_random(timetable, chance=0):
+def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
 
     c1 = random_coordinates(timetable)
     c2 = random_coordinates(timetable)
@@ -45,6 +45,9 @@ def swap_lectures(timetable, c1, c2, chance=0):
 
         course_1 = timetable.find_course(lecture_1.course)
         course_2 = timetable.find_course(lecture_2.course)
+
+        if sa:
+            chance = np.exp(score_diff / (k * T))
 
         if (not timetable.check_order([course_1, course_2]) or
            (score_diff < 0 and chance < np.random.rand())):
