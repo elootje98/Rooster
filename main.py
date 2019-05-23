@@ -2,7 +2,7 @@ import sys
 
 import objective
 import printer
-from algorithms import hillclimber, multiplegreedy, randomalg, simulatedan
+from algorithms import hillclimber, greedy, randomalg, simulatedan
 from classes import timetable as tmt
 from data import data
 from helpers import timetable_helpers as th
@@ -50,8 +50,8 @@ def main():
         randomalg.make_table(timetable)
 
     if algorithm_1 == "greedy":
-        iterations = 1 # int(input("Number of iterations for greedy: "))
-        timetable = multiplegreedy.make_table(timetable, iterations)
+        iterations = int(input("Number of iterations for greedy: "))
+        timetable = greedy.greedy_table(timetable, iterations)
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]
