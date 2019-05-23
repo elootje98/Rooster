@@ -1,6 +1,6 @@
 import sys
 
-import objective
+import helpersobjective
 from algorithms import hillclimber, greedy, randomalg, ppa
 from classes import timetable as tmt
 from data import data

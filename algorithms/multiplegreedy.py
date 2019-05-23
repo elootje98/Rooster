@@ -1,5 +1,5 @@
 from algorithms import greedy
-from objective import objective_function
+from helpers.objective import objective_function
 import copy
 
 def make_table(timetable, iterations):

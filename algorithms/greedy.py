@@ -3,7 +3,7 @@ from algorithms import randomalg as rand
 from classes import empty
 from classes import timetable as t
 from data import points as p
-from objective import objective_function
+from helpers.objective import objective_function
 import copy
 
 def greedy_table(timetable, iterations):

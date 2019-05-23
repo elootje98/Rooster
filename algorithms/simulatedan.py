@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 import math
-import objective as o
+import helpers.objective as o
 from classes import empty
 import copy
 

@@ -2,7 +2,7 @@ import random
 
 import numpy as np
 
-import objective as o
+import helpers.objective as o
 from classes import empty
 from helpers import timetable_helpers as th
 
