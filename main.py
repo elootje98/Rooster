@@ -5,10 +5,11 @@ import printer
 from algorithms import hillclimber, multiplegreedy, randomalg, simulatedan
 from classes import timetable as tmt
 from data import data
+from helpers import timetable_helpers as th
 
 available_algorithms1 = ["random", "greedy"]
 available_algorithms2 = ["hillclimber"] # TODO add other algo's
-hill_functions = {'pop': hillclimber.hill_population, 'burst': hillclimber.random_burst}
+hill_functions = {'hillclimber': th.swap_random, 'greedy_hill': hillclimber.greedy_hill, 'pop': hillclimber.hill_population, 'burst': hillclimber.random_burst}
 helper_functions = {"print": printer.make_table} # TODO add writer
 
 
@@ -62,17 +63,11 @@ def main():
         if algorithm_2 == "simanmany":
             simulatedan.many(timetable, 1)
 
-        if algorithm_2 == "hillclimber":
+        if algorithm_2 == "hillclimber" or algorithm_2 == "greedy_hill":
             iterations = int(input("Number of iterations for hillclimber: "))
 
-            # If no additional arguments are given, run standard hillclimber
-            if len(sys.argv) == 3:
-                hillclimber.hillclimber(timetable, iterations)
-
-            # Runs hillclimber using functions applied as command line args
-            elif len(sys.argv) > 3:
-                hill_functions_applied = [hill_functions[f] for f in sys.argv if f in hill_functions]
-                hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
+            hill_functions_applied = [hill_functions[f] for f in sys.argv if f in hill_functions]
+            hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
 
         # Applies helper functions added to the command line as args
         helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]

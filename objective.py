@@ -272,6 +272,5 @@ def reset_points(timetable): # TODO: beter of mooier maken
             for slot in range(5):
                 try:
                     timetable.grid[classroom][day][slot].score = 0
-                    #print(classroom, " - ", day, " - ",slot)
                 except(AttributeError):
                     pass
