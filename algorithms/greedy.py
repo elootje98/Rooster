@@ -5,6 +5,7 @@ from classes import empty
 from classes import timetable as t
 from data import points as p
 from helpers.objective import objective_function
+from helpers import timetable.helpers as hlp
 
 
 def make_table(timetable):
@@ -25,11 +26,11 @@ def make_table(timetable):
                 rand.remove_lectures(course, timetable)
 
             if attempt > 10000 or not completed:
-                return False
+                make_table(t.Timetable())
 
     timetable.score()
 
-    return True
+    return timetable
 
 
 def give_points_lectures(timetable):
