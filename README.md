@@ -1,6 +1,16 @@
 # Handleiding voor Lectures & Lesroosters
 
+## Case Lectures & Lesroosters
+De opdracht voor Lectures & Lesroosters is om met behulp van verschillende
+algoritmes op zoek te gaan naar het beste weekrooster voor de UvA. Een rooster
+is geldig als alle vakken zijn ingepland volgens de regels van de UvA. Er worden
+punten toegekend aan een rooster op basis van een aantal spelregels: de
+objective function. Een volledige beschrijving van de geldigheidsregels,
+spelregels, rooster en vakkenlijst vind je hier.
 
+We zijn niet toegkomen aan het deel van de case met individuele
+vakinschrijvingen. We hebben geprobeerd meer nadruk te leggen op het implementeren
+van verschillende algoritmes.
 
 ## Requirements
 Deze package is geschreven in Python3.7.2. De benodigde modules staan in
@@ -26,6 +36,6 @@ de presentatie van woensdag.
 - József Zsíros
 
 ## Dankwoord
-- Bram voor de geweldige begeleiding en eindeloze geduld.
-- Het hele team Heuristieken
-- De koffiemachine naast de hokjes bij B1.19
+- Bram voor de geweldige begeleiding en zijn eindeloze geduld.
+- Het hele team Heuristieken.
+- De koffiemachine naast de hokjes bij B1.19.
