@@ -97,7 +97,7 @@ def main():
             elif algorithm == "simulated_annealing":
                 simulated_annealing.make_table(compare_timetable)
             else:
-                raise ValueError("Invalid algorithm", cooling)
+                raise ValueError("Invalid algorithm", algorithm)
 
             new_points = objective_function(compare_timetable)
             if new_points > points:
