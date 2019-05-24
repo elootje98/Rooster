@@ -1,16 +1,21 @@
 import copy
 import sys
 
+<<<<<<< HEAD
 from algorithms import greedy, hillclimber, randomalg, simulated_annealing
+=======
+from helpers import objective, printer, visualize
+from algorithms import hillclimber, greedy, randomalg, simulated_annealing
+>>>>>>> 00ff6d4f25960073d88699f4f54547b57a02b43a
 from classes import timetable as tmt
 from data import data
 from helpers import objective, printer
 from helpers import timetable_helpers as th
 
-available_algorithms1 = ["random", "greedy"]
+available_algorithms1 = ["random", "greedy, multi"]
 available_algorithms2 = ["hillclimber"] # TODO add other algo's
 hill_functions = {'hillclimber': th.swap_random, 'greedy_hill': hillclimber.greedy_hill, 'pop': hillclimber.hill_population, 'burst': hillclimber.random_burst}
-helper_functions = {"print": printer.make_table} # TODO add writer
+helper_functions = {"print": printer.make_table, "visual": visualize.make_plot} # TODO add writer
 
 
 def main():
@@ -69,12 +74,15 @@ def main():
             iterations = int(input("Number of iterations for hillclimber: "))
 
             hill_functions_applied = [hill_functions[f] for f in sys.argv if f in hill_functions]
-            hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
+            scores = hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
 
         # Applies helper functions added to the command line as args
         helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
         for function in helper_functions_applied:
-            function(timetable)
+            try:
+                function(timetable)
+            except (AttributeError):
+                function( sys.argv[2], scores)
 
 
     print("Timetable score:", objective.objective_function(timetable))
