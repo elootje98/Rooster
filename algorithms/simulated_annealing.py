@@ -8,7 +8,7 @@ TEMP_HIGH = 100  # Starting temperature
 TEMP_LOW = 1  # End temperature
 SIGMOIDAL_PAR = 0.01  # Parameter for the sigmoidal function (changes curve)
 TEMP_PAR = 0.4  # Temperature constant, alters chance to accept worse tables
-
+scores = [] # List of score per iteration.
 
 def make_table(timetable, iterations, cooling, reheating=0):
     """ Main function for Simulated Annealing.
@@ -21,12 +21,14 @@ def make_table(timetable, iterations, cooling, reheating=0):
     points. The exact temperature behaviour is given by the cooling functions.
 
     Arguments:
+        timetable (Timetable): Timetable to modify.
         iterations (int): Total number of swaps to try.
         cooling (string): Name of cooling function to use. Possible values are
             hillclimber, linear, exponential and sigmoidal.
+        reheating (int): Temperature at which reheating function activates.
 
     Returns:
-        timetable (Timetable): Final timetable.
+        scores [int]: List of score per iteration.
 
     """
 
@@ -51,11 +53,13 @@ def make_table(timetable, iterations, cooling, reheating=0):
             else:
                 raise ValueError("Invalid cooling function:", cooling)
 
-        print(temp)
         if temp < reheating:
             return make_table(timetable, iterations, cooling)
 
-    return timetable
+        timetable.score()
+        scores.append(timetable.objective_score)
+
+    return scores
 
 
 def linear(iterations, i):

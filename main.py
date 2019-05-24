@@ -62,7 +62,12 @@ def main():
         if algorithm_2 == "sa":
             iterations = int(input("Number of iterations: "))
             cooling = input("Cooling scheme (linear, exponential, sigmoidal) ")
-            scores = sa.simulated(timetable, iterations, cooling)
+            reheat_option = input("Reheating? (yes / no): ")
+            if reheat_option == "yes":
+                reheating = int(input("Reheating at temperature (int): "))
+                scores = sa.make_table(timetable, iterations, cooling, reheating)
+            else:
+                scores = sa.make_table(timetable, iterations, cooling)
             labels = ["Simmulated Annealing"]
 
         if algorithm_2 == "hillclimber":
