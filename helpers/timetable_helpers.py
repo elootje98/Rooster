@@ -6,6 +6,19 @@ from classes import timetable as tmt
 
 
 def make_table(algorithm):
+    """ Make an initial table either randomly or using the greedy algorithm.
+
+    The algorithm that is used to build a table is taken from the 2nd command
+    line argument (args[1]). Both a random and greedy algorithm are available to
+    build the timetable. However, greedy is also based on a random
+
+    Arguments:
+        algorithm (String): Algorithm used to build the table
+
+    Returns:
+        timetable (Timetable): Timetable to modify.
+
+    """
 
     timetable = tmt.Timetable()
 
@@ -24,6 +37,24 @@ def make_table(algorithm):
 
 
 def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
+    """ Function used to swap a random lecture.
+
+    A function that generates two random coordinates corresponding to lectures
+    in the timetable. Calls swap_lectures to execute the actual swap.
+
+    Arguments:
+        timetable (Timetable): Timetable to modify.
+        chance (int): Chance to keep the current state of the timetable if a
+            swap negatively influences the score.
+        sa (bool): Indicates whether simmulated annealing calls the function.
+        T (int): Temperature used by simmulated annealing algorithm.
+        k (float): Parameter used in cooling process of simmulated annealing
+            algoirthm.
+
+    Returns:
+        timetable (Timetable): Timetable to modify.
+
+    """
 
     c1 = random_coordinates(timetable)
     c2 = random_coordinates(timetable)
@@ -34,6 +65,33 @@ def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
 
 
 def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
+    """ Function used to swap two lectures.
+
+    Function that executes a swap between two lectures in the timetable. Before
+    executing the swap, the function checks whether a swap would violite
+    constraints concerning restrictions. After swapping, the score is compared
+    to the score before the swap. If the function is called by the simmulated
+    annealing algorithm, a chance value is determined. The lectures are swapped
+    back if the order in which the lectures occur violates order restrictions or
+    if the score after the swap is lower than the score before the swap and the
+    chance determined for simmulated annealing is lower than a random chance on
+    the same scale.
+
+    Arguments:
+        timetable (Timetable): Timetable to modify.
+        c1 (tuple): Coordinates for the first lecture to swap.
+        c2 (tuple): Coordinates for the second lecture to swap.
+        chance (int): Chance to keep the current state of the timetable if a
+            swap negatively influences the score.
+        sa (bool): Indicates whether simmulated annealing calls the function.
+        T (int): Temperature used by simmulated annealing algorithm.
+        k (float): Parameter used in cooling process of simmulated annealing
+            algoirthm.
+
+    Returns:
+        timetable (Timetable): Timetable to modify.
+
+    """
 
     lecture_1 = timetable.grid[c1[0]][c1[1]][c1[2]]
     lecture_2 = timetable.grid[c2[0]][c2[1]][c2[2]]

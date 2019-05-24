@@ -4,6 +4,10 @@ import colorsys
 import pandas as pd
 import matplotlib.gridspec as gridspec
 import seaborn as sns
+from IPython.display import display, HTML
+import ipywidgets as widgets
+
+
 
 cm = sns.light_palette("red", as_cmap=True)
 
@@ -55,6 +59,18 @@ def make_table(timetable):
         #    print(df)
 
 
+        df.style
+        # display(df)
+        # display(HTML(df.to_html()))
+        # widget1 = widgets.Output()
+        #
+        # with widget1:
+        #     display.display(df)
+        # hbox = widgets.HBox(widget1)
+        # hbox
+
+
+        print(df.to_html())
         fig, ax = plt.subplots()
         im = ax.imshow(current_scores)
         # We want to show all ticks...
@@ -78,4 +94,4 @@ def make_table(timetable):
         i += 1
     f.close()
     #fig.tight_layout()
-    plt.show()
+    #plt.show()

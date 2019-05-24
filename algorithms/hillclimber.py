@@ -21,6 +21,7 @@ def hill_population(timetable):
         timetable (Timetable): Timetable to modify.
 
     """
+    
     # State the number of swaps to be made and chance to swap
     samples = 500
     chance = 0.02
