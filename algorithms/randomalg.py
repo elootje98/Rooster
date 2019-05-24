@@ -38,6 +38,7 @@ def make_table(timetable):
 
             # Checks if planning was unsuccesful or method stuck in loop
             if attempt > 10000 or not completed:
+                # If stuck, attempt to make a new table from scratch
                 timetable = make_table(tmt.Timetable())
 
     timetable.score()
