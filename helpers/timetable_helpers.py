@@ -31,7 +31,7 @@ def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
     swap_lectures(timetable, c1, c2)
 
 
-def swap_lectures(timetable, c1, c2, chance=0):
+def swap_lectures(timetable, c1, c2, chance=0, sa=False):
 
     lecture_1 = timetable.grid[c1[0]][c1[1]][c1[2]]
     lecture_2 = timetable.grid[c2[0]][c2[1]][c2[2]]
