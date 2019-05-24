@@ -1,15 +1,13 @@
 import numpy as np
 
-from algorithms import randomalg as rand
+from algorithms import randomalg as rnd
 from classes import empty
-from classes import timetable as t
-from data import points as p
-from helpers.objective import objective_function
-from helpers import timetable_helpers as hlp
+from classes import timetable as tmt
+from helpers import timetable_helpers as th
 
 
 def make_table(timetable):
-    """Makes timetable using greedy
+    """ Makes timetable using greedy.
 
     First calls gives_points_lectures to sort the courses based on their
     points. The lectures of courses with the highest points, will be planned
@@ -19,8 +17,11 @@ def make_table(timetable):
     (which most likely mean that the algorithm is stuck in a loop), a complete
     new timetable will be made.
 
+    Arguments:
+        timetable (Timetable): Empty timetable object.
+
     Returns:
-        timetable.
+        timetable (Timetable): Final filled in timetable.
 
     """
 
@@ -30,13 +31,13 @@ def make_table(timetable):
 
         attempt = 0
         while True:
-            completed = rand.plan_lectures(course, timetable)
+            completed = rnd.plan_lectures(course, timetable)
             attempt += 1
 
             if timetable.check_order([course]):
                 break
             else:
-                rand.remove_lectures(course, timetable)
+                rnd.remove_lectures(course, timetable)
 
             if attempt > 10000 or not completed:
                 make_table(t.Timetable())
@@ -47,12 +48,15 @@ def make_table(timetable):
 
 
 def give_points_lectures(timetable):
-    """Sort the courses based on their 'difficulty' for planning them in.
+    """ Sort the courses based on their 'difficulty' for planning them in.
 
     Loops over the courses and gives points to the course, based on how
     difficult they are to plan in. For each course that can't be given at the
     same time, 20 points are given. Furthermore, for each HC, 10 points are
     given to the course.
+
+    Arguments:
+        timetable (Timetable): Timetable to be assigned points for courses.
 
     """
 

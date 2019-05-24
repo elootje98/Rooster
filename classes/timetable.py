@@ -4,13 +4,13 @@ import os
 
 import numpy as np
 
-from helpers import objective
 from classes import classroom as cla
 from classes import course as crs
 from classes import empty as emp
 from classes import lecture as lec
 from classes import restricted as res
 from data import data as d
+from helpers import objective
 
 
 class Timetable:
@@ -24,7 +24,7 @@ class Timetable:
             grid (numpy.ndarray): 3d-array containing lectures.
             courses [Course]: List of Course objects.
             classrooms [Classroom]: List of Classroom objects.
-            objective_score ()
+            objective_score (int): Total score of the timetabl (Default -1500).
 
         Methods:
             find_lecture: Finds Lecture object for id.
@@ -202,8 +202,9 @@ class Timetable:
             for lecture in course.lectures:
                 try:
                     (classroom, day, slot) = self.find_slot(lecture)[0]
+
+                # Ignores exception if course is not in timetable
                 except(IndexError):
-                    print("IndexError check_order")
                     return False
 
                 position = day * 5 + slot
@@ -242,6 +243,7 @@ class Timetable:
                    lecture.course in course_i.restricted):
                     return False
 
+            # Ignores exception if course is not in table
             except(AttributeError):
                 pass
 
@@ -258,6 +260,6 @@ class Timetable:
     def score(self):
         """ Calculates score and both returns it and sets it as atribute. """
 
-        self.objective_score = objective.objective_function(self)
+        self.objective_score = math.ceil(objective.objective_function(self))
 
         return math.ceil(self.objective_score)

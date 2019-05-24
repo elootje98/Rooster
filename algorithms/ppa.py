@@ -6,7 +6,6 @@ from algorithms import randomalg as ran
 from classes import timetable as tmt
 from helpers import timetable_helpers as hlp
 
-
 """ Parameters for Plant Propagation Algorithm. """
 
 POPULATION = 20

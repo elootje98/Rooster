@@ -37,12 +37,6 @@ def make_table(algorithm):
 
 
 def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
-<<<<<<< HEAD
-    """Swaps two random lectures.
-
-    It takes the coordinates from two lectures and swaps place of the two
-    lectures."""
-=======
     """ Function used to swap a random lecture.
 
     A function that generates two random coordinates corresponding to lectures
@@ -61,7 +55,6 @@ def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
         timetable (Timetable): Timetable to modify.
 
     """
->>>>>>> 52a08c2a4fd54365fe24468290e7b7f45d89b358
 
     c1 = random_coordinates(timetable)
     c2 = random_coordinates(timetable)
@@ -128,12 +121,13 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
 
 
 def random_coordinates(timetable):
-    """Generates random coordinates in the timetable.
+    """ Generates random coordinates in the timetable.
 
     Takes random values for classroom, day and slot, with those, coordinates
     can be generated.
 
     Returns: classroom, day and slot.
+
     """
 
     while True:
@@ -148,11 +142,11 @@ def random_coordinates(timetable):
 
 
 def swap_coordinates(timetable, c1, c2):
-    """Swaps two coordinates in the timetable.
+    """ Swaps two coordinates in the timetable.
 
     Takes two coordinates and swaps them.
-    
-    Arguements:
+
+    Arguments:
         timetable (Timetable): timetable to modify.
         c1: coordinates from the first lecture.
         c2: coordinates from the second lecture.
