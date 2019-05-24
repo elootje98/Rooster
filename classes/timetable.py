@@ -24,6 +24,7 @@ class Timetable:
             grid (numpy.ndarray): 3d-array containing lectures.
             courses [Course]: List of Course objects.
             classrooms [Classroom]: List of Classroom objects.
+            objective_score ()
 
         Methods:
             find_lecture: Finds Lecture object for id.
@@ -254,7 +255,8 @@ class Timetable:
                     self.grid[classroom][day][4] = res.Restricted()
 
     def score(self):
+        """ Calculates score and both returns it and sets it as atribute. """
 
         self.objective_score = objective.objective_function(self)
 
-        return self.objective_score
+        return math.ceil(self.objective_score)
