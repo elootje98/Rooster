@@ -121,7 +121,10 @@ def hillclimber(timetable, iterations, *args):
     Arguments:
         timetable (Timetable): Timetable to modify.
         iterations (int): Number of iterations the hillclimber will do.
-        *args (list):
+        *args [functions]: List of functions to be executed.
+
+    Returns:
+        scores [int]: List of score per iteration.
 
     """
 
