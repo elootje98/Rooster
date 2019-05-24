@@ -14,6 +14,7 @@ from helpers import visualize
 available_algorithms1 = ["random", "greedy", "multi"]
 available_algorithms2 = ["hillclimber", "sa", "ppa"]
 
+
 def multi_table(timetable, iterations, algorithm):
     """ Function that runs algorithm_1 multiple times returns timetable with
     the highest score.
@@ -28,7 +29,7 @@ def multi_table(timetable, iterations, algorithm):
 
     """
 
-    points = -10000 # Arbitrary low value as initial value.
+    points = -10000  # Arbitrary low value as initial value.
 
     for i in range(iterations):
 
@@ -65,18 +66,23 @@ def to_print_question():
 
     return print_function
 
+
 def is_it_int():
 
     while True:
-        iterations = int(input("Number of iterations: "))
+        try:
+            iterations = int(input("Number of iterations: "))
+        except(Exception):
+            iterations = 0.0
 
-        if type(iterations) != type(1)
+        if not isinstance(iterations, int):
             print("You must provide an int.")
             continue
         else:
             break
 
     return iterations
+
 
 def main():
     """ Main script to generate a timetable using certain algorithms.
@@ -91,7 +97,7 @@ def main():
     # Check if arguments given are valid
     for arg in sys.argv[1:]:
         if (arg not in available_algorithms1 and
-            arg not in available_algorithms2):
+           arg not in available_algorithms2):
             print("Invalid input, run: $ main.py to refer to correct input.")
             return
 
@@ -114,7 +120,7 @@ def main():
 
     elif algorithm_1 == "multi":
         while True:
-            algorithm = int(is_it_int())
+            algorithm = input("Choose between greedy and random: ")
 
             if algorithm != "greedy" and algorithm != "random":
                 print("You can only choose between 'greedy' and 'random'.")
@@ -122,7 +128,7 @@ def main():
             else:
                 break
 
-        iterations = int(is_it_int())
+        iterations = is_it_int()
         timetable = multi_table(timetable, iterations, algorithm)
 
     if len(sys.argv) == 2:
@@ -137,10 +143,9 @@ def main():
             iterations = int(is_it_int())
 
             while True:
-                cooling = input("Cooling scheme (linear, exponential, sigmoidal) ")
+                cooling = input("Cooling scheme (linear, exponential, sigmoidal): ")
 
-                if cooling != "linear" and cooling != "exponential" and
-                    cooling != "sigmoidal":
+                if cooling not in ["linear", "exponential", "sigmoidal"]:
                     print("You can only choose: linear, exponential and sigmoidal")
                     continue
                 else:
@@ -149,7 +154,7 @@ def main():
             while True:
                 reheat_option = input("Reheating? (yes / no): ")
 
-                if reheat_option != "yes" and cooling != "no":
+                if reheat_option != "yes" and reheat_option != "no":
                     print("You can only choose: yes or no.")
                     continue
                 else:
@@ -158,9 +163,12 @@ def main():
             if reheat_option == "yes":
 
                 while True:
-                    reheating = int(input("Reheating at temperature (int): "))
+                    try:
+                        reheating = int(input("Reheating at temperature (int): "))
+                    except(Exception):
+                        reheating = 0.0
 
-                    if not int(reheating)
+                    if not isinstance(reheating, int):
                         print("You must provide an int.")
                         continue
                     else:
@@ -176,8 +184,8 @@ def main():
             while True:
                 function = input("Choose hillclimber type (regular, greedyhill, combined): ")
 
-                if function != ("regular" or "greedyhill" or "combined")
-                    print("You must provide an int.")
+                if function not in ["regular", "greedyhill", "combined"]:
+                    print("You must choose between regular, greedyhill or combined.")
                     continue
                 else:
                     break
@@ -185,8 +193,8 @@ def main():
             while True:
                 optional = input("Choose optional (none, pop, burst, combined): ")
 
-                if optional != ("none" or "pop" or "burst" or "combined")
-                    print("You can only choose between 'none' or 'pop' or 'burst' or 'combined')
+                if optional not in ["none", "pop", "burst", "combined"]:
+                    print("You can only choose between none, pop, burst or combined.")
                     continue
                 else:
                     break
@@ -194,7 +202,7 @@ def main():
             while True:
                 iterations = int(input("Number of iterations for hillclimber: "))
 
-                if type(iterations) != type(1):
+                if not isinstance(iterations, int):
                     print("You must provide an int.")
                     continue
                 else:
@@ -246,18 +254,18 @@ def main():
         else:
             print_function = print_function = to_print_question()
             visual_function = input("Execute visual function (yes / no): ")
-            if visual_function != "yes" and visual_function != "no":
-                    print("No vallid input.")
-                    visual_function = "no"
 
+            while visual_function not in ["yes", "no"]:
+                print("No valid input.")
+                visual_function = input("Execute visual function (yes / no): ")
 
     if print_function == "yes":
         printer.make_table(timetable)
+
     if visual_function == "yes":
         visualize.make_plot(labels, scores)
 
     print("Timetable score:", objective.objective_function(timetable))
-
 
 
 main()
