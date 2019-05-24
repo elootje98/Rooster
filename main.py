@@ -73,14 +73,14 @@ def main():
 
             hill_functions_applied = []
             if function == "regular":
-                hill_functions_applied.append(th.swap_random(timetable))
+                hill_functions_applied.append(th.swap_random)
                 labels.append("Hillclimber")
             elif function == "greedyhill":
-                hill_functions_applied.append(hc.greedy_hill(timetable))
+                hill_functions_applied.append(hc.greedy_hill)
                 labels.append("GreedyHill")
             elif function == "combined":
-                hill_functions_applied.append(th.swap_random(timetable))
-                hill_functions_applied.append(hc.greedy_hill(timetable))
+                hill_functions_applied.append(th.swap_random)
+                hill_functions_applied.append(hc.greedy_hill)
                 labels.append("Hillclimber")
                 labels.append("GreedyHill")
             else:
@@ -90,14 +90,14 @@ def main():
             if optional == "none":
                 pass
             elif optional == "pop":
-                hill_functions_applied.append(hc.hill_population(timetable))
+                hill_functions_applied.append(hc.hill_population)
                 labels.append("Pop")
             elif optional == "burst":
-                hill_functions_applied.append(hc.random_burst(timetable))
+                hill_functions_applied.append(hc.random_burst)
                 labels.append("Burst")
             elif optional == "combined":
-                hill_functions_applied.append(hc.hill_population(timetable))
-                hill_functions_applied.append(hc.random_burst(timetable))
+                hill_functions_applied.append(hc.hill_population)
+                hill_functions_applied.append(hc.random_burst)
                 labels.append("Pop")
                 labels.append("Burst")
             else:
@@ -115,8 +115,8 @@ def main():
             print_function = input("Execute print function (yes / no): ")
             visual_function == "no"
         else:
-            print_function = input("Execute print function (yes / no)")
-            visual_function = input("Execute visual function (yes / no)")
+            print_function = input("Execute print function (yes / no): ")
+            visual_function = input("Execute visual function (yes / no): ")
 
         if print_function == "yes":
             printer.make_table(timetable)
