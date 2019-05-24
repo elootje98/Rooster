@@ -1,8 +1,8 @@
 import sys
 
 from helpers import objective
-from helpers import printer
-from algorithms import hillclimber, greedy, randomalg, simulatedan
+# from helpers import printer
+from algorithms import hillclimber, greedy, randomalg, simulated_annealing
 from classes import timetable as tmt
 from data import data
 from helpers import timetable_helpers as th
@@ -59,10 +59,7 @@ def main():
         print("Starting timetable score:", objective.objective_function(timetable))
 
         if algorithm_2 == "siman":
-            simulatedan.simulated(timetable)
-
-        if algorithm_2 == "simanmany":
-            simulatedan.many(timetable, 1)
+            simulated_anealing.simulated(timetable, 1000)
 
         if algorithm_2 == "hillclimber" or algorithm_2 == "greedy_hill":
             iterations = int(input("Number of iterations for hillclimber: "))
