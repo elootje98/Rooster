@@ -92,13 +92,43 @@ class Timetable:
     def make_courses(self):
         """" Fills list of courses with Course objects made from data file. """
 
-        for course in d.courses:
+        relative_path = os.path.dirname(os.path.abspath("main.py"))
+        absolute_path = os.path.join(relative_path, "data", "courses.csv")
+
+        with open(absolute_path) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=';')
+            line = 0
+            courses = []
+
+            # Loops over all lines in csv file
+            for row in csv_reader:
+                # Reads first row with headers
+                if line == 0:
+                    headers = row
+                    line += 1
+                # Reads data rows
+                else:
+                    courses.append(row[0].replace(",", ""))
+
+        for course in courses:
             self.courses.append(crs.Course(course))
 
     def make_classrooms(self):
         """ Fills list of classrooms with Classroom objects from data file. """
 
-        for classroom in d.classrooms:
+        relative_path = os.path.dirname(os.path.abspath("main.py"))
+        absolute_path = os.path.join(relative_path, "data", "classroom.csv")
+
+        with open(abosolute_path) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=';')
+            line = 0
+            classrooms = []
+
+            # Loops over all lines in csv file
+            for row in csv_reader:
+                classrooms = row[0]
+
+        for classroom in classrooms:
             self.classrooms.append(cla.Classroom(classroom[0], classroom[1]))
 
     def make_lectures(self):
@@ -112,8 +142,20 @@ class Timetable:
 
         _id = 0
 
+        relative_path = os.path.dirname(os.path.abspath("main.py"))
+        absolute_path = os.path.join(relative_path, "data", "lectures.csv")
+
+        with open(absolute_path) as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=';')
+            line = 0
+            lectures = []
+
+            # Loops over all lines in csv file
+            for row in csv_reader:
+                lectures.append(row[0].replace(",", ""))
+
         # Loops over lecture data (ld)
-        for ld in d.lectures:
+        for ld in lectures:
             _type = ld[0]
             name = ld[1]
             students = ld[2]
