@@ -9,7 +9,7 @@ in te rooster. Deze moeilijkheid is een door ons bedachte heuristiek en hangt
 af van het aantal in te plannen colleges en het aantal tegelijk volgbare vakken.
 
 ## Iteratieve algoritmes
-- Hillclimber (hillclimber.py)
+- Hillclimber (hillclimber.py):
 
 - Simulated Annealing (simulated_annealing.py): Simulated annealing werkt
 vergelijkbaar met hillclimber, maar accepteert verslechteringen met een bepaalde
@@ -17,9 +17,7 @@ kans. De kans is een exponentiele functie die afhangt van de grootte van de
 verslechtering, de temperatuur en een parameter. De temperatuur is een indicator
 voor hoe ver het algoritme is in zijn totale runs. De temperatuur volgt een
 koelschema. De geimplementeerde koelschemas zijn lineair, exponentieel en
-sigmoidaal.
-
-Alle parameters bevinden zich bovenaan het bestand en kunnen
+sigmoidaal. Alle parameters bevinden zich bovenaan het bestand en kunnen
 eenvoudig worden aangepast.
 
 - Plant Propagation Algorithm (ppa.py): Plant propagation initialiseert een
@@ -29,7 +27,5 @@ er moet worden gemaakt en hoeveel mutaties (swaps van lectures) moeten worden ge
 Hoe beter het rooster, hoe meer kinderen en minder mutaties. De kindroosters en
 ouderroosters worden in een lijst gegooid, gesorteerd op hun score en de beste
 roosters worden gebruikt om een startgroep te maken voor een volgende generatie.
-Deze formule wordt een aantal keer herhaald.
-
-Alle parameters bevinden zich bovenaan het bestand en kunnen
+Deze formule wordt een aantal keer herhaald. Alle parameters bevinden zich bovenaan het bestand en kunnen
 eenvoudig worden aangepast.
