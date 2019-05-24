@@ -7,12 +7,12 @@ from helpers import timetable_helpers as th
 
 """ Parameters for Plant Propagation Algorithm. """
 
-POPULATION = 2  # Size of initial poulation
-GENERATIONS = 3  # Total generations
+POPULATION = 20  # Size of initial poulation
+GENERATIONS = 30  # Total generations
 LOWER_BOUND = -1400
 UPPER_BOUND = 500
 NUMBER_PAR = 3  # Parameter for number of child tables
-RUN_PAR = 100  # Parameter for number of iterations
+RUN_PAR = 500  # Parameter for number of iterations
 
 
 def make_table():

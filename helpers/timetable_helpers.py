@@ -9,8 +9,8 @@ def make_table(algorithm):
     """ Make an initial table either randomly or using the greedy algorithm.
 
     The algorithm that is used to build a table is taken from the 2nd command
-    line argument (args[1]). Both a random and greedy algorithm are available to
-    build the timetable. However, greedy is also based on a random
+    line argument (args[1]). Both a random and greedy algorithm are available
+    to build the timetable. However, greedy is also based on a random
 
     Arguments:
         algorithm (String): Algorithm used to build the table
@@ -72,10 +72,10 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
     constraints concerning restrictions. After swapping, the score is compared
     to the score before the swap. If the function is called by the simmulated
     annealing algorithm, a chance value is determined. The lectures are swapped
-    back if the order in which the lectures occur violates order restrictions or
-    if the score after the swap is lower than the score before the swap and the
-    chance determined for simmulated annealing is lower than a random chance on
-    the same scale.
+    back if the order in which the lectures occur violates order restrictions
+    or if the score after the swap is lower than the score before the swap and
+    the chance determined for simmulated annealing is lower than a random
+    chance on the same scale.
 
     Arguments:
         timetable (Timetable): Timetable to modify.
@@ -102,7 +102,7 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
     if (timetable.check_restriction(lecture_1, c2[1], c2[2]) and
        timetable.check_restriction(lecture_2, c1[1], c1[2])):
 
-       # Swap coordinates of the lectures and calculates new score.
+        # Swap coordinates of the lectures and calculates new score.
         timetable = swap_coordinates(timetable, c1, c2)
         score_new = timetable.score()
         score_diff = score_new - score_old
@@ -111,7 +111,7 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
         course_1 = timetable.find_course(lecture_1.course)
         course_2 = timetable.find_course(lecture_2.course)
 
-        # Check if the function is called by the simmulated annealing algorithm.
+        # Check if the function is called by the simmulated annealing algorithm
         if sa:
             chance = np.exp(score_diff / (k * T))
 
@@ -119,7 +119,7 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
         if (not timetable.check_order([course_1, course_2]) or
            (score_diff < 0 and chance < np.random.rand())):
 
-           # Swap back.
+            # Swap back.
             timetable = swap_coordinates(timetable, c1, c2)
             timetable.score()
 
