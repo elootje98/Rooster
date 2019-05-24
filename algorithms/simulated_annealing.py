@@ -2,6 +2,8 @@ import numpy as np
 
 from helpers import timetable_helpers as hlp
 
+""" Parameters for Simulated Annealing. """
+
 TEMP_HIGH = 100
 TEMP_LOW = 1
 SIGMOIDAL_PAR = 0.01
@@ -34,12 +36,13 @@ def make_table(iterations, cooling):
 
     for i in range(iterations):
 
-        # Handles
+        # Handles special hillclimber cooling scheme
         if cooling == "hillclimber":
             timetable = hlp.swap_random(timetable)
         else:
             timetable = hlp.swap_random(timetable, sa=True, T=temp, k=TEMP_PAR)
 
+            # Adjusts temperature based of chosen cooling scheme
             if cooling == "linear":
                 temp = linear(iterations, i)
             elif cooling == "exponential":

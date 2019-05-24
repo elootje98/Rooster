@@ -6,6 +6,9 @@ from algorithms import randomalg as ran
 from classes import timetable as tmt
 from helpers import timetable_helpers as hlp
 
+
+""" Parameters for Plant Propagation Algorithm. """
+
 POPULATION = 20
 GENERATIONS = 30
 LOWER_BOUND = -1400
@@ -32,8 +35,8 @@ def make_table():
 
     """
 
+    # Generates initial population
     timetable_list = []
-
     for i in range(POPULATION):
         timetable = hlp.make_table("random")
         timetable_list.append(timetable)
@@ -45,16 +48,19 @@ def make_table():
         for timetable in timetable_list:
             score = timetable.objective_score
 
+            # Creates child tables with varying amount of iterations
             for k in range(offspring_number(score)):
                 offspring = copy.deepcopy(timetable)
                 swap_lectures(offspring, offspring_iterations(score))
                 offspring.score()
                 offspring_list.append(offspring)
 
+        # Join initial and new timetables and sort
         timetable_list = timetable_list + offspring_list
         timetable_list.sort(key=lambda table: table.objective_score,
                             reverse=True)
 
+        # Select the best tables and set new initial population
         timetable_list = timetable_list[0:POPULATION]
 
     return timetable_list[0]
