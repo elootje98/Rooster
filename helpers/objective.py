@@ -60,10 +60,7 @@ def day_check(timetable):
                 courses_day[i - 1].score -= 5
                 points -= 10
 
-
-
     return points
-
 
 def spread_check(timetable):
     """ Calculates timetable score for maximum spread rule.
@@ -91,6 +88,8 @@ def spread_check(timetable):
         found_WC = False
         found_PR = False
 
+        # Loop over all the lectures in a course and put them in different
+        # lists according to their type.
         for lecture in course.lectures:
             if lecture.type == "HC":
                 count += 1
@@ -110,6 +109,8 @@ def spread_check(timetable):
         list_HC.sort()
         tracks = max(len(list_WC), len(list_PR))
 
+        # Sort on track and ???
+        # Replace the lectures in the lists with their coordinates
         list_WC.sort(key=lambda lecture: lecture.track)
         for i in range(len(list_WC)):
             list_WC[i] = timetable.find_slot(list_WC[i])[0][1]
@@ -117,8 +118,9 @@ def spread_check(timetable):
         for i in range(len(list_PR)):
             list_PR[i] = timetable.find_slot(list_PR[i])[0][1]
 
+        # Count is 2 + 2 HC ????
+        # Give 10 points for the optimal spread of 4 lectures.
         if count == 2:
-
             if len(list_HC) == 2:
                 if list_HC == ([0, 3] or [1, 4]):
                     course.lectures[0].score += 10
@@ -183,6 +185,8 @@ def check_track_one(tracks, list_WC, list_PR, day):
 
     points = 0
 
+    # Loops over the tracks and gives points points if they are planned in
+    # on the right day.
     for track in range(tracks):
         try:
             if list_WC[track] == day:
@@ -192,7 +196,6 @@ def check_track_one(tracks, list_WC, list_PR, day):
                 points += 20 / tracks
 
     return points
-
 
 def check_track_two(tracks, list_WC, list_PR, day_1, day_2):
     """ Checks if both WC and PR are scheduled on given day and assigns points.
@@ -234,12 +237,16 @@ def students_check(timetable):
     """
 
     points = 0
+
+    # Loops over the courses in the timetable.
     for course in timetable.courses:
         for lecture in course.lectures:
             room = timetable.find_slot(lecture)[0][0]
 
             margin = timetable.classrooms[room].capacity - lecture.students
 
+            # If there are more sudents in a room than there is space,
+            # points get subtracted.
             if margin < 0:
                 lecture.score += margin
                 points += margin
@@ -262,7 +269,11 @@ def nightslot_check(timetable):
     """
 
     points = 0
+
+    # Loops over the days to check nightslot.
     for day in range(5):
+
+        # When nightslot is used, points get subtracted.
         if timetable.grid[5][day][4].course != ("empty"):
             timetable.grid[5][day][4].score -= 20
             points -= 20
