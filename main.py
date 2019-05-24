@@ -1,11 +1,11 @@
 import sys
 
 from helpers import objective
-# from helpers import printer
 from algorithms import hillclimber, greedy, randomalg, simulated_annealing
 from classes import timetable as tmt
 from data import data
 from helpers import timetable_helpers as th
+import copy
 
 available_algorithms1 = ["random", "greedy"]
 available_algorithms2 = ["hillclimber"] # TODO add other algo's
@@ -51,8 +51,12 @@ def main():
         randomalg.make_table(timetable)
 
     if algorithm_1 == "greedy":
-        iterations = int(input("Number of iterations for greedy: "))
-        timetable = greedy.greedy_table(timetable, iterations)
+        greedy.make_table(timetable)
+
+    if algorithm_1 == "multi":
+        algorithm = input("Algorithm: ")
+        iterations = int(input("Number of iterations: "))
+        multi_table(timetable, iterations, algorithm)
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]
@@ -75,7 +79,20 @@ def main():
 
     print("Timetable score:", objective.objective_function(timetable))
 
+    def multi_table(timetable, iterations, algorithm):
 
+        # Save all the timetables and their points
+        points = -10000
+        for i in range(iterations):
+            compare_timetable = copy.deepcopy(timetable)
+            (algorithm).make_table(compare_timetable)
+            new_points = objective_function(compare_timetable)
+            if new_points > points:
+                new_timetable = copy.deepcopy(compare_timetable)
+                points = new_points
+
+        # Select the timetable with the hightest points
+        return copy.deepcopy(new_timetable)
 
     # Recheck de score voor de individuele vakken
     # rechecked_score = 0 # TODO: weghalen of netter neerzetten later
