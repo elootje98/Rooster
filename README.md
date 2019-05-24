@@ -1,17 +1,7 @@
-# Voor Bram
+## Handleiding voor Lectures & Lesroosters
 
-Gedaan deze week:
-- repository opgeschoond (docstrings)
-- greedy werkend gemaakt
-- random echt random gemaakt
-- check_restriction daadwerkelijk geimplementeerd
-- printer.py werkend gemaakt
-- tracks van tevoren geimplementeerd
-- simulated annealing (deels)
-- hillclimber verder geschreven
+# Requirements
+Deze package is geschreven met Python versie 3.7.2. Benodigde modules kunnen
+worden geinstalleerd met 'pip install -r requirements.txt'.
 
-Er missen nog een aantal docstrings:
-- greedy.py
-- hillclimber_old.py
-- hillclimber.py
-- multiplegreedy.py
+# Handleiding
