@@ -85,7 +85,17 @@ def main():
         points = -10000
         for i in range(iterations):
             compare_timetable = copy.deepcopy(timetable)
-            (algorithm).make_table(compare_timetable)
+            if algorithm == "random":
+                randomalg.make_talbe(compare_timetable)
+            elif algorithm == "greedy":
+                greedy.make_table(compare_timetable)
+            elif algorithm == "hillclimber":
+                hillclimber.make_table(compare_timetable)
+            elif algorithm == "simulated_annealing":
+                simulated_annealing.make_table(compare_timetable)
+            else:
+                raise ValueError("Invalid algorithm", cooling)
+
             new_points = objective_function(compare_timetable)
             if new_points > points:
                 new_timetable = copy.deepcopy(compare_timetable)
