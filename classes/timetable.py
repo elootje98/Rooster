@@ -181,7 +181,8 @@ class Timetable:
                                               capacity, track)
                         _id += 1
                         track += 1
-                        self.find_course(name).lectures.append(lecture)
+
+                    self.find_course(name).lectures.append(lecture)
 
     def add_restricted(self):
         """ Adds restricted courses to each Course object.
