@@ -1,7 +1,6 @@
 import sys
 
 from helpers import objective
-# from helpers import printer
 from algorithms import hillclimber, greedy, randomalg, simulated_annealing
 from classes import timetable as tmt
 from data import data

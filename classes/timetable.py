@@ -4,7 +4,7 @@ import os
 
 import numpy as np
 
-import helpers.objective as objective
+from helpers import objective
 from classes import classroom as cla
 from classes import course as crs
 from classes import empty as emp
@@ -144,7 +144,7 @@ class Timetable:
                         lecture = lec.Lecture(_type, name, _id, students,
                                               capacity, track)
 
-                    # 
+                    #
                     _id += 1
                     track += 1
                     self.find_course(name).lectures.append(lecture)

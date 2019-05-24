@@ -28,15 +28,15 @@ def make_table(iterations, cooling):
 
     """
 
+    # Sets starting temperature and generates random timetable
     temp = TEMP_HIGH
     timetable = hlp.make_table("random")
-    score_list = []
 
     for i in range(iterations):
 
+        # Handles
         if cooling == "hillclimber":
             timetable = hlp.swap_random(timetable)
-            score_list.append(timetable.objective_score)
         else:
             timetable = hlp.swap_random(timetable, sa=True, T=temp, k=TEMP_PAR)
 
@@ -49,7 +49,7 @@ def make_table(iterations, cooling):
             else:
                 raise ValueError("Invalid cooling function:", cooling)
 
-    return score_list
+    return timetable
 
 
 def linear(iterations, i):
