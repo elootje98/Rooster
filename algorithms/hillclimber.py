@@ -125,6 +125,8 @@ def hillclimber(timetable, iterations, *args):
 
     """
 
+    scores = []
+
     # Iterates over a specified range.
     for i in range(iterations):
 
@@ -132,3 +134,6 @@ def hillclimber(timetable, iterations, *args):
         for function in args[0]:
             function(timetable)
         timetable.score()
+        scores.append(timetable.objective_score)
+
+    return scores

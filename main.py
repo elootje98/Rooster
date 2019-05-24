@@ -69,14 +69,14 @@ def main():
             iterations = int(input("Number of iterations for hillclimber: "))
 
             hill_functions_applied = [hill_functions[f] for f in sys.argv if f in hill_functions]
-            hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
+            scores = hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
 
         # Applies helper functions added to the command line as args
         helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
         for function in helper_functions_applied:
             try:
                 function(timetable)
-            catch (AttributeError):
+            except (AttributeError):
                 function( sys.argv[2], scores)
 
 
