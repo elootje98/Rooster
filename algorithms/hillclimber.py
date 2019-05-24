@@ -18,9 +18,11 @@ def hill_population(timetable):
 
     """
 
-    # State the number of swaps to be made and chance to swap
+    # State the number of swaps to be made and chance to swap.
     samples = 500
     chance = 0.02
+
+    # Check if random number is below chance value.
     if np.random.random_sample() < chance:
         to_swap = []
         scores = []
@@ -30,14 +32,15 @@ def hill_population(timetable):
             c = th.random_coordinates(timetable)
             to_swap.append(c)
 
-        # Iterate in steps of 2 in order to swap only two lectures
+        # Iterate in steps of 2 to swap only two lectures.
         for j in range(0, len(to_swap), 2):
             th.swap_coordinates(timetable, to_swap[j], to_swap[j+1])
             scores.append(timetable.score())
             th.swap_coordinates(timetable, to_swap[j], to_swap[j+1])
+
         max_score = scores.index(max(scores))
 
-        # Re-execute swap with the highest score
+        # Re-execute swap with the highest score.
         if max_score >= timetable.objective_score:
             th.swap_coordinates(timetable, to_swap[2*max_score], to_swap[2*max_score+1])
 
@@ -47,27 +50,34 @@ def random_burst(timetable, samples = 50):
     is influenced negatively.
 
     Uses a chance that is proportionate to the difference between the current
-    timetable score and  the maximum score on the total range of scores.
+    timetable score and  the maximum score on the total range of scores. Chance
+    is just an arbitrary small number, to be changed by the user.
 
     Arguments:
         timetable (Timetable): Timetable to modify.
 
     """
 
+    # State lower and upper bound and calculate score differences.
     maximum_points = 420
     minimum_points = -1400
     current_points = timetable.objective_score
     delta_points = maximum_points - current_points
 
-    # Use chance to swap multiple lectures
+    # Use chance to swap multiple lectures.
     chance = 0.005 * delta_points
     bound = np.random.uniform(0, maximum_points - minimum_points)
+
+    # Checks if chance is higher than random bound.
     if (bound < chance):
+
+        # Get random coordinates to swap and fill list for
         to_swap = []
         for samples in range(2*samples):
             c = th.random_coordinates(timetable)
             to_swap.append(c)
 
+        # Swap lectures in the list.
         for k in range(0, len(to_swap), 2):
             th.swap_coordinates(timetable, to_swap[k], to_swap[k+1])
 
@@ -83,17 +93,18 @@ def greedy_hill(timetable):
 
     """
 
-    # Variable to compare lecture score with current lowest lecture found
+    # Variable to compare lecture score with current lowest lecture found.
     current_score = 100
 
-    # Iterate over all lectures to find the lecture with the lowest score
+    # Iterate over all lectures to find the lecture with the lowest score.
     for course in timetable.courses:
         for lecture in course.lectures:
             if lecture.score < current_score:
+
                 c1 = timetable.find_slot(lecture)[0]
                 current_score = timetable.grid[c1[0]][c1[1]][c1[2]].score
-    #print(c1, timetable.grid[c1[0]][c1[1]][c1[2]].score) #TODO weghalen later
-    # Get random second lecture and swap the two lectures
+
+    # Get random second lecture and swap the two lectures.
     c2 = th.random_coordinates(timetable)
     th.swap_lectures(timetable, c1, c2)
 
@@ -114,11 +125,10 @@ def hillclimber(timetable, iterations, *args):
 
     """
 
-    # Iterates over a specified range
+    # Iterates over a specified range.
     for i in range(iterations):
 
         # Apply optional added functions.
         for function in args[0]:
             function(timetable)
         timetable.score()
-        #print(timetable.objective_score) TODO weghalen
