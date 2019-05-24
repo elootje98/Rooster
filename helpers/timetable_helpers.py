@@ -28,14 +28,17 @@ def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
     c1 = random_coordinates(timetable)
     c2 = random_coordinates(timetable)
 
-    swap_lectures(timetable, c1, c2)
+    timetable = swap_lectures(timetable, c1, c2, chance, sa, T, k)
+
+    return timetable
 
 
-def swap_lectures(timetable, c1, c2, chance=0, sa=False):
+def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
 
     lecture_1 = timetable.grid[c1[0]][c1[1]][c1[2]]
     lecture_2 = timetable.grid[c2[0]][c2[1]][c2[2]]
     score_old = timetable.score()
+
     if (timetable.check_restriction(lecture_1, c2[1], c2[2]) and
        timetable.check_restriction(lecture_2, c1[1], c1[2])):
 
