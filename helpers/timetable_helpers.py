@@ -24,6 +24,10 @@ def make_table(algorithm):
 
 
 def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
+    """Swaps two random lectures.
+
+    It takes the coordinates from two lectures and swaps place of the two
+    lectures."""
 
     c1 = random_coordinates(timetable)
     c2 = random_coordinates(timetable)
@@ -63,6 +67,13 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
 
 
 def random_coordinates(timetable):
+    """Generates random coordinates in the timetable.
+
+    Takes random values for classroom, day and slot, with those, coordinates
+    can be generated.
+
+    Returns: classroom, day and slot.
+    """
 
     while True:
         classroom = np.random.randint(0, 7)
@@ -76,6 +87,18 @@ def random_coordinates(timetable):
 
 
 def swap_coordinates(timetable, c1, c2):
+    """Swaps two coordinates in the timetable.
+
+    Takes two coordinates and swaps them.
+    
+    Arguements:
+        timetable (Timetable): timetable to modify.
+        c1: coordinates from the first lecture.
+        c2: coordinates from the second lecture.
+
+    Returns:
+        timetable
+    """
 
     t = timetable.grid
     t[c1[0]][c1[1]][c1[2]], t[c2[0]][c2[1]][c2[2]] = \
