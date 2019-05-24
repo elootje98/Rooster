@@ -3,9 +3,9 @@ import sys
 
 from algorithms import greedy as grd
 from algorithms import hillclimber as hc
+from algorithms import ppa
 from algorithms import randomalg as rnd
 from algorithms import simulated_annealing as sa
-from algorithms import ppa
 from classes import timetable as tmt
 from helpers import objective, printer
 from helpers import timetable_helpers as th
