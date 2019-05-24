@@ -10,7 +10,7 @@ SIGMOIDAL_PAR = 0.01  # Parameter for the sigmoidal function (changes curve)
 TEMP_PAR = 0.4  # Temperature constant, alters chance to accept worse tables
 
 
-def make_table(timetable, iterations, cooling):
+def make_table(timetable, iterations, cooling, reheating=0):
     """ Main function for Simulated Annealing.
 
     Simulated Annealing tries swapping a given number of lectures, always
@@ -50,6 +50,10 @@ def make_table(timetable, iterations, cooling):
                 temp = sigmoidal(iterations, i)
             else:
                 raise ValueError("Invalid cooling function:", cooling)
+
+        print(temp)
+        if temp < reheating:
+            return make_table(timetable, iterations, cooling)
 
     return timetable
 
