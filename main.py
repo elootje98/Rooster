@@ -53,14 +53,30 @@ def multi_table(timetable, iterations, algorithm):
 
 
 def to_print_question():
-    print_function = input("Execute print function (yes / no): ")
 
-    if print_function != "yes" and print_function != "no":
-        print("No vallid input.")
-        print_function = "no"
+    while True:
+        print_function = input("Execute print function (yes / no): ")
+
+        if print_function != "yes" and print_function != "no":
+            print("You can only pick yes and no.")
+            continue
+        else:
+            break
 
     return print_function
 
+def is_it_int():
+
+    while True:
+        iterations = int(input("Number of iterations: "))
+
+        if type(iterations) != type(1)
+            print("You must provide an int.")
+            continue
+        else:
+            break
+
+    return iterations
 
 def main():
     """ Main script to generate a timetable using certain algorithms.
@@ -97,8 +113,16 @@ def main():
         grd.make_table(timetable)
 
     elif algorithm_1 == "multi":
-        algorithm = input("Algorithm: ")
-        iterations = int(input("Number of iterations: "))
+        while True:
+            algorithm = int(is_it_int())
+
+            if algorithm != "greedy" and algorithm != "random":
+                print("You can only choose between 'greedy' and 'random'.")
+                continue
+            else:
+                break
+
+        iterations = int(is_it_int())
         timetable = multi_table(timetable, iterations, algorithm)
 
     if len(sys.argv) == 2:
@@ -110,20 +134,72 @@ def main():
         print("Starting timetable score:", objective.objective_function(timetable))
 
         if algorithm_2 == "sa":
-            iterations = int(input("Number of iterations: "))
-            cooling = input("Cooling scheme (linear, exponential, sigmoidal) ")
-            reheat_option = input("Reheating? (yes / no): ")
+            iterations = int(is_it_int())
+
+            while True:
+                cooling = input("Cooling scheme (linear, exponential, sigmoidal) ")
+
+                if cooling != "linear" and cooling != "exponential" and
+                    cooling != "sigmoidal":
+                    print("You can only choose: linear, exponential and sigmoidal")
+                    continue
+                else:
+                    break
+
+            while True:
+                reheat_option = input("Reheating? (yes / no): ")
+
+                if reheat_option != "yes" and cooling != "no":
+                    print("You can only choose: yes or no.")
+                    continue
+                else:
+                    break
+
             if reheat_option == "yes":
-                reheating = int(input("Reheating at temperature (int): "))
+
+                while True:
+                    reheating = int(input("Reheating at temperature (int): "))
+
+                    if not int(reheating)
+                        print("You must provide an int.")
+                        continue
+                    else:
+                        break
+
                 scores = sa.make_table(timetable, iterations, cooling, reheating)
             else:
                 scores = sa.make_table(timetable, iterations, cooling)
             labels = ["Simmulated Annealing"]
 
         if algorithm_2 == "hillclimber":
-            function = input("Choose hillclimber type (regular, greedyhill, combined): ")
-            optional = input("Choose optional (none, pop, burst, combined): ")
-            iterations = int(input("Number of iterations for hillclimber: "))
+
+            while True:
+                function = input("Choose hillclimber type (regular, greedyhill, combined): ")
+
+                if function != ("regular" or "greedyhill" or "combined")
+                    print("You must provide an int.")
+                    continue
+                else:
+                    break
+
+            while True:
+                optional = input("Choose optional (none, pop, burst, combined): ")
+
+                if optional != ("none" or "pop" or "burst" or "combined")
+                    print("You can only choose between 'none' or 'pop' or 'burst' or 'combined')
+                    continue
+                else:
+                    break
+
+            while True:
+                iterations = int(input("Number of iterations for hillclimber: "))
+
+                if type(iterations) != type(1):
+                    print("You must provide an int.")
+                    continue
+                else:
+                    break
+
             labels = []
 
             hill_functions_applied = []
