@@ -9,7 +9,6 @@ from classes import course as crs
 from classes import empty as emp
 from classes import lecture as lec
 from classes import restricted as res
-from data import data as d
 from helpers import objective
 
 
