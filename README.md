@@ -91,13 +91,36 @@ rooster met de maximaal te behalen score. Een hogere score van het huidige
 rooster betekent een lagere kans waarmee 'burst' uitgevoerd kan worden.
 'combined' betekent dat zowel 'pop' als 'burst' uitegevoerd worden.
 
-Nadat het hillclimber algoritme klaar is met itereren, zal de gebruiker
+Nadat het Hillclimber algoritme klaar is met itereren, zal de gebruiker
 gevraagd worden of het rooster uitgeprint moet worden. Daarnaast wordt ook
 gevraagd of de gebruiker het rooster visueel wil weergeven. Als de gebruiker
 hierop ook 'yes' antwoord, zal een plot worden gemaakt van de score over het
 verloop van de iteraties van het algoritme.
 
 $ main.py algorithm_1 sa :
+Na het genereren van het initiele rooster heeft de gebruiker ook de keuze voor
+simulated annealing. Bij simulated annealing wordt er een starttemperatuur
+gekozen, die met elke iteratie afneemt. De mate waarmee de temperatuur afneemt
+hangt af van het koelschema. Men kan kiezen uit de volgende koelschemas: linear,
+exponentieel en sigmoidal.
+Bij elke iteratie wordt de inhoud van twee random plekken in het rooster
+verwisseld. Als deze verwisseling een verbetering geeft van het puntenaantal van
+het rooster, wordt verwisseling geaccepteerd. Echter, bij een verslechtering,
+wordt de verslechtering met een bepaalde kans geaccepteerd. Deze acceptatiekans
+hangt af van de temperatuur (hoe lager de temperatuur, hoe lager de
+acceptatiekans) en van de mate van verslechtering (hoe groter de verslechtering,
+hoe lager de acceptatiekans).
+Ook kan de gebruiker kiezen voor 'reheaten', dit betekent dat de temperatuur
+weer naar de starttemperatuur wordt gezet, wanneer de temperatuur een
+bepaalde waarde heeft bereikt. De waarde waar de gebruiker wil 'reheaten' wordt
+gevraagd aan de gebruiker.
+
+Nadat Simulated Annealing algoritme klaar is met itereren, zal de gebruiker
+gevraagd worden of het rooster uitgeprint moet worden. Daarnaast wordt ook
+gevraagd of de gebruiker het rooster visueel wil weergeven. Als de gebruiker
+hierop ook 'yes' antwoord, zal een plot worden gemaakt van de score over het
+verloop van de iteraties van het algoritme.
+
 
 $ main.py algorithm_1 ppa :
 Nadat het initële rooster is gegenereerd wordt het Plant Propagation algoritme
