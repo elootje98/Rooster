@@ -76,7 +76,7 @@ def main():
     for arg in sys.argv[1:]:
         if (arg not in available_algorithms1 and
             arg not in available_algorithms2):
-            print("Wrong input, run: $ main.py to refer to correct input.")
+            print("Invalid input, run: $ main.py to refer to correct input.")
             return
 
     if len(sys.argv) < 2:
@@ -92,22 +92,18 @@ def main():
 
     if algorithm_1 == "random":
         rnd.make_table(timetable)
-        print_function = to_print_question()
-        visual_function = "no"
 
-
-    if algorithm_1 == "greedy":
+    elif algorithm_1 == "greedy":
         grd.make_table(timetable)
-        print_function = to_print_question()
-        visual_function = "no"
 
-    if algorithm_1 == "multi":
+    elif algorithm_1 == "multi":
         algorithm = input("Algorithm: ")
         iterations = int(input("Number of iterations: "))
         timetable = multi_table(timetable, iterations, algorithm)
-        print_function = print_function = to_print_question()
-        visual_function = "no"
 
+    if len(sys.argv) == 2:
+        print_function = to_print_question()
+        visual_function = "no"
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]

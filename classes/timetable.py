@@ -147,7 +147,7 @@ class Timetable:
             # Loops over all lines in csv file
             for row in csv_reader:
                 lectures.append(row)
-
+        print(lectures)
         # Loops over lecture data (ld)
         for ld in lectures:
             _type = ld[0]
@@ -227,7 +227,7 @@ class Timetable:
             courses [Course]: List of courses to check.
 
         Returns:
-            Returns True if all courses are in the correct order, False if not.
+            True if all courses are in the correct order, False if not.
 
         """
 
@@ -260,8 +260,8 @@ class Timetable:
 
         Arguments:
             lecture (Lecture): Lecture to be planned in.
-            day (int): day to be planned in.
-            slot (int):slot to be planned in.
+            day (int): Day to be planned in.
+            slot (int): Slot to be planned in.
 
         Returns:
             True if no restrictions are violated, False otherwise.
