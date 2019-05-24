@@ -74,10 +74,10 @@ def main():
         # Applies helper functions added to the command line as args
         helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
         for function in helper_functions_applied:
-            try:
+            if "print" in helper_functions_applied
                 function(timetable)
-            except (AttributeError):
-                function( sys.argv[2], scores)
+            if "visual" in helper_functions_applied:
+                function(sys.argv[2], scores)
 
 
     print("Timetable score:", objective.objective_function(timetable))
