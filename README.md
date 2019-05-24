@@ -6,7 +6,7 @@ algoritmes op zoek te gaan naar het beste weekrooster voor de UvA. Een rooster
 is geldig als alle vakken zijn ingepland volgens de regels van de UvA. Er worden
 punten toegekend aan een rooster op basis van een aantal spelregels: de
 objective function. Een volledige beschrijving van de geldigheidsregels,
-spelregels, rooster en vakkenlijst vind je hier.
+spelregels, rooster en vakkenlijst vind je [hier](http://heuristieken.nl/wiki/index.php?title=Lectures_%26_Lesroosters).
 
 We zijn niet toegkomen aan het deel van de case met individuele
 vakinschrijvingen. We hebben geprobeerd meer nadruk te leggen op het implementeren
@@ -28,7 +28,8 @@ uitleg staat in de ReadMe van deze map.
 voorkomen. Verdere uitleg in de ReadMe van deze map.
 - presentatie: bevat onze presentatie van 24-05, deze wordt nog aangepast voor
 de presentatie van woensdag.
-- main.py: wordt gebruikt om alle algoritmes aan te roepen.
+- main.py: wordt gebruikt om alle algoritmes aan te roepen. Gebruik van dit
+script wordt uitgelegd in de handleiding.
 
 ## Auteurs
 - Wessel Rijk
