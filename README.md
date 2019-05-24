@@ -1,5 +1,7 @@
 # Handleiding voor Lectures & Lesroosters
 
+
+
 ## Requirements
 Deze package is geschreven in Python3.7.2. De benodigde modules staan in
 'requirements.txt' en kunnen worden geinstalleerd met 'pip install -r
@@ -16,4 +18,14 @@ uitleg staat in de ReadMe van deze map.
 voorkomen. Verdere uitleg in de ReadMe van deze map.
 - presentatie: bevat onze presentatie van 24-05, deze wordt nog aangepast voor
 de presentatie van woensdag.
--
+- main.py: wordt gebruikt om alle algoritmes aan te roepen.
+
+## Auteurs
+- Wessel Rijk
+- Elodie Rijnja
+- József Zsíros
+
+## Dankwoord
+- Bram voor de geweldige begeleiding en eindeloze geduld.
+- Het hele team Heuristieken
+- De koffiemachine naast de hokjes bij B1.19
