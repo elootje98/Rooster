@@ -1,5 +1,4 @@
 from classes import timetable as t
-from data import data as d
 
 
 def objective_function(timetable):
