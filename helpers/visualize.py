@@ -6,7 +6,7 @@ def make_plot(labels, scores):
 
     seperator = " + "
     title = seperator.join([x.capitalize() for x in labels])
-    title += " " + str(len(scores)) + " iterations"
+    title += " - " + str(len(scores)) + " iterations"
 
     plt.figure()
     plt.plot(range(len(scores)), scores, label=labels[0].capitalize())
