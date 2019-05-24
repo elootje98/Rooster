@@ -147,7 +147,7 @@ class Timetable:
             # Loops over all lines in csv file
             for row in csv_reader:
                 lectures.append(row)
-                
+
         # Loops over lecture data (ld)
         for ld in lectures:
             _type = ld[0]
