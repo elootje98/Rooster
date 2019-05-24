@@ -1,11 +1,16 @@
+import copy
 import sys
 
+<<<<<<< HEAD
+from algorithms import greedy, hillclimber, randomalg, simulated_annealing
+=======
 from helpers import objective, printer, visualize
 from algorithms import hillclimber, greedy, randomalg, simulated_annealing
+>>>>>>> 00ff6d4f25960073d88699f4f54547b57a02b43a
 from classes import timetable as tmt
 from data import data
+from helpers import objective, printer
 from helpers import timetable_helpers as th
-import copy
 
 available_algorithms1 = ["random", "greedy, multi"]
 available_algorithms2 = ["hillclimber"] # TODO add other algo's

@@ -9,7 +9,6 @@ from classes import course as crs
 from classes import empty as emp
 from classes import lecture as lec
 from classes import restricted as res
-from data import data as d
 from helpers import objective
 
 
@@ -102,13 +101,7 @@ class Timetable:
 
             # Loops over all lines in csv file
             for row in csv_reader:
-                # Reads first row with headers
-                if line == 0:
-                    headers = row
-                    line += 1
-                # Reads data rows
-                else:
-                    courses.append(row[0].replace(",", ""))
+                courses.append(row[0])
 
         for course in courses:
             self.courses.append(crs.Course(course))
@@ -119,20 +112,21 @@ class Timetable:
         relative_path = os.path.dirname(os.path.abspath("main.py"))
         absolute_path = os.path.join(relative_path, "data", "classroom.csv")
 
-        with open(abosolute_path) as csv_file:
+        with open(absolute_path) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=';')
             line = 0
             classrooms = []
 
             # Loops over all lines in csv file
             for row in csv_reader:
-                classrooms = row[0]
+                classrooms.append(row)
 
         for classroom in classrooms:
-            self.classrooms.append(cla.Classroom(classroom[0], classroom[1]))
+            self.classrooms.append(cla.Classroom(classroom[0],
+                                   int(classroom[1])))
 
     def make_lectures(self):
-        """ Makes all needed lectures from list of coursesself.
+        """ Makes all needed lectures from list of courses.
 
         Creates Lecture objects for every course. Creates seperate lectures
         when student number exceeds the capacity. Werkcollege and Practicum
@@ -152,14 +146,14 @@ class Timetable:
 
             # Loops over all lines in csv file
             for row in csv_reader:
-                lectures.append(row[0].replace(",", ""))
+                lectures.append(row)
 
         # Loops over lecture data (ld)
         for ld in lectures:
             _type = ld[0]
             name = ld[1]
-            students = ld[2]
-            capacity = ld[3]
+            students = int(ld[2])
+            capacity = int(ld[3])
 
             # Handles Hoorcollege
             if _type == "HC":
