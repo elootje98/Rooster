@@ -1,6 +1,6 @@
 import numpy as np
 
-from helpers import timetable_helpers as hlp
+from helpers import timetable_helpers as th
 
 """ Parameters for Simulated Annealing. """
 
@@ -32,15 +32,15 @@ def make_table(iterations, cooling):
 
     # Sets starting temperature and generates random timetable
     temp = TEMP_HIGH
-    timetable = hlp.make_table("random")
+    timetable = th.make_table("random")
 
     for i in range(iterations):
 
         # Handles special hillclimber cooling scheme
         if cooling == "hillclimber":
-            timetable = hlp.swap_random(timetable)
+            timetable = th.swap_random(timetable)
         else:
-            timetable = hlp.swap_random(timetable, sa=True, T=temp, k=TEMP_PAR)
+            timetable = th.swap_random(timetable, sa=True, T=temp, k=TEMP_PAR)
 
             # Adjusts temperature based of chosen cooling scheme
             if cooling == "linear":

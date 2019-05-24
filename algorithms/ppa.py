@@ -1,19 +1,18 @@
 import copy
-import math
-import random
 
-from algorithms import randomalg as ran
+import numpy as np
+
 from classes import timetable as tmt
-from helpers import timetable_helpers as hlp
+from helpers import timetable_helpers as th
 
 """ Parameters for Plant Propagation Algorithm. """
 
-POPULATION = 20
-GENERATIONS = 30
+POPULATION = 20  # Size of initial poulation
+GENERATIONS = 30  # Total generations
 LOWER_BOUND = -1400
 UPPER_BOUND = 500
-NUMBER_PARAMETER = 3
-RUN_PARAMETER = 500
+NUMBER_PAR = 3  # Parameter for number of child tables
+RUN_PAR = 500  # Parameter for number of iterations
 
 
 def make_table():
@@ -37,7 +36,7 @@ def make_table():
     # Generates initial population
     timetable_list = []
     for i in range(POPULATION):
-        timetable = hlp.make_table("random")
+        timetable = th.make_table("random")
         timetable_list.append(timetable)
 
     for j in range(GENERATIONS):
@@ -68,24 +67,24 @@ def make_table():
 def offspring_number(score):
     """ Calculates the number of child tables to be made. """
 
-    number = NUMBER_PARAMETER * adapted_fitness(score) * random.random()
+    number = NUMBER_PAR * adapted_fitness(score) * np.random.random()
 
-    return math.ceil(number)
+    return int(np.ceil(number))
 
 
 def offspring_iterations(score):
     """ Calculates the number of hillclimber iterations to be made. """
 
-    iterations = RUN_PARAMETER * (1 - adapted_fitness(score)) * random.random()
+    iterations = RUN_PAR * (1 - adapted_fitness(score)) * np.random.random()
 
-    return math.ceil(iterations)
+    return int(np.ceil(iterations))
 
 
 def adapted_fitness(score):
     """ Calculates the adapted fitness of a table based on its score. """
 
     normalized_fitness = (UPPER_BOUND - score) / (UPPER_BOUND - LOWER_BOUND)
-    adapted_fitness = (math.tanh(4 * (normalized_fitness - 2)) + 1) / 2
+    adapted_fitness = (np.tanh(4 * (normalized_fitness - 2)) + 1) / 2
 
     return adapted_fitness
 
@@ -94,4 +93,4 @@ def swap_lectures(timetable, swaps):
     """ Calls the random swap method a number of times. """
 
     for i in range(swaps):
-        timetable = hlp.swap_random(timetable)
+        timetable = th.swap_random(timetable)
