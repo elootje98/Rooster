@@ -1,14 +1,11 @@
 import copy
 import sys
 
-<<<<<<< HEAD
 from algorithms import greedy, hillclimber, randomalg, simulated_annealing
-=======
+
 from helpers import objective, printer, visualize
 from algorithms import hillclimber, greedy, randomalg, simulated_annealing
->>>>>>> 00ff6d4f25960073d88699f4f54547b57a02b43a
 from classes import timetable as tmt
-from data import data
 from helpers import objective, printer
 from helpers import timetable_helpers as th
 
@@ -79,7 +76,7 @@ def main():
         # Applies helper functions added to the command line as args
         helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
         for function in helper_functions_applied:
-            if "print" in helper_functions_applied
+            if "print" in helper_functions_applied:
                 function(timetable)
             if "visual" in helper_functions_applied:
                 function(sys.argv[2], scores)
