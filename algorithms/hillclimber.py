@@ -42,10 +42,11 @@ def hill_population(timetable):
 
         # Re-execute swap with the highest score.
         if max_score >= timetable.objective_score:
-            th.swap_coordinates(timetable, to_swap[2*max_score], to_swap[2*max_score+1])
+            th.swap_coordinates(timetable, to_swap[2*max_score],
+                                to_swap[2*max_score+1])
 
 
-def random_burst(timetable, samples = 50):
+def random_burst(timetable, samples=50):
     """ Takes a list of sample lectures that randomly swaps, also if the score
     is influenced negatively.
 
@@ -109,11 +110,10 @@ def greedy_hill(timetable):
     th.swap_lectures(timetable, c1, c2)
 
 
-
 def hillclimber(timetable, iterations, *args):
     """ Use hillclimber algorithm to iterate over a timetable.
 
-    A list of functions specifies how this hillclimber will run. The hillclimber
+    A list of functions specifies how hillclimber will run. The hillclimber
     can be a random hillclimber, a greedy hillclimber or a combination of both.
     Functions - of which the function names can be added as command line -
     arguments will be applied during the iteration process of the hillclimber.
