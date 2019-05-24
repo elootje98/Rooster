@@ -14,6 +14,7 @@ from helpers import visualize
 available_algorithms1 = ["random", "greedy", "multi"]
 available_algorithms2 = ["hillclimber", "sa", "ppa"]
 
+
 def multi_table(timetable, iterations, algorithm):
     """ Function that runs algorithm_1 multiple times returns timetable with
     the highest score.
@@ -28,7 +29,7 @@ def multi_table(timetable, iterations, algorithm):
 
     """
 
-    points = -10000 # Arbitrary low value as initial value.
+    points = -10000  # Arbitrary low value as initial value.
 
     for i in range(iterations):
 
@@ -53,13 +54,34 @@ def multi_table(timetable, iterations, algorithm):
 
 
 def to_print_question():
-    print_function = input("Execute print function (yes / no): ")
 
-    if print_function != "yes" and print_function != "no":
-        print("No vallid input.")
-        print_function = "no"
+    while True:
+        print_function = input("Execute print function (yes / no): ")
+
+        if print_function != "yes" and print_function != "no":
+            print("You can only pick yes and no.")
+            continue
+        else:
+            break
 
     return print_function
+
+
+def is_it_int():
+
+    while True:
+        try:
+            iterations = int(input("Number of iterations: "))
+        except(Exception):
+            iterations = 0.0
+
+        if not isinstance(iterations, int):
+            print("You must provide an int.")
+            continue
+        else:
+            break
+
+    return iterations
 
 
 def main():
@@ -75,7 +97,7 @@ def main():
     # Check if arguments given are valid
     for arg in sys.argv[1:]:
         if (arg not in available_algorithms1 and
-            arg not in available_algorithms2):
+           arg not in available_algorithms2):
             print("Invalid input, run: $ main.py to refer to correct input.")
             return
 
@@ -97,8 +119,16 @@ def main():
         grd.make_table(timetable)
 
     elif algorithm_1 == "multi":
-        algorithm = input("Algorithm: ")
-        iterations = int(input("Number of iterations: "))
+        while True:
+            algorithm = input("Choose between greedy and random: ")
+
+            if algorithm != "greedy" and algorithm != "random":
+                print("You can only choose between 'greedy' and 'random'.")
+                continue
+            else:
+                break
+
+        iterations = is_it_int()
         timetable = multi_table(timetable, iterations, algorithm)
 
     if len(sys.argv) == 2:
@@ -110,20 +140,74 @@ def main():
         print("Starting timetable score:", objective.objective_function(timetable))
 
         if algorithm_2 == "sa":
-            iterations = int(input("Number of iterations: "))
-            cooling = input("Cooling scheme (linear, exponential, sigmoidal) ")
-            reheat_option = input("Reheating? (yes / no): ")
+            iterations = int(is_it_int())
+
+            while True:
+                cooling = input("Cooling scheme (linear, exponential, sigmoidal): ")
+
+                if cooling not in ["linear", "exponential", "sigmoidal"]:
+                    print("You can only choose: linear, exponential and sigmoidal")
+                    continue
+                else:
+                    break
+
+            while True:
+                reheat_option = input("Reheating? (yes / no): ")
+
+                if reheat_option != "yes" and reheat_option != "no":
+                    print("You can only choose: yes or no.")
+                    continue
+                else:
+                    break
+
             if reheat_option == "yes":
-                reheating = int(input("Reheating at temperature (int): "))
+
+                while True:
+                    try:
+                        reheating = int(input("Reheating at temperature (int): "))
+                    except(Exception):
+                        reheating = 0.0
+
+                    if not isinstance(reheating, int):
+                        print("You must provide an int.")
+                        continue
+                    else:
+                        break
+
                 scores = sa.make_table(timetable, iterations, cooling, reheating)
             else:
                 scores = sa.make_table(timetable, iterations, cooling)
             labels = ["Simmulated Annealing"]
 
         if algorithm_2 == "hillclimber":
-            function = input("Choose hillclimber type (regular, greedyhill, combined): ")
-            optional = input("Choose optional (none, pop, burst, combined): ")
-            iterations = int(input("Number of iterations for hillclimber: "))
+
+            while True:
+                function = input("Choose hillclimber type (regular, greedyhill, combined): ")
+
+                if function not in ["regular", "greedyhill", "combined"]:
+                    print("You must choose between regular, greedyhill or combined.")
+                    continue
+                else:
+                    break
+
+            while True:
+                optional = input("Choose optional (none, pop, burst, combined): ")
+
+                if optional not in ["none", "pop", "burst", "combined"]:
+                    print("You can only choose between none, pop, burst or combined.")
+                    continue
+                else:
+                    break
+
+            while True:
+                iterations = int(input("Number of iterations for hillclimber: "))
+
+                if not isinstance(iterations, int):
+                    print("You must provide an int.")
+                    continue
+                else:
+                    break
+
             labels = []
 
             hill_functions_applied = []
@@ -170,18 +254,18 @@ def main():
         else:
             print_function = print_function = to_print_question()
             visual_function = input("Execute visual function (yes / no): ")
-            if visual_function != "yes" and visual_function != "no":
-                    print("No vallid input.")
-                    visual_function = "no"
 
+            while visual_function not in ["yes", "no"]:
+                print("No valid input.")
+                visual_function = input("Execute visual function (yes / no): ")
 
     if print_function == "yes":
         printer.make_table(timetable)
+
     if visual_function == "yes":
         visualize.make_plot(labels, scores)
 
     print("Timetable score:", objective.objective_function(timetable))
-
 
 
 main()

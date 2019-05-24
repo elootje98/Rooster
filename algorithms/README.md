@@ -1,4 +1,4 @@
-# algoritmes
+# Algoritmes
 
 ## Constructieve algoritmes:
 - Random (randomalg.py): Maakt een leeg rooster object aan en vult alle vakken
