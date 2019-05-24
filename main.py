@@ -1,18 +1,18 @@
 import copy
 import sys
 
-from algorithms import greedy, hillclimber, randomalg, simulated_annealing
-
-from helpers import objective, printer, visualize
-from algorithms import hillclimber, greedy, randomalg, simulated_annealing
+from algorithms import greedy as grd
+from algorithms import hillclimber as hc
+from algorithms import randomalg as rnd
+from algorithms import simulated_annealing as sa
+from algorithms import ppa
 from classes import timetable as tmt
 from helpers import objective, printer
 from helpers import timetable_helpers as th
+from helpers import visualize
 
 available_algorithms1 = ["random", "greedy, multi"]
-available_algorithms2 = ["hillclimber"] # TODO add other algo's
-hill_functions = {'hillclimber': th.swap_random, 'greedy_hill': hillclimber.greedy_hill, 'pop': hillclimber.hill_population, 'burst': hillclimber.random_burst}
-helper_functions = {"print": printer.make_table, "visual": visualize.make_plot} # TODO add writer
+available_algorithms2 = ["hillclimber", "sa", "ppa"]
 
 
 def main():
@@ -24,7 +24,6 @@ def main():
     Use of hillclimber can be switched on with the second command-line argument
     (hillclimber).
 
-
     """
     # Check if arguments given are valid
     for arg in sys.argv[1:]:
@@ -34,15 +33,11 @@ def main():
             print("Wrong input, run: $ main.py to refer to correct input.")
             return
 
-
-
     if len(sys.argv) < 2:
         print("Please provide an algorithm.")
-        print("Correct usage: main.py algorithm 1 [, algorithm 2, *added_functions, *helper_functions]")
+        print("Correct usage: main.py algorithm 1 (algorithm 2)")
         print("Available algorithms #1 : " + ", ".join([str(a) for a in available_algorithms1]))
         print("Available algorithms #2 : " + ", ".join([str(a) for a in available_algorithms2]))
-        print("Available added hillclimber functions: " + ", ".join([str(key) for key in hill_functions]))
-        print("Available added helper functions: " + ", ".join([str(key) for key in helper_functions]))
         exit()
 
     algorithm_1 = sys.argv[1]
@@ -50,39 +45,97 @@ def main():
     timetable = tmt.Timetable()
 
     if algorithm_1 == "random":
-        randomalg.make_table(timetable)
+        rnd.make_table(timetable)
 
     if algorithm_1 == "greedy":
-        greedy.make_table(timetable)
+        grd.make_table(timetable)
 
-    if algorithm_1 == "multi":
-        algorithm = input("Algorithm: ")
-        iterations = int(input("Number of iterations: "))
-        multi_table(timetable, iterations, algorithm)
+    # if algorithm_1 == "multi":
+    #     algorithm = input("Algorithm: ")
+    #     iterations = int(input("Number of iterations: "))
+    #     multi_table(timetable, iterations, algorithm)
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]
         print("Starting timetable score:", objective.objective_function(timetable))
 
-        if algorithm_2 == "siman":
-            simulated_anealing.simulated(timetable, 1000)
+        if algorithm_2 == "sa":
+            iterations = int(input("Number of iterations: "))
+            cooling = input("Cooling scheme (linear, exponential, sigmoidal) ")
+            scores = sa.simulated(timetable, iterations, cooling)
+            labels = ["Simmulated Annealing"]
 
-        if algorithm_2 == "hillclimber" or algorithm_2 == "greedy_hill":
+        if algorithm_2 == "hillclimber":
+            function = input("Choose hillclimber type (regular, greedyhill, combined): ")
+            optional = input("Choose optional (none, pop, burst, combined): ")
             iterations = int(input("Number of iterations for hillclimber: "))
+            labels = []
 
-            hill_functions_applied = [hill_functions[f] for f in sys.argv if f in hill_functions]
-            scores = hillclimber.hillclimber(timetable, iterations, hill_functions_applied)
+            hill_functions_applied = []
+            if function == "regular":
+                hill_functions_applied.append(th.swap_random(timetable))
+                labels.append("Hillclimber")
+            elif function == "greedyhill":
+                hill_functions_applied.append(hc.greedy_hill(timetable))
+                labels.append("GreedyHill")
+            elif function == "combined":
+                hill_functions_applied.append(th.swap_random(timetable))
+                hill_functions_applied.append(hc.greedy_hill(timetable))
+                labels.append("Hillclimber")
+                labels.append("GreedyHill")
+            else:
+                print("Wrong input")
+                return
 
-        # Applies helper functions added to the command line as args
-        helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
-        for function in helper_functions_applied:
-            if "print" in sys.argv:
-                function(timetable)
-            if "visual" in sys.argv:
-                function(sys.argv[2:len(helper_functions)+1], scores)
+            if optional == "none":
+                pass
+            elif optional == "pop":
+                hill_functions_applied.append(hc.hill_population(timetable))
+                labels.append("Pop")
+            elif optional == "burst":
+                hill_functions_applied.append(hc.random_burst(timetable))
+                labels.append("Burst")
+            elif optional == "combined":
+                hill_functions_applied.append(hc.hill_population(timetable))
+                hill_functions_applied.append(hc.random_burst(timetable))
+                labels.append("Pop")
+                labels.append("Burst")
+            else:
+                print("Wrong input")
+                return
+
+            scores = hc.hillclimber(timetable, iterations,
+                                    hill_functions_applied)
+
+        if algorithm_2 == "ppa":
+            ppa.make_table()
+
+        print("Timetable score:", objective.objective_function(timetable))
+        if algorithm_2 == "ppa":
+            print_function = input("Execute print function (yes / no): ")
+            visual_function == "no"
+        else:
+            print_function = input("Execute print function (yes / no)")
+            visual_function = input("Execute visual function (yes / no)")
+
+        if print_function == "yes":
+            printer.make_table(timetable)
+        if visual_function == "yes":
+            visualize.make_plot(labels, scores)
 
 
-    print("Timetable score:", objective.objective_function(timetable))
+
+
+        # # Applies helper functions added to the command line as args
+        # helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
+        # for function in helper_functions_applied:
+        #     if "print" in sys.argv:
+        #         function(timetable)
+        #     if "visual" in sys.argv:
+        #         function(sys.argv[2:len(helper_functions)+1], scores)
+
+
+
 
     def multi_table(timetable, iterations, algorithm):
 
@@ -109,40 +162,6 @@ def main():
         # Select the timetable with the hightest points
         return copy.deepcopy(new_timetable)
 
-    # Recheck de score voor de individuele vakken
-    # rechecked_score = 0 # TODO: weghalen of netter neerzetten later
-    # for classroom in range(7):
-    #     for day in range(5):
-    #         for slot in range(5):
-    #             try:
-    #                 rechecked_score += timetable.grid[classroom][day][slot].score
-    #             except(AttributeError):
-    #                 pass
-    #
-    # print("Timetable rechecked_score:", rechecked_score)
-
-
-    # ## Prints out all lectures made in ID order
-    #
-    # for course in timetable.courses:
-    #     print(course.name, '\n')
-    #
-    #     for lecture in course.lectures:
-    #         print(lecture.id, lecture.course, lecture.type, lecture.students, lecture.capacity)
-    #
-    #     print('\n', "Restrictions:", '\n')
-    #
-    #     for entry in course.restricted:
-    #         print(entry)
-    #
-    #     print('\n')
-
-    # ## Prints out all lectures in timetable
-    #
-    # for i in range(0,7):
-    #     for j in range(0, 5):
-    #         for k in range(0, 5):
-    #             print(timetable.grid[i][j][k].course)
 
 
 main()
