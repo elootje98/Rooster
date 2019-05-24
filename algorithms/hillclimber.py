@@ -61,7 +61,7 @@ def random_burst(timetable, samples=50):
 
     # State lower and upper bound and calculate score differences.
     maximum_points = 420
-    minimum_points = -1400
+    minimum_points = -1500
     current_points = timetable.objective_score
     delta_points = maximum_points - current_points
 

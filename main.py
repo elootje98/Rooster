@@ -11,8 +11,55 @@ from helpers import objective, printer
 from helpers import timetable_helpers as th
 from helpers import visualize
 
-available_algorithms1 = ["random", "greedy, multi"]
+available_algorithms1 = ["random", "greedy", "multi"]
 available_algorithms2 = ["hillclimber", "sa", "ppa"]
+
+def multi_table(timetable, iterations, algorithm):
+    """ Function that runs algorithm_1 multiple times returns timetable with
+    the highest score.
+
+    Arguments:
+        timetable (Timetable): Timetable to fill in.
+        iterations (int): Total number of initial timetables to compare.
+        algorithm (string): Algorithm used to create initial timetables.
+
+    Returns:
+        timetable (Timetable): Filled in timetable.
+
+    """
+
+    points = -10000 # Arbitrary low value as initial value.
+
+    for i in range(iterations):
+
+        # Copy initial timetable for comparison.
+        compare_timetable = copy.deepcopy(timetable)
+
+        if algorithm == "random":
+            rnd.make_table(compare_timetable)
+        elif algorithm == "greedy":
+            grd.make_table(compare_timetable)
+        else:
+            raise ValueError("Invalid algorithm ", algorithm)
+
+        # Set new_timetable if compare_timetable has a higher score.
+        new_points = objective.objective_function(compare_timetable)
+        if new_points > points:
+            new_timetable = copy.deepcopy(compare_timetable)
+            points = new_points
+
+    # Return the timetable with the hightest points.
+    return copy.deepcopy(new_timetable)
+
+
+def to_print_question():
+    print_function = input("Execute print function (yes / no): ")
+
+    if print_function != "yes" and print_function != "no":
+        print("No vallid input.")
+        print_function = "no"
+
+    return print_function
 
 
 def main():
@@ -28,8 +75,7 @@ def main():
     # Check if arguments given are valid
     for arg in sys.argv[1:]:
         if (arg not in available_algorithms1 and
-            arg not in available_algorithms2 and
-            arg not in hill_functions and arg not in helper_functions):
+            arg not in available_algorithms2):
             print("Wrong input, run: $ main.py to refer to correct input.")
             return
 
@@ -46,14 +92,22 @@ def main():
 
     if algorithm_1 == "random":
         rnd.make_table(timetable)
+        print_function = to_print_question()
+        visual_function = "no"
+
 
     if algorithm_1 == "greedy":
         grd.make_table(timetable)
+        print_function = to_print_question()
+        visual_function = "no"
 
-    # if algorithm_1 == "multi":
-    #     algorithm = input("Algorithm: ")
-    #     iterations = int(input("Number of iterations: "))
-    #     multi_table(timetable, iterations, algorithm)
+    if algorithm_1 == "multi":
+        algorithm = input("Algorithm: ")
+        iterations = int(input("Number of iterations: "))
+        timetable = multi_table(timetable, iterations, algorithm)
+        print_function = print_function = to_print_question()
+        visual_function = "no"
+
 
     if len(sys.argv) >= 3:
         algorithm_2 = sys.argv[2]
@@ -89,7 +143,7 @@ def main():
                 labels.append("Hillclimber")
                 labels.append("GreedyHill")
             else:
-                print("Wrong input")
+                print("Invalid input.")
                 return
 
             if optional == "none":
@@ -106,7 +160,7 @@ def main():
                 labels.append("Pop")
                 labels.append("Burst")
             else:
-                print("Wrong input")
+                print("Invalid input.")
                 return
 
             scores = hc.hillclimber(timetable, iterations,
@@ -115,57 +169,22 @@ def main():
         if algorithm_2 == "ppa":
             ppa.make_table()
 
-        print("Timetable score:", objective.objective_function(timetable))
-        if algorithm_2 == "ppa":
-            print_function = input("Execute print function (yes / no): ")
+            print_function = print_function = to_print_question()
             visual_function == "no"
         else:
-            print_function = input("Execute print function (yes / no): ")
+            print_function = print_function = to_print_question()
             visual_function = input("Execute visual function (yes / no): ")
-
-        if print_function == "yes":
-            printer.make_table(timetable)
-        if visual_function == "yes":
-            visualize.make_plot(labels, scores)
+            if visual_function != "yes" and visual_function != "no":
+                    print("No vallid input.")
+                    visual_function = "no"
 
 
+    if print_function == "yes":
+        printer.make_table(timetable)
+    if visual_function == "yes":
+        visualize.make_plot(labels, scores)
 
-
-        # # Applies helper functions added to the command line as args
-        # helper_functions_applied = [helper_functions[f] for f in sys.argv[-len(helper_functions):] if f in helper_functions]
-        # for function in helper_functions_applied:
-        #     if "print" in sys.argv:
-        #         function(timetable)
-        #     if "visual" in sys.argv:
-        #         function(sys.argv[2:len(helper_functions)+1], scores)
-
-
-
-
-    def multi_table(timetable, iterations, algorithm):
-
-        # Save all the timetables and their points
-        points = -10000
-        for i in range(iterations):
-            compare_timetable = copy.deepcopy(timetable)
-            if algorithm == "random":
-                randomalg.make_talbe(compare_timetable)
-            elif algorithm == "greedy":
-                greedy.make_table(compare_timetable)
-            elif algorithm == "hillclimber":
-                hillclimber.make_table(compare_timetable)
-            elif algorithm == "simulated_annealing":
-                simulated_annealing.make_table(compare_timetable)
-            else:
-                raise ValueError("Invalid algorithm", algorithm)
-
-            new_points = objective_function(compare_timetable)
-            if new_points > points:
-                new_timetable = copy.deepcopy(compare_timetable)
-                points = new_points
-
-        # Select the timetable with the hightest points
-        return copy.deepcopy(new_timetable)
+    print("Timetable score:", objective.objective_function(timetable))
 
 
 
