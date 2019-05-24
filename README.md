@@ -68,7 +68,7 @@ Vervolgens zal de gebruiker om meer input gevraagd worden voor de
 functionaliteit van de algoritmes.
 
 $ main.py algorithm_1 hillclimber :
-Nadat het initele rooster is gegenereerd heeft de gebruiker drie mogelijkheden
+Nadat het initële rooster is gegenereerd heeft de gebruiker drie mogelijkheden
 om het Hillclimber algoritme uit te voeren. 'regular' betekent dat Hillclimber
 willekeurige vakken uit het rooster zoekt en deze omwisselt. Als het
 resulterende rooster geen lagere score heeft dan het voorgaande, wordt het
@@ -80,11 +80,30 @@ per iteratie zowel een stap 'regular' als 'greedy' wordt uitgevoerd.
 Vervolgens is er de mogelijkheid om het Hillclimber algoritme optionele functies
 mee te geven om uit te voeren. 'none' betekent dat er geen optionele functies
 worden uitegevoerd. 'pop' is een populatie gebasseerd algoritme wat per iteratie
-een kans heeft van 2% om uitegevoerd te worden, waarna 
+een kans heeft van 2% om uitegevoerd te worden, waarna er voor een groep van
+500 samples willekeurig worden gekozen uit het lesrooster en in een lijst
+worden gestopt. Van deze lijst wordt een element gewisselt met de eerstvolgende
+vervolgens wordt van de lesroosters van al deze wisselingen de score berekent en
+slechts de beste wisseling behouden. 'burst' is een random algoritme die
+ongeacht de resulterende score een groep van 50 samples wordt gewisselt. De kans
+waarmee dit gebeurt hangt af van het verschil van de score van het huidige
+rooster met de maximaal te behalen score. Een hogere score van het huidige
+rooster betekent een lagere kans waarmee 'burst' uitgevoerd kan worden.
+'combined' betekent dat zowel 'pop' als 'burst' uitegevoerd worden.
+
+Nadat het hillclimber algoritme klaar is met itereren, zal de gebruiker
+gevraagd worden of het rooster uitgeprint moet worden. Daarnaast wordt ook
+gevraagd of de gebruiker het rooster visueel wil weergeven. Als de gebruiker
+hierop ook 'yes' antwoord, zal een plot worden gemaakt van de score over het
+verloop van de iteraties van het algoritme.
 
 $ main.py algorithm_1 sa :
 
 $ main.py algorithm_1 ppa :
+Nadat het initële rooster is gegenereerd wordt het Plant Propagation algoritme
+op het rooster uitgevoerd. In de terminal zal de gebruiker weergegeven zien
+worden over welke generatie het algoritme op dit moment aan het itereren is.
+Vervolgens wordt de gebruiker gevraagd voor print opties.
 
 ## Structuur
 - algorithms: bevat alle python scripts met de gebruikte algoritmes. Verdere
