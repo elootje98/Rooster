@@ -5,7 +5,7 @@ from classes import empty
 from classes import timetable as t
 from data import points as p
 from helpers.objective import objective_function
-from helpers import timetable.helpers as hlp
+from helpers import timetable_helpers as hlp
 
 
 def make_table(timetable):

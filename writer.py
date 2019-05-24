@@ -1,9 +1,10 @@
 import sys
 
-import objective
+from helpers import objective
 from algorithms import hillclimber, greedy, randomalg, ppa
 from classes import timetable as tmt
 from data import data
+from helpers import timetable_helpers as hlp
 
 
 def writer():
@@ -53,7 +54,7 @@ def writer():
             timetable = ppa.make_table()
 
         if algorithm_2 == "hillclimber":
-            hillclimber.hillclimber(timetable, iterations)
+            hillclimber.hillclimber(timetable, iterations, [hlp.swap_random])
 
         f.write(str(int(objective.objective_function(timetable))))
         f.write(';')

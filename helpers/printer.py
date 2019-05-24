@@ -1,8 +1,10 @@
+import colorsys
+
+import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 import numpy as np
-import colorsys
 import pandas as pd
-import matplotlib.gridspec as gridspec
+
 import seaborn as sns
 
 cm = sns.light_palette("red", as_cmap=True)

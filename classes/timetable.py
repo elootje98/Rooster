@@ -127,7 +127,7 @@ class Timetable:
 
             # Handles Werkcollege & Practicum
             else:
-                # Calculates number of needed groups
+                # Calculates number of needed groups and initializes track
                 groups = math.ceil(students / capacity)
                 track = 1
 
@@ -144,6 +144,7 @@ class Timetable:
                         lecture = lec.Lecture(_type, name, _id, students,
                                               capacity, track)
 
+                    # 
                     _id += 1
                     track += 1
                     self.find_course(name).lectures.append(lecture)
