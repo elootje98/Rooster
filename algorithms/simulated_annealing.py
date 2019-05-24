@@ -4,13 +4,13 @@ from helpers import timetable_helpers as th
 
 """ Parameters for Simulated Annealing. """
 
-TEMP_HIGH = 100
-TEMP_LOW = 1
-SIGMOIDAL_PAR = 0.01
-TEMP_PAR = 0.4
+TEMP_HIGH = 100  # Starting temperature
+TEMP_LOW = 1  # End temperature
+SIGMOIDAL_PAR = 0.01  # Parameter for the sigmoidal function (changes curve)
+TEMP_PAR = 0.4  # Temperature constant, alters chance to accept worse tables
 
 
-def make_table(iterations, cooling):
+def make_table(timetable, iterations, cooling):
     """ Main function for Simulated Annealing.
 
     Simulated Annealing tries swapping a given number of lectures, always
@@ -32,7 +32,6 @@ def make_table(iterations, cooling):
 
     # Sets starting temperature and generates random timetable
     temp = TEMP_HIGH
-    timetable = th.make_table("random")
 
     for i in range(iterations):
 
