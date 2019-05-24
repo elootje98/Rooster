@@ -7,7 +7,6 @@ from classes import empty
 from helpers import timetable_helpers as th
 
 
-
 def hill_population(timetable):
     """ Genetic algorithm, finds the best swap for a population.
 

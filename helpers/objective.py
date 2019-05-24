@@ -269,6 +269,7 @@ def nightslot_check(timetable):
 
     return points
 
+
 def reset_points(timetable):
     """ Resets the individual scores of the lectures in the timetable.
 

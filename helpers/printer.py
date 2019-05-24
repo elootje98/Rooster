@@ -1,8 +1,10 @@
+import colorsys
+
+import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 import numpy as np
-import colorsys
 import pandas as pd
-import matplotlib.gridspec as gridspec
+
 import seaborn as sns
 from IPython.display import display, HTML
 import ipywidgets as widgets

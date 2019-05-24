@@ -1,30 +1,28 @@
 import numpy as np
+
 from algorithms import randomalg as rand
 from classes import empty
 from classes import timetable as t
 from data import points as p
 from helpers.objective import objective_function
-import copy
+from helpers import timetable_helpers as hlp
 
-def greedy_table(timetable, iterations):
-    """Makes a timetable using greedy multiple times and picks
-     the timetable with the highest score"""
-
-    # Save all the timetables and their points
-    points = -10000
-    for i in range(iterations):
-        compare_timetable = copy.deepcopy(timetable)
-        make_table(compare_timetable)
-        new_points = objective_function(compare_timetable)
-        if new_points > points:
-            new_timetable = copy.deepcopy(compare_timetable)
-            points = new_points
-
-    # Select the timetable with the hightest points
-    return copy.deepcopy(new_timetable)
 
 def make_table(timetable):
-    """Makes the timetable, with the course sorted on their points"""
+    """Makes timetable using greedy
+
+    First calls gives_points_lectures to sort the courses based on their
+    points. The lectures of courses with the highest points, will be planned
+    in first. After planning in the lecture, there is checked if the lectures
+    of that course are in the right order. If they are not, the lectures will
+    be removed and a new attampt will be made. In the case of >1000 attemps
+    (which most likely mean that the algorithm is stuck in a loop), a complete
+    new timetable will be made.
+
+    Returns:
+        timetable.
+
+    """
 
     # First sort the courses based on points
     give_points_lectures(timetable)
@@ -41,13 +39,22 @@ def make_table(timetable):
                 rand.remove_lectures(course, timetable)
 
             if attempt > 10000 or not completed:
-                return False
+                make_table(t.Timetable())
 
     timetable.score()
-    return True
+
+    return timetable
+
 
 def give_points_lectures(timetable):
-    """Sort the courses based on their 'difficulty' for planning them in."""
+    """Sort the courses based on their 'difficulty' for planning them in.
+
+    Loops over the courses and gives points to the course, based on how
+    difficult they are to plan in. For each course that can't be given at the
+    same time, 20 points are given. Furthermore, for each HC, 10 points are
+    given to the course.
+
+    """
 
     # Loop over the courses and lectures
     for course in timetable.courses:
