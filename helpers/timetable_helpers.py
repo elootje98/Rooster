@@ -52,7 +52,7 @@ def swap_random(timetable, chance=0, sa=False, T=0, k=0.4):
             algoirthm.
 
     Returns:
-        timetable (Timetable): Timetable to modify.
+        timetable (Timetable): Modified timetable.
 
     """
 
@@ -89,52 +89,67 @@ def swap_lectures(timetable, c1, c2, chance=0, sa=False, T=0, k=0.4):
             algoirthm.
 
     Returns:
-        timetable (Timetable): Timetable to modify.
+        timetable (Timetable): Modified timetable.
 
     """
 
+    # Get lectures from the timetable and gets the current score.
     lecture_1 = timetable.grid[c1[0]][c1[1]][c1[2]]
     lecture_2 = timetable.grid[c2[0]][c2[1]][c2[2]]
     score_old = timetable.score()
 
+    # Checks for restrictions between the two lectures.
     if (timetable.check_restriction(lecture_1, c2[1], c2[2]) and
        timetable.check_restriction(lecture_2, c1[1], c1[2])):
 
+       # Swap coordinates of the lectures and calculates new score.
         timetable = swap_coordinates(timetable, c1, c2)
         score_new = timetable.score()
         score_diff = score_new - score_old
 
+        # Of the lectures, find corresponding course objects.
         course_1 = timetable.find_course(lecture_1.course)
         course_2 = timetable.find_course(lecture_2.course)
 
+        # Check if the function is called by the simmulated annealing algorithm.
         if sa:
             chance = np.exp(score_diff / (k * T))
 
+        # Check whether swap is not viable.
         if (not timetable.check_order([course_1, course_2]) or
            (score_diff < 0 and chance < np.random.rand())):
 
+           # Swap back.
             timetable = swap_coordinates(timetable, c1, c2)
             timetable.score()
+
             return timetable
 
     return timetable
 
 
 def random_coordinates(timetable):
-    """ Generates random coordinates in the timetable.
+    """ Generates random lecture coordinates from the timetable.
 
     Takes random values for classroom, day and slot, with those, coordinates
-    can be generated.
+    can be generated. The function also checks that only for classroom C0.110
+    (classroom with index 5 in the timetable.grid) there is a 5th timeslot.
 
-    Returns: classroom, day and slot.
+    Arguments:
+        timetable (Timetable): timetable to modify.
+
+    Returns:
+        random_coordinates (tuple): Tuple of a random classroom, day and slot.
 
     """
 
+    # Loops till condition is met.
     while True:
         classroom = np.random.randint(0, 7)
         day = np.random.randint(0, 5)
         slot = np.random.randint(0, 5)
 
+        # Condition stating that only classroom 5 has timeslot 5.
         if not (classroom != 5 and slot == 4):
             break
 
@@ -142,9 +157,8 @@ def random_coordinates(timetable):
 
 
 def swap_coordinates(timetable, c1, c2):
-    """ Swaps two coordinates in the timetable.
-
-    Takes two coordinates and swaps them.
+    """ Swaps two coordinates in the timetable, by simultaneously swapping them
+    for each other.
 
     Arguments:
         timetable (Timetable): timetable to modify.
@@ -152,7 +166,7 @@ def swap_coordinates(timetable, c1, c2):
         c2: coordinates from the second lecture.
 
     Returns:
-        timetable
+        timetable (Timetable): Modified timetable.
     """
 
     t = timetable.grid

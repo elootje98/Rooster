@@ -1,8 +1,5 @@
-import random
-
 import numpy as np
 
-import helpers.objective as o
 from classes import empty
 from helpers import timetable_helpers as th
 
@@ -20,7 +17,7 @@ def hill_population(timetable):
         timetable (Timetable): Timetable to modify.
 
     """
-    
+
     # State the number of swaps to be made and chance to swap
     samples = 500
     chance = 0.02
@@ -64,7 +61,7 @@ def random_burst(timetable, samples = 50):
 
     # Use chance to swap multiple lectures
     chance = 0.005 * delta_points
-    bound = random.uniform(0, maximum_points - minimum_points)
+    bound = np.random.uniform(0, maximum_points - minimum_points)
     if (bound < chance):
         to_swap = []
         for samples in range(2*samples):

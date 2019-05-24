@@ -20,6 +20,8 @@ def make_table(timetable):
 
     # Iterate over classrooms to print and write timetables.
     for classroom in timetable.classrooms:
+
+        # Prints and writes classroom name.
         print("\n\n----- " + classroom.name + " -----")
         f.write("\n\n----- " + classroom.name + " -----\n")
 
@@ -35,5 +37,7 @@ def make_table(timetable):
 
         print(df.to_string())
         f.write(df.to_string())
+
         i += 1
+
     f.close()
