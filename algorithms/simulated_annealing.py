@@ -54,7 +54,7 @@ def make_table(timetable, iterations, cooling, reheating=0):
                 raise ValueError("Invalid cooling function:", cooling)
 
         if temp < reheating:
-            return make_table(timetable, iterations, cooling)
+            return make_table(timetable, iterations - i, cooling)
 
         timetable.score()
         scores.append(timetable.objective_score)

@@ -28,7 +28,7 @@ def make_table(timetable):
         # Using pandas dataframes for a simple output.
         columns = ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5']
         index = ['9:00', '11:00', '13:00' , '15:00', '17:00']
-        df = pd.DataFrame(np.transpose(timetable.grid[i]), columns, index)
+        df = pd.DataFrame(np.transpose(timetable.grid[i]), index, columns)
 
         # Change values in the dataframe to the course and type.
         for courses in timetable.courses:
